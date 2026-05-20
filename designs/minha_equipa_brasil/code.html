@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html lang="pt"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-lowest": "#ffffff",
+              "on-error-container": "#93000a",
+              "error": "#ba1a1a",
+              "error-container": "#ffdad6",
+              "surface-dim": "#dadada",
+              "on-secondary": "#ffffff",
+              "on-secondary-fixed": "#261900",
+              "primary-fixed": "#aaf3b7",
+              "surface-container-low": "#f3f3f3",
+              "on-tertiary-fixed-variant": "#5a430b",
+              "inverse-primary": "#8ed79d",
+              "on-tertiary": "#ffffff",
+              "on-tertiary-fixed": "#261a00",
+              "tertiary-fixed-dim": "#e3c27f",
+              "tertiary": "#553f06",
+              "inverse-on-surface": "#f1f1f1",
+              "secondary-fixed-dim": "#e9c176",
+              "on-primary-container": "#98e1a6",
+              "on-background": "#1a1c1c",
+              "primary-container": "#1e6637",
+              "secondary-fixed": "#ffdea5",
+              "on-surface": "#1a1c1c",
+              "surface-variant": "#e2e2e2",
+              "surface-tint": "#246b3c",
+              "surface-container-high": "#e8e8e8",
+              "background": "#f9f9f9",
+              "surface-bright": "#f9f9f9",
+              "secondary": "#775a19",
+              "surface-container-highest": "#e2e2e2",
+              "surface-container": "#eeeeee",
+              "outline-variant": "#bfc9bd",
+              "surface": "#f9f9f9",
+              "outline": "#707a6f",
+              "on-secondary-fixed-variant": "#5d4201",
+              "on-surface-variant": "#404940",
+              "on-primary": "#ffffff",
+              "primary": "#004d23",
+              "on-primary-fixed": "#00210b",
+              "secondary-container": "#fed488",
+              "primary-fixed-dim": "#8ed79d",
+              "tertiary-fixed": "#ffdf9e",
+              "tertiary-container": "#6e561d",
+              "on-error": "#ffffff",
+              "on-secondary-container": "#785a1a",
+              "inverse-surface": "#2f3131",
+              "on-primary-fixed-variant": "#005226",
+              "on-tertiary-container": "#eecd88"
+            },
+            fontFamily: {
+              "headline": ["Playfair Display"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-header {
+        background: rgba(249, 249, 249, 0.8);
+        backdrop-filter: blur(20px);
+      }
+      .gold-gradient {
+        background: linear-gradient(135deg, #775a19 0%, #fed488 100%);
+      }
+      .pitch-gradient {
+        background: linear-gradient(135deg, #004d23 0%, #1e6637 100%);
+      }
+      .asymmetric-layout {
+        margin-left: 2.75rem;
+        margin-right: 1.4rem;
+      }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body selection:bg-secondary-container">
+<!-- TopAppBar -->
+<header class="bg-surface/80 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-[#775a19]/15 shadow-sm shadow-black/5 docked full-width top-0 sticky z-50 flex justify-between items-center w-full px-6 h-16">
+<button class="hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors active:scale-95 duration-200 p-2 rounded-lg">
+<span class="material-symbols-outlined text-[#775a19] dark:text-[#d4af37]">menu</span>
+</button>
+<h1 class="font-['Playfair_Display'] text-xl uppercase tracking-[0.2em] text-[#775a19] dark:text-[#d4af37]">MUNDIAL 2026</h1>
+<button class="hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors active:scale-95 duration-200 p-2 rounded-lg">
+<span class="material-symbols-outlined text-[#775a19] dark:text-[#d4af37]">search</span>
+</button>
+</header>
+<main class="pb-32">
+<!-- Hero Section: Team Identity -->
+<section class="mt-8 mb-12 asymmetric-layout">
+<div class="flex items-center gap-6 mb-4">
+<div class="w-16 h-16 rounded-sm overflow-hidden shadow-lg border border-secondary/20">
+<img class="w-full h-full object-cover" data-alt="Close up of the Brazilian national flag with vibrant green and yellow colors and rich fabric texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIzlO9JwlyVVxGQh21zQTmr71zCQ1AC2DG9uZB3txKEirqbPFFnEEHR7KbIjNkH_PNos1FFWTBW5x2d6___NKb3crdzKPG59Ebvn5qZ3ne9xXj-I3B7lhwWCIIVuxBPBNrYMNlwYQ2ako6sQKgQpWOl847sq7m48R_IMpnYShwCLTnNTu3BxcUVhxX0pdbYjYEUPMf6bnlp_4H5aV9NVq1TfZ2puwn0aPaYJeZFKGfxRBHwqUVqe77xYV3DAusBjoLNFx2uu1_tRo"/>
+</div>
+<h2 class="font-headline text-5xl font-black tracking-tight uppercase text-primary">BRASIL</h2>
+</div>
+<p class="font-label text-xs font-semibold uppercase tracking-[0.15em] text-secondary">Confederação Brasileira de Futebol</p>
+</section>
+<!-- Marquee Match Card -->
+<section class="mb-12 px-4">
+<div class="pitch-gradient p-8 shadow-2xl relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div class="relative z-10">
+<div class="flex justify-between items-center mb-6">
+<span class="font-label text-[10px] bg-secondary text-on-secondary px-3 py-1 tracking-widest uppercase">Próximo Jogo</span>
+<span class="font-label text-[10px] text-white/70 uppercase tracking-widest">14 Jun • 20:00</span>
+</div>
+<div class="flex items-center justify-between gap-4">
+<div class="flex flex-col items-center flex-1">
+<img class="w-16 h-16 object-contain mb-2" data-alt="Brazil national football crest on a high quality jersey fabric background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsiurVUEAf3Laz3d4rqesWrcE_o1SmWHBpAJd6GtAH2FM7kLOcuSSOsLNjXv-shbJgdi_MP5KeUQfvp5XqQBuuzHR7sj_RfcfruYSuYg6XJZl6ZY21OTa2zrGZqN4hXHzSJOp-CYh1DLxUkLNriv4IUqQbeGGnwDyZdWCAwS6DD_bsNHnxz8G6jKmcdWCCA6dXPwagz0LsMYODfX-dcIDxuO6wPPTEwyc36JRJW1sqL6pSSB6O702p2lQhtFgDnJ5ptsVrtrjrYZ4"/>
+<span class="font-headline text-white text-xl">Brasil</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-headline text-secondary-fixed text-3xl italic">vs</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-16 h-16 bg-surface-container-low rounded-sm flex items-center justify-center mb-2 overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Tunisia national flag icon simplified for sports broadcast display" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBTk_RTIIdQoo6MCgP4-t_HCvI4yglYAWGfZsqrp8fZl4XKKNfdhDPfij1fGZe-h4CiKCiS20WJjsrjcfJexwbQzRMOKX3rfB1zrJDVkSp-ef5rwlTJIRikR9uhq9MdqxRy-ghRHaBPUIRBGvTWQUPQAKE8zyMfxsVq5r-Hqtft6y4srnZsnsnaM5B3CDo9G1XIwnfld2cksxVmAynzryW7EWJ4oUvSK5YhYynBKWsIOgZ8ieJ6nG2_hUKszVJTGwqTJelyROdjmIU"/>
+</div>
+<span class="font-headline text-white text-xl">Tunísia</span>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-white/10 flex justify-center">
+<button class="font-label text-[11px] font-bold uppercase tracking-widest text-secondary-fixed flex items-center gap-2 group-hover:gap-4 transition-all">
+                            Adquirir Bilhetes <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats & Group Standing (Bento Grid) -->
+<section class="asymmetric-layout grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+<!-- Group Standings -->
+<div class="bg-surface-container-low p-6 border-l-2 border-secondary/30">
+<div class="flex justify-between items-end mb-6">
+<h3 class="font-headline text-xl">Classificação Grupo G</h3>
+<span class="font-label text-[10px] uppercase tracking-widest text-secondary">Fase de Grupos</span>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between font-label text-[10px] text-zinc-400 uppercase tracking-tighter mb-2 border-b border-secondary/10 pb-2">
+<span class="w-8">Pos</span>
+<span class="flex-1">Equipa</span>
+<span class="w-8 text-center">P</span>
+<span class="w-8 text-center">V</span>
+</div>
+<div class="flex items-center justify-between bg-surface-container-lowest p-3 shadow-sm">
+<span class="w-8 font-bold text-primary italic">1.</span>
+<span class="flex-1 font-semibold text-sm">Brasil</span>
+<span class="w-8 text-center font-bold">6</span>
+<span class="w-8 text-center">2</span>
+</div>
+<div class="flex items-center justify-between p-3 opacity-60">
+<span class="w-8 text-xs">2.</span>
+<span class="flex-1 text-sm">Suíça</span>
+<span class="w-8 text-center">3</span>
+<span class="w-8 text-center">1</span>
+</div>
+<div class="flex items-center justify-between p-3 opacity-60">
+<span class="w-8 text-xs">3.</span>
+<span class="flex-1 text-sm">Sérvia</span>
+<span class="w-8 text-center">1</span>
+<span class="w-8 text-center">0</span>
+</div>
+</div>
+</div>
+<!-- Key Player Stats -->
+<div class="bg-surface-container-low p-6 border-l-2 border-secondary/30">
+<div class="flex justify-between items-end mb-6">
+<h3 class="font-headline text-xl">Estatísticas</h3>
+<span class="font-label text-[10px] uppercase tracking-widest text-secondary">Destaque Individual</span>
+</div>
+<div class="relative group cursor-pointer">
+<div class="absolute inset-0 bg-primary/5 group-hover:bg-primary/10 transition-colors"></div>
+<div class="relative p-4 flex items-center gap-4">
+<div class="w-16 h-16 rounded-full overflow-hidden border-2 border-secondary/20">
+<img class="w-full h-full object-cover" data-alt="Close up of professional football player with focused expression during training session" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxPWobY_o_ndMSqm2KiPhAIM1eUTlhTJW0PHjq9Rq4R6-L_AqoVHlE23wdkj97nOoQThRPkM_7HmjPHRwk7ZzuBMStV8m3pORlGpEvRnQylnKZunFnIiXr3jYwZWoWTTOp5GtU37srtp9AFKaqA48ke-2sLkJUJYIYSNb0W13eN2kIHbJUM8dVP8oezjSpxYzKLWg-rGmgp2Op9HmH_LDs9s33-_d2NEg2ZLile770W0GXSMmBS8Gyj8SanvmCV4OLarBwUkK8UFk"/>
+</div>
+<div>
+<p class="font-label text-[10px] uppercase text-secondary font-bold">Melhor Marcador</p>
+<h4 class="font-headline text-lg">Vinícius Jr.</h4>
+<div class="flex gap-4 mt-1">
+<div class="text-center">
+<span class="block text-xl font-black text-primary">3</span>
+<span class="text-[9px] uppercase text-zinc-400">Golos</span>
+</div>
+<div class="text-center">
+<span class="block text-xl font-black text-primary">2</span>
+<span class="text-[9px] uppercase text-zinc-400">Assists</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Match Lists -->
+<section class="asymmetric-layout">
+<!-- Recent Games -->
+<div class="mb-10">
+<div class="flex items-center gap-4 mb-6">
+<h3 class="font-headline text-2xl">Jogos Recentes</h3>
+<div class="h-[1px] flex-1 bg-secondary/20"></div>
+</div>
+<div class="space-y-6">
+<div class="bg-surface-container-lowest p-5 flex items-center justify-between border-l-4 border-primary">
+<div class="w-24">
+<span class="block font-label text-[9px] text-zinc-400 uppercase">28 Out 2025</span>
+<span class="text-xs font-semibold text-secondary">Amigável</span>
+</div>
+<div class="flex-1 flex items-center justify-center gap-6">
+<span class="font-semibold text-sm">Brasil</span>
+<div class="bg-surface-container-highest px-4 py-1 font-headline text-lg font-black tracking-widest">
+                                4 - 1
+                            </div>
+<span class="font-semibold text-sm">Gana</span>
+</div>
+<div class="w-24 text-right">
+<span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Upcoming Games -->
+<div>
+<div class="flex items-center gap-4 mb-6">
+<h3 class="font-headline text-2xl">Próximos Jogos</h3>
+<div class="h-[1px] flex-1 bg-secondary/20"></div>
+</div>
+<div class="space-y-4">
+<div class="bg-surface-container-lowest p-5 flex items-center justify-between opacity-80 hover:opacity-100 transition-opacity">
+<div class="w-24 text-center">
+<span class="block font-headline text-xl text-primary">18</span>
+<span class="block font-label text-[10px] uppercase text-secondary">Junho</span>
+</div>
+<div class="flex-1 px-8 border-l border-secondary/10">
+<div class="flex justify-between items-center">
+<span class="font-semibold">Brasil vs Camarões</span>
+<span class="material-symbols-outlined text-zinc-300">confirmation_number</span>
+</div>
+<span class="text-[10px] text-zinc-400 uppercase tracking-widest">Estádio Lusail • 16:00</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface_container_high dark:bg-zinc-900 fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-3 pb-6 border-t border-[#775a19]/20 shadow-[0_-4px_24px_rgba(0,0,0,0.04)] z-50">
+<a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-[#775a19] transition-all active:opacity-80" href="#">
+<span class="material-symbols-outlined mb-1">calendar_today</span>
+<span class="font-['Inter'] text-[11px] font-semibold uppercase tracking-wider">Calendário</span>
+</a>
+<a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-[#775a19] transition-all active:opacity-80" href="#">
+<span class="material-symbols-outlined mb-1">format_list_numbered</span>
+<span class="font-['Inter'] text-[11px] font-semibold uppercase tracking-wider">Tabela</span>
+</a>
+<a class="flex flex-col items-center justify-center text-[#775a19] dark:text-[#d4af37] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#775a19] after:rounded-full active:opacity-80" href="#">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-['Inter'] text-[11px] font-semibold uppercase tracking-wider">Minha Equipa</span>
+</a>
+</nav>
+</body></html>

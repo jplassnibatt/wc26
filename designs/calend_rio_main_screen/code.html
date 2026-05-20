@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+
+<html lang="pt"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&amp;family=Inter:wght@300;400;500;600;700&amp;family=Noto+Serif:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-lowest": "#ffffff",
+              "on-error-container": "#93000a",
+              "error": "#ba1a1a",
+              "error-container": "#ffdad6",
+              "surface-dim": "#dadada",
+              "on-secondary": "#ffffff",
+              "on-secondary-fixed": "#261900",
+              "primary-fixed": "#aaf3b7",
+              "surface-container-low": "#f3f3f3",
+              "on-tertiary-fixed-variant": "#5a430b",
+              "inverse-primary": "#8ed79d",
+              "on-tertiary": "#ffffff",
+              "on-tertiary-fixed": "#261a00",
+              "tertiary-fixed-dim": "#e3c27f",
+              "tertiary": "#553f06",
+              "inverse-on-surface": "#f1f1f1",
+              "secondary-fixed-dim": "#e9c176",
+              "on-primary-container": "#98e1a6",
+              "on-background": "#1a1c1c",
+              "primary-container": "#1e6637",
+              "secondary-fixed": "#ffdea5",
+              "on-surface": "#1a1c1c",
+              "surface-variant": "#e2e2e2",
+              "surface-tint": "#246b3c",
+              "surface-container-high": "#e8e8e8",
+              "background": "#f9f9f9",
+              "surface-bright": "#f9f9f9",
+              "secondary": "#775a19",
+              "surface-container-highest": "#e2e2e2",
+              "surface-container": "#eeeeee",
+              "outline-variant": "#bfc9bd",
+              "surface": "#f9f9f9",
+              "outline": "#707a6f",
+              "on-secondary-fixed-variant": "#5d4201",
+              "on-surface-variant": "#404940",
+              "on-primary": "#ffffff",
+              "primary": "#004d23",
+              "on-primary-fixed": "#00210b",
+              "secondary-container": "#fed488",
+              "primary-fixed-dim": "#8ed79d",
+              "tertiary-fixed": "#ffdf9e",
+              "tertiary-container": "#6e561d",
+              "on-error": "#ffffff",
+              "on-secondary-container": "#785a1a",
+              "inverse-surface": "#2f3131",
+              "on-primary-fixed-variant": "#005226",
+              "on-tertiary-container": "#eecd88"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body min-h-screen">
+<!-- Top App Bar -->
+<header class="bg-surface/80 dark:bg-zinc-950/80 backdrop-blur-xl border-b border-[#775a19]/15 shadow-sm shadow-black/5 docked full-width top-0 sticky z-50 flex justify-between items-center w-full px-6 h-16">
+<button class="text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors active:scale-95 duration-200 p-2">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-['Playfair_Display'] text-xl uppercase tracking-[0.2em] text-[#775a19] dark:text-[#d4af37]">MUNDIAL 2026</h1>
+<button class="text-zinc-500 dark:text-zinc-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors active:scale-95 duration-200 p-2">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+</button>
+</header>
+<main class="pb-24">
+<!-- Date Selector Shell -->
+<section class="bg-surface py-4 sticky top-16 z-40">
+<div class="flex items-center justify-between px-6 mb-4">
+<span class="font-['Playfair_Display'] text-lg font-bold tracking-tight text-on-surface">Junho 2026</span>
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-bold tracking-widest uppercase text-zinc-400">Favoritos</span>
+<button class="w-8 h-4 bg-zinc-200 rounded-full relative transition-colors">
+<span class="absolute left-0.5 top-0.5 w-3 h-3 bg-white rounded-full shadow-sm"></span>
+</button>
+</div>
+</div>
+<div class="flex overflow-x-auto no-scrollbar px-6 gap-4">
+<button class="flex flex-col items-center min-w-[3.5rem] py-2">
+<span class="text-[10px] uppercase font-bold text-zinc-400 tracking-tighter">Qua</span>
+<span class="text-lg font-['Playfair_Display'] font-bold text-on-surface">10</span>
+</button>
+<button class="flex flex-col items-center min-w-[3.5rem] py-2 border-b-2 border-secondary text-secondary">
+<span class="text-[10px] uppercase font-bold tracking-tighter">Qui</span>
+<span class="text-lg font-['Playfair_Display'] font-bold">11</span>
+</button>
+<button class="flex flex-col items-center min-w-[3.5rem] py-2">
+<span class="text-[10px] uppercase font-bold text-zinc-400 tracking-tighter">Sex</span>
+<span class="text-lg font-['Playfair_Display'] font-bold text-on-surface">12</span>
+</button>
+<button class="flex flex-col items-center min-w-[3.5rem] py-2">
+<span class="text-[10px] uppercase font-bold text-zinc-400 tracking-tighter">Sáb</span>
+<span class="text-lg font-['Playfair_Display'] font-bold text-on-surface">13</span>
+</button>
+<button class="flex flex-col items-center min-w-[3.5rem] py-2">
+<span class="text-[10px] uppercase font-bold text-zinc-400 tracking-tighter">Dom</span>
+<span class="text-lg font-['Playfair_Display'] font-bold text-on-surface">14</span>
+</button>
+<button class="flex flex-col items-center min-w-[3.5rem] py-2">
+<span class="text-[10px] uppercase font-bold text-zinc-400 tracking-tighter">Seg</span>
+<span class="text-lg font-['Playfair_Display'] font-bold text-on-surface">15</span>
+</button>
+</div>
+</section>
+<!-- Match List Content -->
+<div class="px-4 mt-6 space-y-6">
+<!-- Group Label -->
+<div class="flex items-center gap-4 px-2">
+<h2 class="font-['Playfair_Display'] text-sm italic text-secondary">Grupo B</h2>
+<div class="h-[0.5px] flex-grow bg-secondary/20"></div>
+</div>
+<!-- Highlighted Match Card (Brasil) -->
+<div class="bg-surface-container-lowest border border-secondary/30 rounded-lg p-6 shadow-sm relative overflow-hidden">
+<!-- Gold Accent hairline -->
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-secondary"></div>
+<div class="flex justify-between items-start mb-6">
+<span class="text-[10px] font-bold tracking-widest text-secondary uppercase">Fase de Grupos</span>
+<button class="text-secondary active:scale-90 transition-transform">
+<span class="material-symbols-outlined" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</button>
+</div>
+<div class="flex items-center justify-between gap-4">
+<div class="flex flex-col items-center flex-1">
+<div class="w-14 h-14 rounded-full overflow-hidden mb-2 ring-1 ring-zinc-100 p-1">
+<img alt="Flag of Brazil" data-alt="vibrant flag of Brazil with iconic green, yellow and blue circle detail on a clean white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBl-lJZ_eoQAcbIhWMtydyToT71R1giBbM2r7zp6R_k6Mgif6BggNpPSBzz5FZrqhJnktIwXdXpxF8y8Pn3u07nYW4fJ_q7RB50bPIVRsIy12sfNYOuJzVVQID9MDmuV4SPabXq0OBKSe63KEb_dpMppjEpljbSTWgq0Tzti3KhiWlq180LIydnUgJmNk64MTtzUypUcVPJtOJsHiipUELjzidf1uoMenvJzDKdFJ1bfCotyLFlHSjSGENjBdBy_mVnACRgfvNXDnE"/>
+</div>
+<span class="font-['Playfair_Display'] font-bold text-sm tracking-wide text-on-surface">BRASIL</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="bg-surface-container-highest px-4 py-1 rounded text-xs font-bold tracking-widest mb-1 text-on-surface">22:00</div>
+<span class="text-[9px] uppercase tracking-tighter text-zinc-400 font-semibold">BST</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-14 h-14 rounded-full overflow-hidden mb-2 ring-1 ring-zinc-100 p-1">
+<img alt="Flag of Morocco" data-alt="bold flag of Morocco with red field and green pentagram detail on a clean white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBE9_1ClNDdjUTsKfaJCnp7ZS-WEY5zL8QhCxPUuOZ5GrECudFPGKnndsPlu1LZ5qq62LfcPFuVGLYngeascwZzCsWpzQ12gnxHYSJ4URlUWANMuVFTCSZTRJoVmdKpzYSAZY-ZQi-oLOUobsKudqLvJhiZ_14q12db64GKhJqpPXahEvDuHR4LPh3RA-ruScTNmzbung5AOVSVA7r0dZ_v10V0BEtHCENALLecQS1xNyK10YGJ9pO-mKnQO8xnyNe5QqIWE40bbB8"/>
+</div>
+<span class="font-['Playfair_Display'] font-bold text-sm tracking-wide text-on-surface">MARROCOS</span>
+</div>
+</div>
+<div class="mt-6 pt-4 border-t border-zinc-100 flex justify-center">
+<button class="text-[10px] font-bold uppercase tracking-widest text-primary flex items-center gap-2">
+                        Ver Detalhes <span class="material-symbols-outlined text-xs" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Standard Match Card -->
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_2px_12px_rgba(0,0,0,0.02)]">
+<div class="flex justify-between items-start mb-6">
+<span class="text-[10px] font-bold tracking-widest text-zinc-400 uppercase">Fase de Grupos • Grupo B</span>
+<button class="text-zinc-300 hover:text-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="star">star</span>
+</button>
+</div>
+<div class="flex items-center justify-between gap-4">
+<div class="flex flex-col items-center flex-1">
+<div class="w-14 h-14 rounded-full overflow-hidden mb-2 ring-1 ring-zinc-100 p-1">
+<img alt="Flag of Japan" data-alt="minimalist flag of Japan with iconic red sun on white field high quality graphic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLac6gOkccE6iigGvHQJAJus6J2Qs4J2yIufc_DFlJo7eGpaOg6v0VivlCyO-B8jsnbV4tFxKnuYkivu-U3_5EpoIfr5R7tcQEbV7si1zMHuHsNwO85s-Zw0v5HtffthSVC2792xtdIyuRhGkWxAqtPR2o0tArTjc-3C3jQ8J-eiQPRhkf_rPYY4hOIw2_bhw9Fndcb5sGf-jwvWrXUtHEJ0NzoHIo7-x04HiDK0aqY8BTjLVLuRy-IIpm9ouU8edOyGQPIH6FdR8"/>
+</div>
+<span class="font-['Playfair_Display'] font-bold text-sm tracking-wide text-on-surface">JAPÃO</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="bg-surface-container-low px-4 py-1 rounded text-xs font-bold tracking-widest mb-1 text-zinc-500">19:00</div>
+<span class="text-[9px] uppercase tracking-tighter text-zinc-400 font-semibold">BST</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-14 h-14 rounded-full overflow-hidden mb-2 ring-1 ring-zinc-100 p-1">
+<img alt="Flag of Switzerland" data-alt="bold square flag of Switzerland with white cross on red background clean graphic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0OvXjivRaP-u-bzn7UCvyj10lVjadAa5CPdrVL20vyg2QcAATLvDTnzIlTqxtPnArKyiXwObi80A03RXrdJqw1ibubkLtfLYnUOiNdU93t2Ve1S5_oYAw8Wz3Ua6-NMGXEbZpiv9AnF5p2StKra5LlLuZ_sTn4Iei21lJ3IGEWa0xD5gsyoiczcsZFZWPyoTKYSaBJfX6j9hp6KiNnuySBYvnPvvX5qD7l0DsVZv1We6HfkS4D3hLIQ6MasNf1Pw4nIFCrtl9coA"/>
+</div>
+<span class="font-['Playfair_Display'] font-bold text-sm tracking-wide text-on-surface">SUÍÇA</span>
+</div>
+</div>
+</div>
+<!-- Group Label -->
+<div class="flex items-center gap-4 px-2 pt-4">
+<h2 class="font-['Playfair_Display'] text-sm italic text-secondary">Grupo A</h2>
+<div class="h-[0.5px] flex-grow bg-secondary/20"></div>
+</div>
+<!-- Standard Match Card -->
+<div class="bg-surface-container-lowest rounded-lg p-6 shadow-[0_2px_12px_rgba(0,0,0,0.02)]">
+<div class="flex justify-between items-start mb-6">
+<span class="text-[10px] font-bold tracking-widest text-zinc-400 uppercase">Fase de Grupos • Grupo A</span>
+<button class="text-zinc-300 hover:text-secondary transition-colors">
+<span class="material-symbols-outlined" data-icon="star">star</span>
+</button>
+</div>
+<div class="flex items-center justify-between gap-4">
+<div class="flex flex-col items-center flex-1">
+<div class="w-14 h-14 rounded-full overflow-hidden mb-2 ring-1 ring-zinc-100 p-1">
+<img alt="Flag of USA" data-alt="classic flag of United States with stars and stripes graphic on white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCP5iMjk3TnHT6HNlOmVbfYa_qgqzlQ21FVyo2xrVoDcAMERJ7jxv3radQWejYheN6mmd9sIBVckom7eXhyjpjAf6zJ5odlY6rqCi811eqj7hvmGjqM7h7BtJli8kH2ydgi5U3HCfjUGOucNd-0r2crLylft7d9ZvAx0lOXqfvH8k5fLO17rKzjytzG84whPQ5cQnhBp9ci5i7M6i_gVARcZY4cp6hfuAbJ0MBG2LnpQIMAv_G8gaxoq4h7XjY74CujIoaYZRy_B0k"/>
+</div>
+<span class="font-['Playfair_Display'] font-bold text-sm tracking-wide text-on-surface">EUA</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="bg-surface-container-low px-4 py-1 rounded text-xs font-bold tracking-widest mb-1 text-zinc-500">16:00</div>
+<span class="text-[9px] uppercase tracking-tighter text-zinc-400 font-semibold">BST</span>
+</div>
+<div class="flex flex-col items-center flex-1">
+<div class="w-14 h-14 rounded-full overflow-hidden mb-2 ring-1 ring-zinc-100 p-1">
+<img alt="Flag of Senegal" data-alt="vibrant flag of Senegal with green yellow red stripes and green star on white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBWnOI29LZaHhcLWJ5PIG6azu_z0COfPLOh-Pg96NPNihD3xTAiIYML6YfIYIJrNp2s6_40Btw_AC1XMRaDA78zLYUuftdoF_BrhAyM8r51voF4_h_KI1FAaKZnsGYFAnn6sXBx-VucICIprPG8bpH-rXaKOTYVQihFDxkvSfd9Coqk7_BuhTEEzmibm6UQZU54nMVjnMu7RawU0JsVWzWCgQ8MKkrl_PjbGncUAWUZ1GNkmLhbSJ_HvLedSHAK60fKZt-Lmu5e-s"/>
+</div>
+<span class="font-['Playfair_Display'] font-bold text-sm tracking-wide text-on-surface">SENEGAL</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-3 pb-6 bg-surface_container_high dark:bg-zinc-900 border-t border-[#775a19]/20 shadow-[0_-4px_24px_rgba(0,0,0,0.04)] z-50">
+<!-- Calendário - Active -->
+<a class="flex flex-col items-center justify-center text-[#775a19] dark:text-[#d4af37] relative after:content-[''] after:absolute after:-bottom-1 after:w-1 after:h-1 after:bg-[#775a19] after:rounded-full transition-all active:opacity-80" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="calendar_today" style="font-variation-settings: 'FILL' 1;">calendar_today</span>
+<span class="font-['Inter'] text-[11px] font-semibold uppercase tracking-wider">Calendário</span>
+</a>
+<!-- Tabela - Inactive -->
+<a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-[#775a19] transition-all active:opacity-80" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="format_list_numbered">format_list_numbered</span>
+<span class="font-['Inter'] text-[11px] font-semibold uppercase tracking-wider">Tabela</span>
+</a>
+<!-- Minha Equipa - Inactive -->
+<a class="flex flex-col items-center justify-center text-zinc-400 dark:text-zinc-500 hover:text-[#775a19] transition-all active:opacity-80" href="#">
+<span class="material-symbols-outlined mb-1" data-icon="star">star</span>
+<span class="font-['Inter'] text-[11px] font-semibold uppercase tracking-wider">Minha Equipa</span>
+</a>
+</nav>
+</body></html>

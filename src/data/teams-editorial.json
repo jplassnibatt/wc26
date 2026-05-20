@@ -1,0 +1,28 @@
+{
+  "_schema": {
+    "iso": "ISO code matching schedule.json",
+    "generalInfo": {
+      "fifaRanking": "FIFA ranking (March 2026)",
+      "manager": "Head coach name",
+      "captain": "Team captain",
+      "starPlayer": "Key player to watch",
+      "wcAppearances": "Number of World Cup appearances including 2026",
+      "bestResult": "Best ever World Cup result",
+      "nickname": "Team nickname"
+    },
+    "qualifyingStats": {
+      "record": "W-D-L",
+      "goalsScored": "Total goals scored",
+      "goalsConceded": "Total goals conceded",
+      "topScorer": { "name": "Player name", "goals": "Number of goals" },
+      "mostCapped": { "name": "Player name", "appearances": "Number of appearances" }
+    },
+    "squad": [
+      { "name": "Player name", "position": "GK/DEF/MID/FWD", "club": "Club name" }
+    ],
+    "funFacts": [
+      { "fact": "The fun fact text", "source": "URL source" }
+    ]
+  },
+  "teams": []
+}

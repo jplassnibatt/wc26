@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <!-- Clip for the circle -->
+    <clipPath id="circleClip">
+      <circle cx="256" cy="256" r="240"/>
+    </clipPath>
+    <!-- Vintage noise texture -->
+    <filter id="noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feBlend in="SourceGraphic" mode="multiply" result="blend"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.12"/>
+      </feComponentTransfer>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+  </defs>
+
+  <!-- Outer ring -->
+  <circle cx="256" cy="256" r="248" fill="#1a3a2a"/>
+
+  <!-- Main circle background -->
+  <g clip-path="url(#circleClip)">
+    <!-- Green half (left) -->
+    <rect x="0" y="0" width="256" height="512" fill="#1a5632"/>
+    <!-- Red half (right) -->
+    <rect x="256" y="0" width="256" height="512" fill="#8b1a1a"/>
+  </g>
+
+  <!-- Inner border ring -->
+  <circle cx="256" cy="256" r="230" fill="none" stroke="#d4b856" stroke-width="3" opacity="0.5"/>
+  <circle cx="256" cy="256" r="240" fill="none" stroke="#f5e6c8" stroke-width="2.5" opacity="0.4"/>
+
+  <!-- World Cup Trophy -->
+  <g transform="translate(256,256) scale(1.1) translate(-256,-256)">
+    <!-- Trophy base bottom -->
+    <rect x="216" y="420" width="80" height="14" rx="3" fill="#c9a84c"/>
+    <rect x="220" y="418" width="72" height="6" rx="2" fill="#dfc268"/>
+
+    <!-- Base plate -->
+    <rect x="226" y="400" width="60" height="22" rx="4" fill="#c9a84c"/>
+    <rect x="230" y="402" width="52" height="18" rx="3" fill="#dfc268"/>
+
+    <!-- FIFA text on base -->
+    <text x="256" y="416" text-anchor="middle" font-size="10" font-weight="bold" fill="#8b6914" font-family="Arial, sans-serif" letter-spacing="2">FIFA</text>
+
+    <!-- Trophy stem -->
+    <rect x="246" y="350" width="20" height="54" rx="4" fill="#c9a84c"/>
+    <rect x="249" y="352" width="14" height="50" rx="3" fill="#dfc268"/>
+
+    <!-- Stem decorative ring -->
+    <ellipse cx="256" cy="355" rx="18" ry="6" fill="#c9a84c"/>
+    <ellipse cx="256" cy="354" rx="16" ry="5" fill="#dfc268"/>
+
+    <!-- Trophy body - main cup shape -->
+    <path d="M186,200 C186,200 182,160 200,130 C218,100 230,95 230,95 L230,340 C230,348 240,355 256,355 C272,355 282,348 282,340 L282,95 C282,95 294,100 312,130 C330,160 326,200 326,200 C326,200 332,260 310,300 C295,328 282,340 282,340 L230,340 C230,340 217,328 202,300 C180,260 186,200 186,200 Z" fill="#c9a84c"/>
+    <path d="M192,200 C192,200 188,162 205,133 C220,106 233,100 233,100 L233,337 C233,344 242,350 256,350 C270,350 279,344 279,337 L279,100 C279,100 292,106 307,133 C324,162 320,200 320,200 C320,200 326,258 305,296 C292,322 279,337 279,337 L233,337 C233,337 220,322 207,296 C186,258 192,200 192,200 Z" fill="#dfc268"/>
+
+    <!-- Left handle -->
+    <path d="M186,180 C186,180 150,175 140,210 C130,250 155,280 175,285 C185,288 190,278 186,270 C170,265 158,245 163,218 C168,195 186,195 186,195 Z" fill="#c9a84c"/>
+    <path d="M188,185 C188,185 157,182 148,213 C140,248 160,274 177,278 C178,278 182,275 180,268 C165,263 155,245 160,222 C165,200 188,198 188,198 Z" fill="#dfc268"/>
+
+    <!-- Right handle -->
+    <path d="M326,180 C326,180 362,175 372,210 C382,250 357,280 337,285 C327,288 322,278 326,270 C342,265 354,245 349,218 C344,195 326,195 326,195 Z" fill="#c9a84c"/>
+    <path d="M324,185 C324,185 355,182 364,213 C372,248 352,274 335,278 C334,278 330,275 332,268 C347,263 357,245 352,222 C347,200 324,198 324,198 Z" fill="#dfc268"/>
+
+    <!-- Globe on top -->
+    <circle cx="256" cy="115" r="52" fill="#c9a84c"/>
+    <circle cx="256" cy="113" r="48" fill="#dfc268"/>
+
+    <!-- Globe lines - continents suggestion -->
+    <ellipse cx="256" cy="113" rx="48" ry="48" fill="none" stroke="#c9a84c" stroke-width="1.5"/>
+    <ellipse cx="256" cy="113" rx="25" ry="48" fill="none" stroke="#c9a84c" stroke-width="1"/>
+    <ellipse cx="256" cy="113" rx="8" ry="48" fill="none" stroke="#c9a84c" stroke-width="0.7"/>
+    <line x1="208" y1="113" x2="304" y2="113" stroke="#c9a84c" stroke-width="1"/>
+    <line x1="212" y1="90" x2="300" y2="90" stroke="#c9a84c" stroke-width="0.7"/>
+    <line x1="212" y1="136" x2="300" y2="136" stroke="#c9a84c" stroke-width="0.7"/>
+
+    <!-- Two figures holding the globe -->
+    <!-- Left figure -->
+    <path d="M220,170 C220,160 215,140 218,125 C220,115 225,108 230,105 L230,95 C228,95 218,108 215,125 C210,150 212,170 215,185 C216,190 220,200 222,195 Z" fill="#c9a84c"/>
+
+    <!-- Right figure -->
+    <path d="M292,170 C292,160 297,140 294,125 C292,115 287,108 282,105 L282,95 C284,95 294,108 297,125 C302,150 300,170 297,185 C296,190 292,200 290,195 Z" fill="#c9a84c"/>
+  </g>
+
+  <!-- Subtle vintage texture overlay -->
+  <circle cx="256" cy="256" r="240" fill="none" stroke="#f5e6c8" stroke-width="0" filter="url(#noise)" opacity="0.3"/>
+</svg>

@@ -1,0 +1,84 @@
+import { useState, useEffect } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
+import { useAuth } from '../hooks/useAuth';
+import { usePools } from '../hooks/usePools';
+import { useLanguage } from '../i18n/LanguageContext';
+
+export default function Leaderboard() {
+  const { user } = useAuth();
+  const { activePoolId } = usePools();
+  const { t } = useLanguage();
+  const [entries, setEntries] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!activePoolId) return;
+    let cancelled = false;
+    (async () => {
+      const snap = await getDocs(collection(db, 'pools', activePoolId, 'leaderboard'));
+      if (cancelled) return;
+      const list = snap.docs
+        .map((d) => ({ uid: d.id, ...d.data() }))
+        .sort((a, b) => {
+          if (b.totalPoints !== a.totalPoints) return b.totalPoints - a.totalPoints;
+          if (b.exactResultsCount !== a.exactResultsCount) return b.exactResultsCount - a.exactResultsCount;
+          return b.correctOutcomeCount - a.correctOutcomeCount;
+        });
+      setEntries(list);
+      setLoading(false);
+    })();
+    return () => { cancelled = true; };
+  }, [activePoolId]);
+
+  if (loading) {
+    return <div className="leaderboard__loading">{t('loading')}</div>;
+  }
+
+  if (entries.length === 0) {
+    return (
+      <div className="leaderboard__empty">
+        <span className="leaderboard__empty-icon">🏅</span>
+        <p>{t('leaderboardEmpty')}</p>
+      </div>
+    );
+  }
+
+  const medals = ['🥇', '🥈', '🥉'];
+
+  return (
+    <div className="leaderboard">
+      <div className="leaderboard__header">
+        <span className="leaderboard__col leaderboard__col--pos">#</span>
+        <span className="leaderboard__col leaderboard__col--name">{t('player')}</span>
+        <span className="leaderboard__col leaderboard__col--exact">🎯</span>
+        <span className="leaderboard__col leaderboard__col--pts">{t('pts')}</span>
+      </div>
+
+      {entries.map((entry, i) => {
+        const isMe = entry.uid === user?.uid;
+        return (
+          <div
+            key={entry.uid}
+            className={`leaderboard__row ${isMe ? 'leaderboard__row--me' : ''} ${i < 3 ? 'leaderboard__row--top' : ''}`}
+          >
+            <span className="leaderboard__col leaderboard__col--pos">
+              {i < 3 ? medals[i] : i + 1}
+            </span>
+            <span className="leaderboard__col leaderboard__col--name">
+              <span className="leaderboard__avatar">{entry.nickname?.charAt(0).toUpperCase()}</span>
+              {entry.nickname}
+              {isMe && <span className="leaderboard__me-badge">{t('you')}</span>}
+            </span>
+            <span className="leaderboard__col leaderboard__col--exact">
+              {entry.exactResultsCount || 0}
+            </span>
+            <span className="leaderboard__col leaderboard__col--pts">
+              {entry.totalPoints || 0}
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+}

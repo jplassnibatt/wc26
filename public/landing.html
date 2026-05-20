@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mundial 2026 — The Digital Almanac</title>
+<meta name="description" content="A mobile-first companion for the FIFA World Cup 2026. Schedule, teams, betting pool, live scores — curated like a limited-edition almanac." />
+<meta name="theme-color" content="#004d23" />
+<meta property="og:title" content="Mundial 2026 — The Digital Almanac" />
+<meta property="og:description" content="A mobile-first companion for the FIFA World Cup 2026. Schedule, teams, betting pool, live scores." />
+<meta property="og:image" content="screenshots/schedule.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --primary: #004d23;
+    --primary-deep: #00361a;
+    --primary-container: #1e6637;
+    --gold: #775a19;
+    --gold-soft: #b89559;
+    --surface: #FAF7F0;
+    --surface-low: #F2EEE3;
+    --surface-lowest: #FFFFFF;
+    --on-surface: #1a1c1c;
+    --on-surface-muted: #5a5d5a;
+    --outline: rgba(26, 28, 28, 0.10);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--on-surface);
+    background: var(--surface);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display { font-family: 'Playfair Display', Georgia, serif; font-weight: 600; letter-spacing: -0.015em; }
+  a { color: var(--primary); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .container { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+  .eyebrow {
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+  }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(250, 247, 240, 0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+  nav .container { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+  nav .brand {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: 0.04em;
+    color: var(--gold);
+  }
+  nav .links { display: flex; gap: 32px; align-items: center; }
+  nav .links a {
+    color: var(--on-surface-muted);
+    font-size: 13px; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  nav .links a:hover { color: var(--on-surface); text-decoration: none; }
+  nav .cta {
+    background: var(--primary);
+    color: #fff !important;
+    padding: 11px 22px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  nav .cta:hover { background: var(--primary-deep); text-decoration: none; }
+
+  /* Hero */
+  .hero {
+    padding: 80px 0 100px;
+    background:
+      radial-gradient(ellipse at 80% 0%, rgba(119, 90, 25, 0.08) 0%, transparent 60%),
+      var(--surface);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 60px; right: -40px;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    border: 1px solid rgba(119, 90, 25, 0.15);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: 90px; right: -10px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    border: 1px solid rgba(119, 90, 25, 0.08);
+    pointer-events: none;
+  }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: center; position: relative; z-index: 1; }
+  .hero .eyebrow { margin-bottom: 24px; display: inline-block; }
+  .hero .eyebrow::before {
+    content: '✦';
+    margin-right: 10px;
+    color: var(--gold-soft);
+  }
+  .hero h1 {
+    font-size: clamp(48px, 6.5vw, 86px);
+    line-height: 0.95;
+    margin-bottom: 28px;
+    color: var(--on-surface);
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); font-weight: 500; }
+  .hero p.lead {
+    font-family: 'Inter', sans-serif;
+    font-size: 19px;
+    color: var(--on-surface-muted);
+    max-width: 520px;
+    margin-bottom: 36px;
+    line-height: 1.55;
+  }
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 15px 28px;
+    font-weight: 600; font-size: 13px;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .btn:hover { text-decoration: none; transform: translateY(-1px); }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-container) 100%);
+    color: #fff;
+  }
+  .btn-primary:hover { background: var(--primary-deep); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--on-surface);
+    border-bottom: 1px solid var(--gold);
+    padding: 15px 4px;
+  }
+  .btn-ghost:hover { color: var(--gold); }
+
+  .hero-phones { position: relative; height: 600px; }
+  .phone {
+    position: absolute;
+    width: 280px;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 24px 48px rgba(26, 28, 28, 0.08);
+  }
+  .phone img { width: 100%; display: block; }
+  .phone-1 { top: 20px; left: 20px; transform: rotate(-3deg); z-index: 2; }
+  .phone-2 { top: 80px; right: 0; transform: rotate(3deg); z-index: 1; }
+
+  /* Stat strip */
+  .stat-strip {
+    background: var(--primary-deep);
+    color: #fff;
+    padding: 44px 0;
+    position: relative;
+  }
+  .stat-strip::before, .stat-strip::after {
+    content: '';
+    position: absolute; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-soft), transparent);
+  }
+  .stat-strip::before { top: 0; }
+  .stat-strip::after { bottom: 0; }
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center; }
+  .stat .number {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px; font-weight: 600;
+    color: var(--gold-soft);
+    line-height: 1;
+  }
+  .stat .label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 12px;
+  }
+
+  /* Sections */
+  section { padding: 100px 0; }
+  .section-head { max-width: 720px; margin: 0 auto 64px; text-align: center; }
+  .section-head .eyebrow { margin-bottom: 18px; display: block; }
+  .section-head h2 {
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.1;
+    margin-bottom: 18px;
+  }
+  .section-head h2 em { font-style: italic; color: var(--gold); }
+  .section-head p { color: var(--on-surface-muted); font-size: 17px; }
+
+  /* Features */
+  .features { background: var(--surface-low); }
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .feature {
+    background: var(--surface-lowest);
+    padding: 36px 32px;
+    transition: transform 0.25s ease;
+  }
+  .feature:hover { transform: translateY(-3px); }
+  .feature .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px; font-style: italic;
+    color: var(--gold);
+    display: block; margin-bottom: 16px;
+    letter-spacing: 0.1em;
+  }
+  .feature h3 {
+    font-size: 22px;
+    margin-bottom: 8px;
+    color: var(--on-surface);
+  }
+  .feature p { color: var(--on-surface-muted); font-size: 15px; }
+
+  /* Screens */
+  .screens-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+  }
+  .screen { text-align: center; }
+  .screen-frame {
+    background: var(--surface-low);
+    padding: 28px 20px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  .screen-frame img {
+    width: 100%;
+    max-width: 220px;
+    box-shadow: 0 12px 28px rgba(26, 28, 28, 0.08);
+  }
+  .screen .label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--gold);
+    font-weight: 600;
+  }
+  .screen h3 {
+    font-size: 20px;
+    margin: 6px 0 6px;
+    font-style: italic;
+    font-weight: 500;
+  }
+  .screen p { color: var(--on-surface-muted); font-size: 14px; }
+
+  /* Scoring */
+  .scoring { background: var(--surface-low); }
+  .scoring-table {
+    max-width: 760px; margin: 0 auto;
+    background: var(--surface-lowest);
+    padding: 8px;
+  }
+  .scoring-row {
+    display: grid;
+    grid-template-columns: 100px 1fr 1.2fr;
+    align-items: center;
+    padding: 24px 32px;
+    gap: 24px;
+  }
+  .scoring-row + .scoring-row {
+    border-top: 1px solid var(--outline);
+  }
+  .scoring-row .points {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 600;
+    color: var(--primary);
+    line-height: 1;
+  }
+  .scoring-row .points small {
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 600;
+    color: var(--gold);
+    display: block;
+    margin-top: 6px;
+  }
+  .scoring-row .desc {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .scoring-row .ex {
+    color: var(--on-surface-muted);
+    font-size: 14px;
+    font-style: italic;
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* Tech */
+  .tech-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .tech-card {
+    background: var(--surface-lowest);
+    padding: 28px 24px;
+  }
+  .tech-card .label {
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--gold);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  .tech-card .value {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 500;
+  }
+
+  /* CTA */
+  .cta-section {
+    background: var(--primary-deep);
+    color: #fff;
+    text-align: center;
+    padding: 80px 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(184, 149, 89, 0.15);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .cta-section::after {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    border: 1px solid rgba(184, 149, 89, 0.08);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .cta-section .eyebrow { color: var(--gold-soft); margin-bottom: 18px; display: block; position: relative; }
+  .cta-section h2 { font-size: clamp(34px, 4vw, 52px); color: #fff; margin-bottom: 14px; position: relative; }
+  .cta-section h2 em { color: var(--gold-soft); font-style: italic; }
+  .cta-section p { color: rgba(255, 255, 255, 0.7); max-width: 520px; margin: 0 auto 36px; position: relative; }
+  .cta-section .btn {
+    background: var(--gold);
+    color: #fff;
+    position: relative;
+  }
+  .cta-section .btn:hover { background: var(--gold-soft); }
+
+  /* Footer */
+  footer {
+    padding: 48px 0 60px;
+    color: var(--on-surface-muted);
+    font-size: 13px;
+    background: var(--surface);
+  }
+  footer .container { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  footer .brand-foot {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    color: var(--gold);
+    font-size: 16px;
+  }
+
+  /* Responsive */
+  @media (max-width: 920px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 56px; }
+    .hero-phones { height: 500px; max-width: 380px; margin: 0 auto; }
+    .features-grid, .tech-grid { grid-template-columns: 1fr; }
+    .screens-grid { grid-template-columns: repeat(2, 1fr); }
+    .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 16px; }
+    nav .links a:not(.cta) { display: none; }
+    section { padding: 64px 0; }
+    .scoring-row { grid-template-columns: 80px 1fr; }
+    .scoring-row .ex { grid-column: 2; padding-left: 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <div class="brand">Mundial 2026</div>
+    <div class="links">
+      <a href="#features">Features</a>
+      <a href="#screens">Screens</a>
+      <a href="#scoring">Pool</a>
+      <a href="#tech">Tech</a>
+      <a href="https://github.com/martinsmdnuno/wc26" class="cta">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+      <span class="eyebrow">The Digital Almanac · Edition 2026</span>
+      <h1>Every match. Every team. <em>Curated</em> for the pocket.</h1>
+      <p class="lead">A mobile-first companion for the FIFA World Cup 2026 — schedule, teams, betting pool with friends, and live scores. Built like a limited-edition publication, not a utility.</p>
+      <div class="btn-row">
+        <a href="./" class="btn btn-primary">Open the app →</a>
+        <a href="https://github.com/martinsmdnuno/wc26" class="btn btn-ghost">View source</a>
+      </div>
+    </div>
+    <div class="hero-phones">
+      <div class="phone phone-1"><img src="screenshots/schedule.png" alt="Schedule" /></div>
+      <div class="phone phone-2"><img src="screenshots/my-team.png" alt="My team" /></div>
+    </div>
+  </div>
+</header>
+
+<div class="stat-strip">
+  <div class="container">
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="number">104</div>
+        <div class="label">Matches</div>
+      </div>
+      <div class="stat">
+        <div class="number">48</div>
+        <div class="label">Teams</div>
+      </div>
+      <div class="stat">
+        <div class="number">7</div>
+        <div class="label">Phases</div>
+      </div>
+      <div class="stat">
+        <div class="number">3</div>
+        <div class="label">Host nations</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="features" class="features">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">What's inside</span>
+      <h2>Heritage <em>meets</em> the data feed.</h2>
+      <p>Editorial layout. Live scores. A small group of friends competing for bragging rights. Everything in one place.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature">
+        <span class="num">— 01</span>
+        <h3>Full schedule</h3>
+        <p>All 104 matches across 7 phases, with venues and kick-off times in your local zone.</p>
+      </div>
+      <div class="feature">
+        <span class="num">— 02</span>
+        <h3>Team directory</h3>
+        <p>48 qualified teams browsable A–Z, by group, or by confederation.</p>
+      </div>
+      <div class="feature">
+        <span class="num">— 03</span>
+        <h3>Favourites</h3>
+        <p>Star teams to filter their matches in a personal "My Matches" view.</p>
+      </div>
+      <div class="feature">
+        <span class="num">— 04</span>
+        <h3>Calendar export</h3>
+        <p>Add single matches or whole stages to your device calendar via ICS.</p>
+      </div>
+      <div class="feature">
+        <span class="num">— 05</span>
+        <h3>Betting pool</h3>
+        <p>Predict scores against friends in a private group. Live leaderboard included.</p>
+      </div>
+      <div class="feature">
+        <span class="num">— 06</span>
+        <h3>Live scores</h3>
+        <p>Automatic results pulled from football-data.org — no refresh required.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="screens">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">A look inside</span>
+      <h2>Designed like a <em>limited edition</em>.</h2>
+      <p>Playfair Display headlines, Inter for the data, deep green and gold leaf. No "grid of boxes."</p>
+    </div>
+    <div class="screens-grid">
+      <div class="screen">
+        <div class="screen-frame"><img src="screenshots/schedule.png" alt="Schedule" /></div>
+        <div class="label">— 01</div>
+        <h3>Schedule</h3>
+        <p>Browse matches by date and group</p>
+      </div>
+      <div class="screen">
+        <div class="screen-frame"><img src="screenshots/onboarding.png" alt="Onboarding" /></div>
+        <div class="label">— 02</div>
+        <h3>Onboarding</h3>
+        <p>Pick a team, follow the journey</p>
+      </div>
+      <div class="screen">
+        <div class="screen-frame"><img src="screenshots/my-team.png" alt="My team" /></div>
+        <div class="label">— 03</div>
+        <h3>My team</h3>
+        <p>Standings, stats, next match</p>
+      </div>
+      <div class="screen">
+        <div class="screen-frame"><img src="screenshots/standings.png" alt="Standings" /></div>
+        <div class="label">— 04</div>
+        <h3>Standings</h3>
+        <p>Groups, third-place race, knockouts</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="scoring" class="scoring">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">The pool</span>
+      <h2>Predict, score, <em>brag</em>.</h2>
+      <p>A clean four-tier scoring system. Tiebreak: total &gt; exact results &gt; correct outcomes.</p>
+    </div>
+    <div class="scoring-table">
+      <div class="scoring-row">
+        <div class="points">5<small>Points</small></div>
+        <div class="desc">Exact result</div>
+        <div class="ex">"Predicted 2-1 — final score 2-1."</div>
+      </div>
+      <div class="scoring-row">
+        <div class="points">3<small>Points</small></div>
+        <div class="desc">Correct outcome</div>
+        <div class="ex">"Home win called, scoreline missed."</div>
+      </div>
+      <div class="scoring-row">
+        <div class="points">1<small>Point</small></div>
+        <div class="desc">One team's goals correct</div>
+        <div class="ex">"Got Brazil's two — missed the rest."</div>
+      </div>
+      <div class="scoring-row">
+        <div class="points">0<small>Points</small></div>
+        <div class="desc">Nothing correct</div>
+        <div class="ex">"Better luck on the next one."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tech">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Under the hood</span>
+      <h2>Modern stack, <em>no</em> server to babysit.</h2>
+      <p>Static frontend, Firebase for auth and realtime data, deployed continuously to GitHub Pages.</p>
+    </div>
+    <div class="tech-grid">
+      <div class="tech-card"><div class="label">Framework</div><div class="value">React 19 · Vite</div></div>
+      <div class="tech-card"><div class="label">Auth</div><div class="value">Firebase Anonymous</div></div>
+      <div class="tech-card"><div class="label">Database</div><div class="value">Cloud Firestore</div></div>
+      <div class="tech-card"><div class="label">Live data</div><div class="value">football-data.org</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding: 0 0 80px;">
+  <div class="container">
+    <div class="cta-section">
+      <span class="eyebrow">Kick-off</span>
+      <h2>Ready for the <em>tournament</em>?</h2>
+      <p>The full app is one click away. Free, open source, mobile-first. No account needed to browse — sign in only to bet.</p>
+      <a href="./" class="btn">Open Mundial 2026 →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div>
+      <span class="brand-foot">Mundial 2026</span> · A personal project by <a href="https://github.com/martinsmdnuno">@martinsmdnuno</a>
+    </div>
+    <div>Built with React, Firebase, and a love of editorial design.</div>
+  </div>
+</footer>
+
+</body>
+</html>
