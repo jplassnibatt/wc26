@@ -1,26 +1,47 @@
 name: Sync results
 
+# Self-perpetuating loop: each run polls for ~55 minutes (sync-loop.mjs), then
+# re-dispatches itself. GitHub's `schedule` trigger is best-effort and often
+# skips hours of runs, so the cron below is only a watchdog that restarts the
+# chain if it ever dies.
 on:
   schedule:
-    # Every 15 minutes. The script no-ops when there are no new finished matches.
     - cron: '*/15 * * * *'
   workflow_dispatch:
+
+# One loop at a time; watchdog/self dispatches that overlap just queue (GitHub
+# keeps a single pending run per group and collapses the rest).
+concurrency:
+  group: sync-results
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  actions: write
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 70
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - name: Sync finished results and score bets
+      - name: Poll results for ~55 minutes
+        id: loop
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
         run: |
           if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
             echo "FIREBASE_SERVICE_ACCOUNT not set — skipping."
+            echo "continue=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           npm i --no-save firebase-admin@12
-          node scripts/sync-results.mjs
+          node scripts/sync-loop.mjs
+      - name: Re-dispatch to keep the chain alive
+        if: steps.loop.outputs.continue == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run sync-results.yml --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME"
