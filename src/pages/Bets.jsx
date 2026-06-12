@@ -76,7 +76,7 @@ export default function Bets({ onTeamClick }) {
         >
           🎯 {t('betTab')}
         </button>
-        <button
+        {/*<button
           className={`teams__view-chip ${view === 'special' ? 'teams__view-chip--active' : ''}`}
           onClick={() => setView('special')}
         >
@@ -87,7 +87,7 @@ export default function Bets({ onTeamClick }) {
           onClick={() => setView('bracket')}
         >
           🏆 {t('bracketTab')}
-        </button>
+        </button>*/}
         <button
           className={`teams__view-chip ${view === 'summary' ? 'teams__view-chip--active' : ''}`}
           onClick={() => setView('summary')}
@@ -103,56 +103,56 @@ export default function Bets({ onTeamClick }) {
       </div>
 
       <Suspense fallback={<div className="bets__loading">{t('loading')}</div>}>
-      {view === 'ranking' ? (
-        <Leaderboard />
-      ) : view === 'special' ? (
-        <SpecialBets />
-      ) : view === 'bracket' ? (
-        <BracketPredictor />
-      ) : view === 'summary' ? (
-        <PhaseSummary />
-      ) : (
-        <>
-          <PhaseFilter
-            phases={translatedPhases}
-            active={activePhase}
-            onSelect={setActivePhase}
-          />
+        {view === 'ranking' ? (
+          <Leaderboard />
+        ) : view === 'special' ? (
+          <SpecialBets />
+        ) : view === 'bracket' ? (
+          <BracketPredictor />
+        ) : view === 'summary' ? (
+          <PhaseSummary />
+        ) : (
+          <>
+            <PhaseFilter
+              phases={translatedPhases}
+              active={activePhase}
+              onSelect={setActivePhase}
+            />
 
-          <TimezoneNote />
+            <TimezoneNote />
 
-          {loading ? (
-            <div className="bets__loading">{t('loading')}</div>
-          ) : (
-            <div className="bets__list">
-              {Object.entries(matchesByDate).map(([date, matches]) => {
-                const d = new Date(date + 'T00:00:00');
-                const label = d.toLocaleDateString(t('dateLocale'), {
-                  weekday: 'long',
-                  day: 'numeric',
-                  month: 'long',
-                });
+            {loading ? (
+              <div className="bets__loading">{t('loading')}</div>
+            ) : (
+              <div className="bets__list">
+                {Object.entries(matchesByDate).map(([date, matches]) => {
+                  const d = new Date(date + 'T00:00:00');
+                  const label = d.toLocaleDateString(t('dateLocale'), {
+                    weekday: 'long',
+                    day: 'numeric',
+                    month: 'long',
+                  });
 
-                return (
-                  <div key={date} className="schedule__day">
-                    <h3 className="schedule__day-label">{label}</h3>
-                    {matches.map((match) => (
-                      <BetCard
-                        key={match.id}
-                        match={match}
-                        bet={betsMap[match.id]}
-                        matchScore={cachedScores[String(match.id)]}
-                        onSave={handleSave}
-                        onTeamClick={onTeamClick}
-                      />
-                    ))}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </>
-      )}
+                  return (
+                    <div key={date} className="schedule__day">
+                      <h3 className="schedule__day-label">{label}</h3>
+                      {matches.map((match) => (
+                        <BetCard
+                          key={match.id}
+                          match={match}
+                          bet={betsMap[match.id]}
+                          matchScore={cachedScores[String(match.id)]}
+                          onSave={handleSave}
+                          onTeamClick={onTeamClick}
+                        />
+                      ))}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </>
+        )}
       </Suspense>
     </div>
   );
