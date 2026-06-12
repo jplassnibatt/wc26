@@ -22,6 +22,8 @@ permissions:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
     timeout-minutes: 70
     steps:
       - uses: actions/checkout@v4

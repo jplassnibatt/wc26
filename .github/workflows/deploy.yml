@@ -58,6 +58,8 @@ jobs:
   # exists this job runs but skips gracefully, so the run stays green.
   firestore-rules:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
