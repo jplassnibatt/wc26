@@ -9,9 +9,6 @@ const missingTeams = [
   { iso: 'pl' },
   { iso: 'ru' },
   { iso: 'si' },
-  { iso: 'cl' },
-  { iso: 'pe' },
-  { iso: 've' },
 ];
 
 function getFlagUrl(iso) {

@@ -1,26 +1,27 @@
 import { useLanguage } from '../i18n/LanguageContext';
 import { downloadICS } from '../utils/calendar';
+import { kickoffDateStr, kickoffTimeStr } from '../utils/matchTime';
 
 function getFlagUrl(iso) {
   return `https://flagcdn.com/w80/${iso}.png`;
 }
 
-export default function MatchCard({ match, isNext, showCalButton = false, onTeamClick }) {
+export default function MatchCard({ match, matchScore, isNext, showCalButton = false, onTeamClick }) {
   const { t } = useLanguage();
   const hasTeams = !!match.home_iso;
   const isKnockout = !hasTeams;
+  const isFinished = matchScore?.status === 'finished' && matchScore.scoreHome != null;
+  const scorersA = isFinished ? (matchScore.scorers || []).filter((s) => s.side === 'A') : [];
+  const scorersB = isFinished ? (matchScore.scorers || []).filter((s) => s.side === 'B') : [];
 
   const homeName = hasTeams ? t(`team.${match.home_iso}`) : match.home;
   const awayName = hasTeams ? t(`team.${match.away_iso}`) : match.away;
 
-  const dateStr = (() => {
-    const d = new Date(match.date + 'T00:00:00');
-    return d.toLocaleDateString(t('dateLocale'), {
-      weekday: 'short',
-      day: 'numeric',
-      month: 'short',
-    });
-  })();
+  const dateStr = kickoffDateStr(match, t('dateLocale'), {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  });
 
   const handleAddToCalendar = (e) => {
     e.stopPropagation();
@@ -49,7 +50,7 @@ export default function MatchCard({ match, isNext, showCalButton = false, onTeam
       )}
 
       <div className="match-card__date">
-        {dateStr} &middot; {match.kickoff_bst}
+        {dateStr} &middot; {kickoffTimeStr(match)}
         {showCalButton && hasTeams && (
           <button
             className={`match-card__cal-pill ${isNext ? 'match-card__cal-pill--next' : ''}`}
@@ -83,7 +84,13 @@ export default function MatchCard({ match, isNext, showCalButton = false, onTeam
           <span className="match-card__name">{homeName}</span>
         </div>
 
-        <span className="match-card__vs">{t('vs')}</span>
+        {isFinished ? (
+          <span className="match-card__score">
+            {matchScore.scoreHome}<span className="match-card__score-sep">:</span>{matchScore.scoreAway}
+          </span>
+        ) : (
+          <span className="match-card__vs">{t('vs')}</span>
+        )}
 
         <div className="match-card__team" onClick={() => hasTeams && onTeamClick?.(match.away_iso)} style={hasTeams && onTeamClick ? { cursor: 'pointer' } : undefined}>
           {hasTeams ? (
@@ -99,6 +106,25 @@ export default function MatchCard({ match, isNext, showCalButton = false, onTeam
           <span className="match-card__name">{awayName}</span>
         </div>
       </div>
+
+      {isFinished && (scorersA.length > 0 || scorersB.length > 0) && (
+        <div className="match-card__scorers">
+          <div className="match-card__scorers-side">
+            {scorersA.map((s, i) => (
+              <span key={i} className="match-card__scorer">
+                ⚽ {s.name} {s.minute}{s.pen ? ' (g.p.)' : ''}{s.og ? ' (p.b.)' : ''}
+              </span>
+            ))}
+          </div>
+          <div className="match-card__scorers-side match-card__scorers-side--away">
+            {scorersB.map((s, i) => (
+              <span key={i} className="match-card__scorer">
+                {s.name} {s.minute}{s.pen ? ' (g.p.)' : ''}{s.og ? ' (p.b.)' : ''} ⚽
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

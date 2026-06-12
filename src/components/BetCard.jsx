@@ -1,5 +1,8 @@
 import { useState, useRef, useCallback } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
+import { isMatchLocked } from '../data/matchLock';
+import { kickoffDateStr, kickoffTimeStr } from '../utils/matchTime';
+import MatchBets from './MatchBets';
 
 function getFlagUrl(iso) {
   return `https://flagcdn.com/w80/${iso}.png`;
@@ -9,13 +12,17 @@ export default function BetCard({ match, bet, onSave, matchScore, onTeamClick })
   const { t } = useLanguage();
   const hasTeams = !!match.home_iso;
   const isKnockout = !hasTeams;
+  const [showBets, setShowBets] = useState(false);
+  const revealAvailable = hasTeams && isMatchLocked(match.id);
 
   const homeName = hasTeams ? t(`team.${match.home_iso}`) : match.home;
   const awayName = hasTeams ? t(`team.${match.away_iso}`) : match.away;
 
   const isFinished = matchScore?.status === 'finished';
   const isLive = matchScore?.status === 'live';
-  const isLocked = isFinished || isLive;
+  // Lock at kickoff too (not just when the live feed reports it), so a lagging
+  // feed can't leave the inputs editable after the match has started.
+  const isLocked = isFinished || isLive || isMatchLocked(match.id);
 
   const [scoreA, setScoreA] = useState(bet?.predictedScoreA ?? '');
   const [scoreB, setScoreB] = useState(bet?.predictedScoreB ?? '');
@@ -24,14 +31,11 @@ export default function BetCard({ match, bet, onSave, matchScore, onTeamClick })
   const [saveError, setSaveError] = useState(false);
   const debounceRef = useRef(null);
 
-  const dateStr = (() => {
-    const d = new Date(match.date + 'T00:00:00');
-    return d.toLocaleDateString(t('dateLocale'), {
-      weekday: 'short',
-      day: 'numeric',
-      month: 'short',
-    });
-  })();
+  const dateStr = kickoffDateStr(match, t('dateLocale'), {
+    weekday: 'short',
+    day: 'numeric',
+    month: 'short',
+  });
 
   const handleChange = useCallback(
     (side, value) => {
@@ -73,11 +77,13 @@ export default function BetCard({ match, bet, onSave, matchScore, onTeamClick })
       )}
 
       <div className="bet-card__date">
-        {dateStr} &middot; {match.kickoff_bst}
+        {dateStr} &middot; {kickoffTimeStr(match)}
         {isLive && <span className="bet-card__live-badge">{t('live')}</span>}
-        {saving && <span className="bet-card__status">{t('saving')}</span>}
-        {saved && <span className="bet-card__status bet-card__status--saved">✓</span>}
-        {saveError && <span className="bet-card__status bet-card__status--error">{t('saveFailed')}</span>}
+        <span className="bet-card__status-live" aria-live="polite">
+          {saving && <span className="bet-card__status">{t('saving')}</span>}
+          {saved && <span className="bet-card__status bet-card__status--saved">✓</span>}
+          {saveError && <span className="bet-card__status bet-card__status--error">{t('saveFailed')}</span>}
+        </span>
       </div>
 
       {match.venue && match.venue !== 'TBD' && (
@@ -137,6 +143,27 @@ export default function BetCard({ match, bet, onSave, matchScore, onTeamClick })
             <span className={`bet-card__points bet-card__points--${bet.pointsAwarded}`}>
               +{bet.pointsAwarded} {t('pts')}
             </span>
+          )}
+        </div>
+      )}
+
+      {revealAvailable && (
+        <div className="bet-card__group">
+          <button
+            className="bet-card__group-toggle"
+            onClick={() => setShowBets((s) => !s)}
+          >
+            {showBets ? '▾' : '▸'} 📊 {t('matchBetsToggle')}
+          </button>
+          {showBets && (
+            <MatchBets
+              matchId={match.id}
+              homeName={homeName}
+              awayName={awayName}
+              finished={isFinished}
+              actualA={matchScore?.scoreHome}
+              actualB={matchScore?.scoreAway}
+            />
           )}
         </div>
       )}

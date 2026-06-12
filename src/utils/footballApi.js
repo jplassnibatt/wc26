@@ -36,6 +36,8 @@ export function mapApiStatus(status) {
 
 export function extractScore(apiMatch) {
   const ft = apiMatch.score?.fullTime;
-  if (!ft) return null;
+  // A finished match without confirmed goals (abandoned, or the API returning
+  // null) must NOT be persisted as a 0/null result — treat as no score.
+  if (!ft || ft.home == null || ft.away == null) return null;
   return { home: ft.home, away: ft.away };
 }

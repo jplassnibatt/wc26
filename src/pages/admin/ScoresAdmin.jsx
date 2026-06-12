@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react';
 import {
-  collection, getDocs, doc, getDoc, setDoc, writeBatch, query, where,
+  collection, getDocs, doc, getDoc, setDoc, updateDoc, writeBatch, query, where, increment,
 } from 'firebase/firestore';
 import { db } from '../../firebase';
 import { calculatePoints } from '../../utils/scoring';
@@ -93,7 +93,10 @@ export default function ScoresAdmin() {
         if (betsSnap.empty) continue;
 
         const batch = writeBatch(db);
-        const leaderboardUpdates = {};
+        // Credit the DELTA vs what each bet was already awarded, so re-posting
+        // or recalculating a result never double-counts. The previous bet type
+        // is derived from its previous points (5=exact, 3=outcome, else none).
+        const deltas = {}; // uid -> { points, exact, outcome }
 
         for (const betDoc of betsSnap.docs) {
           const bet = betDoc.data();
@@ -102,29 +105,40 @@ export default function ScoresAdmin() {
           );
           if (!result) continue;
 
+          const prev = bet.pointsAwarded; // number already awarded, or null if never scored
           batch.update(betDoc.ref, { pointsAwarded: result.points });
 
-          if (!leaderboardUpdates[bet.userId]) {
-            leaderboardUpdates[bet.userId] = { points: 0, exact: 0, outcome: 0 };
-          }
-          leaderboardUpdates[bet.userId].points += result.points;
-          if (result.type === 'exact') leaderboardUpdates[bet.userId].exact += 1;
-          if (result.type === 'outcome') leaderboardUpdates[bet.userId].outcome += 1;
+          if (!deltas[bet.userId]) deltas[bet.userId] = { points: 0, exact: 0, outcome: 0 };
+          deltas[bet.userId].points += result.points - (prev ?? 0);
+          deltas[bet.userId].exact += (result.type === 'exact' ? 1 : 0) - (prev === 5 ? 1 : 0);
+          deltas[bet.userId].outcome += (result.type === 'outcome' ? 1 : 0) - (prev === 3 ? 1 : 0);
         }
 
         await batch.commit();
 
-        // Update leaderboard
-        for (const [uid, delta] of Object.entries(leaderboardUpdates)) {
+        // Apply leaderboard deltas atomically (increment), upserting the entry
+        // if it's somehow missing so points are never silently dropped.
+        for (const [uid, d] of Object.entries(deltas)) {
+          if (d.points === 0 && d.exact === 0 && d.outcome === 0) continue;
           const lbRef = doc(db, 'pools', poolId, 'leaderboard', uid);
           const lbSnap = await getDoc(lbRef);
           if (lbSnap.exists()) {
-            const current = lbSnap.data();
+            await updateDoc(lbRef, {
+              totalPoints: increment(d.points),
+              exactResultsCount: increment(d.exact),
+              correctOutcomeCount: increment(d.outcome),
+            });
+          } else {
+            let nickname = '';
+            try {
+              const us = await getDoc(doc(db, 'users', uid));
+              if (us.exists()) nickname = us.data().nickname || '';
+            } catch { /* nickname is best-effort */ }
             await setDoc(lbRef, {
-              ...current,
-              totalPoints: (current.totalPoints || 0) + delta.points,
-              exactResultsCount: (current.exactResultsCount || 0) + delta.exact,
-              correctOutcomeCount: (current.correctOutcomeCount || 0) + delta.outcome,
+              nickname,
+              totalPoints: Math.max(0, d.points),
+              exactResultsCount: Math.max(0, d.exact),
+              correctOutcomeCount: Math.max(0, d.outcome),
             });
           }
         }

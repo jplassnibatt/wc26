@@ -14,20 +14,93 @@ service cloud.firestore {
 
     // Pools
     match /pools/{poolId} {
+      // A user joining adds only themselves to `members` (and nothing else).
+      // Needed because a new joiner isn't a member yet, so the member-only
+      // update rule below would otherwise block them from joining.
+      function joiningSelf() {
+        return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['members'])
+          && !(request.auth.uid in resource.data.members)
+          && (request.auth.uid in request.resource.data.members)
+          && request.resource.data.members.size() == resource.data.members.size() + 1;
+      }
+
       allow read: if request.auth != null;
       allow create: if request.auth != null;
       allow update: if request.auth != null
-        && (request.auth.uid in resource.data.members || isAdmin());
+        && (request.auth.uid in resource.data.members || isAdmin() || joiningSelf());
       allow delete: if request.auth != null
         && (request.auth.uid == resource.data.createdBy || isAdmin());
 
       // Bets
+      // Anti-copy: you can only read another player's bet for a match once that
+      // match has kicked off. Each bet carries `lockAt` (kickoff, epoch ms); for
+      // legacy bets without it, fall back to the opening match (1781193600000).
       match /bets/{betId} {
-        allow read: if request.auth != null;
-        allow create, update: if request.auth != null
-          && request.auth.uid == request.resource.data.userId;
+        // Two owner checks are both needed:
+        //  - `resource.data.userId == uid` lets the "my bets" list query
+        //    (where userId == uid) validate against the rules.
+        //  - `betId.split('_')[0] == uid` (docId is `<uid>_<matchId>`) covers a
+        //    get of a not-yet-existing own bet (the create flow reads first).
+        // The time-gate (resource.data) is only touched when the doc exists.
+        allow read: if request.auth != null
+          && (betId.split('_')[0] == request.auth.uid
+              || isAdmin()
+              || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy
+              || (resource != null
+                  && (resource.data.userId == request.auth.uid
+                      || ('lockAt' in resource.data
+                          ? request.time.toMillis() >= resource.data.lockAt
+                          : request.time.toMillis() >= 1781193600000))));
+        // Owner places their prediction: only before kickoff, and may not
+        // award themselves points.
+        allow create: if request.auth != null
+          && request.auth.uid == request.resource.data.userId
+          && request.resource.data.get('pointsAwarded', null) == null
+          && (request.resource.data.lockAt == null
+              || request.time.toMillis() < request.resource.data.lockAt);
+        // Owner edits their prediction (before kickoff, without touching the
+        // awarded points); admin / pool creator write pointsAwarded on scoring.
+        allow update: if request.auth != null
+          && (
+            (request.auth.uid == request.resource.data.userId
+              && request.resource.data.get('pointsAwarded', null) == resource.data.get('pointsAwarded', null)
+              && (request.resource.data.lockAt == null
+                  || request.time.toMillis() < request.resource.data.lockAt))
+            || isAdmin()
+            || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy);
         allow delete: if request.auth != null
           && (request.auth.uid == resource.data.userId
+              || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy
+              || isAdmin());
+      }
+
+      // Special bets (one doc per user, all tournament-wide picks).
+      // Anti-cheat: you can only read OTHER players' picks once the deadline has
+      // passed (opening match kickoff, 2026-06-11 16:00 UTC = 1781193600000 ms).
+      // Your own picks, the admin and the pool creator can always read.
+      match /specialBets/{uid} {
+        allow read: if request.auth != null
+          && (request.auth.uid == uid
+              || request.time.toMillis() >= 1781193600000
+              || isAdmin()
+              || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy);
+        // Owner creates picks before the deadline and can't self-award points.
+        allow create: if request.auth != null
+          && request.auth.uid == uid
+          && request.auth.uid == request.resource.data.userId
+          && request.resource.data.get('pointsAwarded', null) == null
+          && request.time.toMillis() < 1781193600000;
+        // Owner edits picks before the deadline (points unchanged); admin / pool
+        // creator write awarded points on resolve.
+        allow update: if request.auth != null
+          && (
+            (request.auth.uid == uid
+              && request.time.toMillis() < 1781193600000
+              && request.resource.data.get('pointsAwarded', null) == resource.data.get('pointsAwarded', null))
+            || isAdmin()
+            || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy);
+        allow delete: if request.auth != null
+          && (request.auth.uid == uid
               || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy
               || isAdmin());
       }
@@ -36,6 +109,41 @@ service cloud.firestore {
       match /leaderboard/{uid} {
         allow read: if request.auth != null;
         allow write: if request.auth != null
+          && (request.auth.uid == uid
+              || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy
+              || isAdmin());
+      }
+
+      // Live-score cache for the pool, written by clients from the public
+      // scores feed and read by all members. Members write; everyone reads.
+      match /matches/{matchId} {
+        allow read: if request.auth != null;
+        allow write: if request.auth != null
+          && request.auth.uid in get(/databases/$(database)/documents/pools/$(poolId)).data.members;
+      }
+
+      // Bracket predictions (one doc per user). Like specialBets, other
+      // players' brackets are unreadable until the deadline (opening kickoff).
+      match /brackets/{uid} {
+        allow read: if request.auth != null
+          && (request.auth.uid == uid
+              || request.time.toMillis() >= 1781193600000
+              || isAdmin()
+              || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy);
+        // Owner builds the bracket before the deadline; no self-awarded points.
+        allow create: if request.auth != null
+          && request.auth.uid == uid
+          && request.auth.uid == request.resource.data.userId
+          && request.resource.data.get('pointsAwarded', null) == null
+          && request.time.toMillis() < 1781193600000;
+        allow update: if request.auth != null
+          && (
+            (request.auth.uid == uid
+              && request.time.toMillis() < 1781193600000
+              && request.resource.data.get('pointsAwarded', null) == resource.data.get('pointsAwarded', null))
+            || isAdmin()
+            || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy);
+        allow delete: if request.auth != null
           && (request.auth.uid == uid
               || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy
               || isAdmin());
@@ -54,10 +162,28 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // Special-bet correct answers (tournament-wide): admin writes, all read
+    match /specialResults/{docId} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+
+    // Bracket actual advancers (tournament-wide): admin writes, all read
+    match /bracketResults/{docId} {
+      allow read: if request.auth != null;
+      allow write: if isAdmin();
+    }
+
     // Analytics
     match /analytics/{docId} {
       allow read: if isAdmin();
       allow create, update: if request.auth != null;
+    }
+
+    // Notification dedup log: written only by the server (Admin SDK bypasses
+    // rules); clients have no business reading or writing it.
+    match /notificationLog/{docId} {
+      allow read, write: if false;
     }
 
     // Legacy groups (read-only for migration)

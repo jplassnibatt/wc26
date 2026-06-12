@@ -1,13 +1,21 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, lazy, Suspense } from 'react';
 import schedule from '../data/schedule.json';
 import PhaseFilter from '../components/PhaseFilter';
 import BetCard from '../components/BetCard';
-import Leaderboard from '../components/Leaderboard';
 import PoolManager from '../components/PoolManager';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useBets, useMyBetsMap } from '../hooks/useBets';
 import { usePools } from '../hooks/usePools';
 import { useCachedScores } from '../hooks/useLiveScores';
+import { groupMatchesByDate } from '../utils/matchOrder';
+import TimezoneNote from '../components/TimezoneNote';
+
+// Lazy sub-views: Especiais/Bracket pull in the player index; defer them so the
+// default "Apostar" (match betting) tab stays in the light initial chunk.
+const SpecialBets = lazy(() => import('../components/SpecialBets'));
+const BracketPredictor = lazy(() => import('../components/BracketPredictor'));
+const PhaseSummary = lazy(() => import('../components/PhaseSummary'));
+const Leaderboard = lazy(() => import('../components/Leaderboard'));
 
 export default function Bets({ onTeamClick }) {
   const [activePhase, setActivePhase] = useState('group');
@@ -25,15 +33,10 @@ export default function Bets({ onTeamClick }) {
 
   const phase = schedule.phases.find((p) => p.id === activePhase);
 
-  const matchesByDate = useMemo(() => {
-    if (!phase) return {};
-    const grouped = {};
-    for (const match of phase.matches) {
-      if (!grouped[match.date]) grouped[match.date] = [];
-      grouped[match.date].push(match);
-    }
-    return grouped;
-  }, [phase]);
+  const matchesByDate = useMemo(
+    () => (phase ? groupMatchesByDate(phase.matches) : {}),
+    [phase]
+  );
 
   const handleSave = async (matchId, scoreA, scoreB) => {
     await saveBet(matchId, scoreA, scoreB);
@@ -74,6 +77,24 @@ export default function Bets({ onTeamClick }) {
           🎯 {t('betTab')}
         </button>
         <button
+          className={`teams__view-chip ${view === 'special' ? 'teams__view-chip--active' : ''}`}
+          onClick={() => setView('special')}
+        >
+          🃏 {t('specialTab')}
+        </button>
+        <button
+          className={`teams__view-chip ${view === 'bracket' ? 'teams__view-chip--active' : ''}`}
+          onClick={() => setView('bracket')}
+        >
+          🏆 {t('bracketTab')}
+        </button>
+        <button
+          className={`teams__view-chip ${view === 'summary' ? 'teams__view-chip--active' : ''}`}
+          onClick={() => setView('summary')}
+        >
+          📋 {t('summaryTab')}
+        </button>
+        <button
           className={`teams__view-chip ${view === 'ranking' ? 'teams__view-chip--active' : ''}`}
           onClick={() => setView('ranking')}
         >
@@ -81,8 +102,15 @@ export default function Bets({ onTeamClick }) {
         </button>
       </div>
 
+      <Suspense fallback={<div className="bets__loading">{t('loading')}</div>}>
       {view === 'ranking' ? (
         <Leaderboard />
+      ) : view === 'special' ? (
+        <SpecialBets />
+      ) : view === 'bracket' ? (
+        <BracketPredictor />
+      ) : view === 'summary' ? (
+        <PhaseSummary />
       ) : (
         <>
           <PhaseFilter
@@ -90,6 +118,8 @@ export default function Bets({ onTeamClick }) {
             active={activePhase}
             onSelect={setActivePhase}
           />
+
+          <TimezoneNote />
 
           {loading ? (
             <div className="bets__loading">{t('loading')}</div>
@@ -123,6 +153,7 @@ export default function Bets({ onTeamClick }) {
           )}
         </>
       )}
+      </Suspense>
     </div>
   );
 }

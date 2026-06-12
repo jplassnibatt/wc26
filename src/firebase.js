@@ -1,8 +1,9 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-import { getFirestore } from 'firebase/firestore';
+import { initializeFirestore } from 'firebase/firestore';
+import { getMessaging, isSupported } from 'firebase/messaging';
 
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
@@ -13,5 +14,14 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
-export const db = getFirestore(app);
+// ignoreUndefinedProperties: a stray `undefined` field drops silently instead
+// of throwing on write (Firestore otherwise rejects undefined values).
+export const db = initializeFirestore(app, { ignoreUndefinedProperties: true });
 export const googleProvider = new GoogleAuthProvider();
+
+// Cloud Messaging is only available in secure contexts that support service
+// workers + the Push API. Resolves to null where unsupported (e.g. an iOS
+// Safari tab that hasn't been installed to the Home Screen).
+export const messagingPromise = isSupported()
+  .then((ok) => (ok ? getMessaging(app) : null))
+  .catch(() => null);

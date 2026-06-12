@@ -68,6 +68,10 @@ export default function Overview() {
       query(collection(db, 'adminLogs'), where('resolved', '==', false)),
       (snap) => {
         setMetrics((prev) => ({ ...prev, unresolvedErrors: snap.size }));
+      },
+      (err) => {
+        // Transient permission errors during auth changes shouldn't bubble up.
+        console.warn('adminLogs listener error:', err?.code || err);
       }
     );
 

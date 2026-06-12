@@ -1,12 +1,9 @@
-import { useState, useCallback, useRef, useEffect } from 'react';
+import { useState, useCallback, useRef, useEffect, lazy, Suspense } from 'react';
 import BottomNav from './components/BottomNav';
 import Schedule from './pages/Schedule';
 import MyMatches from './pages/MyMatches';
 import Teams from './pages/Teams';
-import Missing from './pages/Missing';
 import Bets from './pages/Bets';
-import Rules from './pages/Rules';
-import TeamProfile from './pages/TeamProfile';
 import HamburgerMenu from './components/HamburgerMenu';
 import PoolSelector from './components/PoolSelector';
 import PoolManager from './components/PoolManager';
@@ -16,9 +13,16 @@ import InstallBanner from './components/InstallBanner';
 import { useFavorites } from './hooks/useFavorites';
 import { useLanguage } from './i18n/LanguageContext';
 import { useAuth } from './hooks/useAuth';
-import Admin from './pages/Admin';
 import logo from './assets/logo.png';
 import './App.css';
+
+// Lazy-loaded pages — TeamProfile + Admin pull in the 48 team files / player
+// index, so deferring them (and the rarely-first Rules/Missing) keeps the
+// initial bundle light.
+const TeamProfile = lazy(() => import('./pages/TeamProfile'));
+const Admin = lazy(() => import('./pages/Admin'));
+const Rules = lazy(() => import('./pages/Rules'));
+const Missing = lazy(() => import('./pages/Missing'));
 
 const ADMIN_UID = import.meta.env.VITE_ADMIN_UID;
 
@@ -115,30 +119,32 @@ export default function App() {
         <>
           <main className="app-main">
             <div className={`page-wrapper ${animClass}`}>
-              {page === 'schedule' && <Schedule onTeamClick={navigateToTeam} />}
-              {page === 'my-matches' && (
-                <MyMatches favorites={favorites} onNavigate={navigate} onTeamClick={navigateToTeam} />
-              )}
-              {page === 'teams' && (
-                <Teams
-                  favorites={favorites}
-                  toggleFavorite={toggleFavorite}
-                  isFavorite={isFavorite}
-                  onTeamClick={navigateToTeam}
-                />
-              )}
-              {page === 'bets' && <Bets onTeamClick={navigateToTeam} />}
-              {page === 'team' && (
-                <TeamProfile
-                  iso={teamIso}
-                  onBack={navigateBackFromTeam}
-                  onTeamClick={navigateToTeam}
-                />
-              )}
-              {page === 'pools' && <PoolManager />}
-              {page === 'rules' && <Rules />}
-              {page === 'missing' && <Missing />}
-              {page === 'admin' && isAdmin && <Admin />}
+              <Suspense fallback={<div className="app-loading__text" style={{ textAlign: 'center', padding: 40 }}>⚽</div>}>
+                {page === 'schedule' && <Schedule onTeamClick={navigateToTeam} />}
+                {page === 'my-matches' && (
+                  <MyMatches favorites={favorites} onNavigate={navigate} onTeamClick={navigateToTeam} />
+                )}
+                {page === 'teams' && (
+                  <Teams
+                    favorites={favorites}
+                    toggleFavorite={toggleFavorite}
+                    isFavorite={isFavorite}
+                    onTeamClick={navigateToTeam}
+                  />
+                )}
+                {page === 'bets' && <Bets onTeamClick={navigateToTeam} />}
+                {page === 'team' && (
+                  <TeamProfile
+                    iso={teamIso}
+                    onBack={navigateBackFromTeam}
+                    onTeamClick={navigateToTeam}
+                  />
+                )}
+                {page === 'pools' && <PoolManager />}
+                {page === 'rules' && <Rules />}
+                {page === 'missing' && <Missing />}
+                {page === 'admin' && isAdmin && <Admin />}
+              </Suspense>
             </div>
           </main>
 

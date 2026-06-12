@@ -199,12 +199,15 @@ export function PoolProvider({ children }) {
     const pool = pools.find((p) => p.id === poolId);
     if (!pool || pool.createdBy !== user.uid) throw new Error('NOT_ADMIN');
 
-    // Delete subcollections
-    for (const sub of ['bets', 'leaderboard']) {
+    // Delete every subcollection so nothing is orphaned.
+    for (const sub of ['bets', 'leaderboard', 'specialBets', 'brackets', 'matches']) {
       const subSnap = await getDocs(collection(db, 'pools', poolId, sub));
-      const batch = writeBatch(db);
-      subSnap.docs.forEach((d) => batch.delete(d.ref));
-      await batch.commit();
+      // Chunk into batches of 400 (Firestore caps a batch at 500 writes).
+      for (let i = 0; i < subSnap.docs.length; i += 400) {
+        const batch = writeBatch(db);
+        subSnap.docs.slice(i, i + 400).forEach((d) => batch.delete(d.ref));
+        await batch.commit();
+      }
     }
 
     // Delete pool doc

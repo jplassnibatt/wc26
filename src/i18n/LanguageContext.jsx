@@ -9,11 +9,10 @@ function getInitialLang() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved && translations[saved]) return saved;
-  } catch { }
+  } catch {}
   // Default based on browser language
   const browserLang = navigator.language || '';
   if (browserLang.startsWith('pt')) return 'pt-PT';
-  if (browserLang.startsWith('es')) return 'es-CL';
   return 'en-GB';
 }
 
@@ -24,12 +23,11 @@ export function LanguageProvider({ children }) {
     setLangState(newLang);
     try {
       localStorage.setItem(STORAGE_KEY, newLang);
-    } catch { }
+    } catch {}
   }, []);
 
   useEffect(() => {
-    const langCode = lang === 'pt-PT' ? 'pt' : lang === 'es-CL' ? 'es' : 'en';
-    document.documentElement.lang = langCode;
+    document.documentElement.lang = lang === 'pt-PT' ? 'pt' : 'en';
   }, [lang]);
 
   const t = useCallback(

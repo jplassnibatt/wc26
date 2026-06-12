@@ -26,7 +26,7 @@ export function useLiveScores() {
         updates[m.id] = { status, score, apiMatchId: m.id };
         if (status === 'live') anyLive = true;
 
-        if (status === 'finished' && score && activePoolId) {
+        if (status === 'finished' && score && score.home != null && score.away != null && activePoolId) {
           await setDoc(
             doc(db, 'pools', activePoolId, 'matches', String(m.id)),
             { status, scoreHome: score.home, scoreAway: score.away },
@@ -59,23 +59,33 @@ export function useLiveScores() {
 }
 
 export function useCachedScores() {
-  const { activePoolId } = usePools();
   const [scores, setScores] = useState({});
 
   useEffect(() => {
-    if (!activePoolId) return;
     let cancelled = false;
     (async () => {
-      const snap = await getDocs(collection(db, 'pools', activePoolId, 'matches'));
-      if (cancelled) return;
-      const map = {};
-      snap.docs.forEach((d) => {
-        map[d.id] = d.data();
-      });
-      setScores(map);
+      try {
+        // Source of truth for results is the admin-posted `matchResults`
+        // (keyed by matchId). Mapped to the shape BetCard/MatchCard expect.
+        const snap = await getDocs(collection(db, 'matchResults'));
+        if (cancelled) return;
+        const map = {};
+        snap.docs.forEach((d) => {
+          const data = d.data();
+          map[d.id] = {
+            status: data.status || 'finished',
+            scoreHome: data.scoreA,
+            scoreAway: data.scoreB,
+            scorers: data.scorers || [],
+          };
+        });
+        setScores(map);
+      } catch {
+        if (!cancelled) setScores({});
+      }
     })();
     return () => { cancelled = true; };
-  }, [activePoolId]);
+  }, []);
 
   return scores;
 }

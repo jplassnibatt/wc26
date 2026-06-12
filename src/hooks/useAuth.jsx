@@ -245,7 +245,9 @@ export function AuthProvider({ children }) {
       setProfile(data);
       return resultUser;
     } catch (err) {
-      if (err.code === 'auth/credential-already-in-use') {
+      // linkWithPopup throws either code depending on whether the Google
+      // account or just its email already belongs to another user
+      if (err.code === 'auth/credential-already-in-use' || err.code === 'auth/email-already-in-use') {
         const credential = GoogleAuthProvider.credentialFromError(err);
         if (credential) {
           const result = await signInWithCredential(auth, credential);
@@ -312,6 +314,7 @@ export function AuthProvider({ children }) {
     setUser(null);
     setProfile(null);
     try { localStorage.removeItem('wc26-active-pool'); } catch {}
+    try { localStorage.removeItem('wc26-favorites'); } catch {}
     await signInAnonymously(auth);
   }, []);
 

@@ -1,6 +1,26 @@
 import { useState, useEffect } from 'react';
+import * as Sentry from '@sentry/react';
 import { useAuth } from '../hooks/useAuth';
 import { useLanguage } from '../i18n/LanguageContext';
+
+// Google blocks OAuth inside embedded webviews (WhatsApp, Instagram, Facebook,
+// Messenger, TikTok…) with "disallowed_useragent" — the popup opens, shows a
+// Google error page and dies without ever reporting back, so we pre-empt it.
+function isInAppBrowser() {
+  const ua = navigator.userAgent || '';
+  return /FBAN|FBAV|FB_IAB|Instagram|Messenger|WhatsApp|TikTok|musical_ly|Line\/|; wv\)/i.test(ua);
+}
+
+function reportAuthError(err, flow) {
+  Sentry.captureException(err, {
+    tags: { flow },
+    extra: {
+      code: err.code,
+      standalone: window.matchMedia('(display-mode: standalone)').matches,
+      userAgent: navigator.userAgent,
+    },
+  });
+}
 
 export default function AuthScreen() {
   const { saveProfile, signInWithGoogle, signInWithEmail, user, profile } = useAuth();
@@ -34,6 +54,14 @@ export default function AuthScreen() {
   }, [user, step]);
 
   const handleGoogle = async () => {
+    if (isInAppBrowser()) {
+      setError(t('authInAppBrowser'));
+      Sentry.captureMessage('google-signin blocked: in-app browser', {
+        level: 'warning',
+        extra: { userAgent: navigator.userAgent },
+      });
+      return;
+    }
     setSaving(true);
     setError('');
     try {
@@ -46,12 +74,17 @@ export default function AuthScreen() {
       console.error('Google sign-in error:', err);
       if (err.code === 'auth/popup-blocked') {
         setError(t('authPopupBlocked'));
+        reportAuthError(err, 'google-signin');
       } else if (err.code === 'auth/popup-closed-by-user' || err.code === 'auth/cancelled-popup-request') {
         setError(''); // user-initiated cancel; no error shown
       } else if (err.code === 'auth/unauthorized-domain') {
         setError(t('authUnauthorizedDomain'));
+        reportAuthError(err, 'google-signin');
+      } else if (err.code === 'auth/network-request-failed') {
+        setError(t('authNetworkError'));
       } else {
         setError(t('authGoogleError'));
+        reportAuthError(err, 'google-signin');
       }
     }
     setSaving(false);
@@ -83,6 +116,7 @@ export default function AuthScreen() {
         setError(t('authPasswordMin'));
       } else {
         setError(t('authEmailError'));
+        reportAuthError(err, 'email-signin');
       }
     }
     setSaving(false);

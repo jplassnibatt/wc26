@@ -1,0 +1,1569 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Nuno Martins//Mundial 2026//PT
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Mundial 2026 ⚽
+X-WR-TIMEZONE:Europe/Lisbon
+X-WR-CALDESC:Todos os 104 jogos do Mundial 2026 (horas de Lisboa). Bolão: https://wc26.martinsnuno.com/
+BEGIN:VEVENT
+UID:wc2026-jogo-1@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260611T190000Z
+DTEND:20260611T210000Z
+SUMMARY:⚽ México vs África do Sul (Grupo A)
+LOCATION:Estádio Azteca\, Cidade do México\, México
+DESCRIPTION:Jogo 1 — Grupo A\n\n🏟️ Estádio: Estádio Azteca\n📍 Local: Cidade do México, México\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:México vs África do Sul daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-2@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260612T020000Z
+DTEND:20260612T040000Z
+SUMMARY:⚽ Coreia do Sul vs Rep. Checa (Grupo A)
+LOCATION:Estádio Akron\, Guadalajara\, México
+DESCRIPTION:Jogo 2 — Grupo A\n\n🏟️ Estádio: Estádio Akron\n📍 Local: Guadalajara, México\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Coreia do Sul vs Rep. Checa daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-3@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260612T190000Z
+DTEND:20260612T210000Z
+SUMMARY:⚽ Canadá vs Bósnia-Herzegovina (Grupo B)
+LOCATION:BMO Field\, Toronto\, Canadá
+DESCRIPTION:Jogo 3 — Grupo B\n\n🏟️ Estádio: BMO Field\n📍 Local: Toronto, Canadá\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Canadá vs Bósnia-Herzegovina daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-4@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260613T010000Z
+DTEND:20260613T030000Z
+SUMMARY:⚽ EUA vs Paraguai (Grupo D)
+LOCATION:SoFi Stadium\, Los Angeles/Inglewood\, EUA
+DESCRIPTION:Jogo 4 — Grupo D\n\n🏟️ Estádio: SoFi Stadium\n📍 Local: Los Angeles/Inglewood, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:EUA vs Paraguai daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-5@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260613T190000Z
+DTEND:20260613T210000Z
+SUMMARY:⚽ Catar vs Suíça (Grupo B)
+LOCATION:Levi's Stadium\, São Francisco/Santa Clara\, EUA
+DESCRIPTION:Jogo 5 — Grupo B\n\n🏟️ Estádio: Levi's Stadium\n📍 Local: São Francisco/Santa Clara, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Catar vs Suíça daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-6@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260613T220000Z
+DTEND:20260614T000000Z
+SUMMARY:⚽ Brasil vs Marrocos (Grupo C)
+LOCATION:MetLife Stadium\, Nova Iorque/Nova Jérsia\, EUA
+DESCRIPTION:Jogo 6 — Grupo C\n\n🏟️ Estádio: MetLife Stadium\n📍 Local: Nova Iorque/Nova Jérsia, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Brasil vs Marrocos daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-7@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260614T010000Z
+DTEND:20260614T030000Z
+SUMMARY:⚽ Haiti vs Escócia (Grupo C)
+LOCATION:Gillette Stadium\, Boston/Foxborough\, EUA
+DESCRIPTION:Jogo 7 — Grupo C\n\n🏟️ Estádio: Gillette Stadium\n📍 Local: Boston/Foxborough, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Haiti vs Escócia daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-8@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260614T040000Z
+DTEND:20260614T060000Z
+SUMMARY:⚽ Austrália vs Turquia (Grupo D)
+LOCATION:BC Place\, Vancouver\, Canadá
+DESCRIPTION:Jogo 8 — Grupo D\n\n🏟️ Estádio: BC Place\n📍 Local: Vancouver, Canadá\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Austrália vs Turquia daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-9@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260614T170000Z
+DTEND:20260614T190000Z
+SUMMARY:⚽ Alemanha vs Curaçao (Grupo E)
+LOCATION:NRG Stadium\, Houston\, EUA
+DESCRIPTION:Jogo 9 — Grupo E\n\n🏟️ Estádio: NRG Stadium\n📍 Local: Houston, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Alemanha vs Curaçao daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-10@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260614T200000Z
+DTEND:20260614T220000Z
+SUMMARY:⚽ Países Baixos vs Japão (Grupo F)
+LOCATION:AT&T Stadium\, Dallas/Arlington\, EUA
+DESCRIPTION:Jogo 10 — Grupo F\n\n🏟️ Estádio: AT&T Stadium\n📍 Local: Dallas/Arlington, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Países Baixos vs Japão daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-11@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260614T230000Z
+DTEND:20260615T010000Z
+SUMMARY:⚽ Costa do Marfim vs Equador (Grupo E)
+LOCATION:Lincoln Financial Field\, Filadélfia\, EUA
+DESCRIPTION:Jogo 11 — Grupo E\n\n🏟️ Estádio: Lincoln Financial Field\n📍 Local: Filadélfia, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Costa do Marfim vs Equador daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-12@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260615T020000Z
+DTEND:20260615T040000Z
+SUMMARY:⚽ Suécia vs Tunísia (Grupo F)
+LOCATION:Estádio BBVA\, Monterrey\, México
+DESCRIPTION:Jogo 12 — Grupo F\n\n🏟️ Estádio: Estádio BBVA\n📍 Local: Monterrey, México\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Suécia vs Tunísia daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-13@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260615T160000Z
+DTEND:20260615T180000Z
+SUMMARY:⚽ Espanha vs Cabo Verde (Grupo H)
+LOCATION:Mercedes-Benz Stadium\, Atlanta\, EUA
+DESCRIPTION:Jogo 13 — Grupo H\n\n🏟️ Estádio: Mercedes-Benz Stadium\n📍 Local: Atlanta, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Espanha vs Cabo Verde daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-14@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260615T190000Z
+DTEND:20260615T210000Z
+SUMMARY:⚽ Bélgica vs Egito (Grupo G)
+LOCATION:Lumen Field\, Seattle\, EUA
+DESCRIPTION:Jogo 14 — Grupo G\n\n🏟️ Estádio: Lumen Field\n📍 Local: Seattle, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Bélgica vs Egito daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-15@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260615T220000Z
+DTEND:20260616T000000Z
+SUMMARY:⚽ Arábia Saudita vs Uruguai (Grupo H)
+LOCATION:Hard Rock Stadium\, Miami\, EUA
+DESCRIPTION:Jogo 15 — Grupo H\n\n🏟️ Estádio: Hard Rock Stadium\n📍 Local: Miami, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Arábia Saudita vs Uruguai daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-16@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260616T010000Z
+DTEND:20260616T030000Z
+SUMMARY:⚽ Irão vs Nova Zelândia (Grupo G)
+LOCATION:SoFi Stadium\, Los Angeles/Inglewood\, EUA
+DESCRIPTION:Jogo 16 — Grupo G\n\n🏟️ Estádio: SoFi Stadium\n📍 Local: Los Angeles/Inglewood, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Irão vs Nova Zelândia daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-17@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260616T190000Z
+DTEND:20260616T210000Z
+SUMMARY:⚽ França vs Senegal (Grupo I)
+LOCATION:MetLife Stadium\, Nova Iorque/Nova Jérsia\, EUA
+DESCRIPTION:Jogo 17 — Grupo I\n\n🏟️ Estádio: MetLife Stadium\n📍 Local: Nova Iorque/Nova Jérsia, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:França vs Senegal daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-18@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260616T220000Z
+DTEND:20260617T000000Z
+SUMMARY:⚽ Iraque vs Noruega (Grupo I)
+LOCATION:Gillette Stadium\, Boston/Foxborough\, EUA
+DESCRIPTION:Jogo 18 — Grupo I\n\n🏟️ Estádio: Gillette Stadium\n📍 Local: Boston/Foxborough, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Iraque vs Noruega daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-19@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260617T010000Z
+DTEND:20260617T030000Z
+SUMMARY:⚽ Argentina vs Argélia (Grupo J)
+LOCATION:Arrowhead Stadium\, Kansas City\, EUA
+DESCRIPTION:Jogo 19 — Grupo J\n\n🏟️ Estádio: Arrowhead Stadium\n📍 Local: Kansas City, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Argentina vs Argélia daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-20@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260617T040000Z
+DTEND:20260617T060000Z
+SUMMARY:⚽ Áustria vs Jordânia (Grupo J)
+LOCATION:Levi's Stadium\, São Francisco/Santa Clara\, EUA
+DESCRIPTION:Jogo 20 — Grupo J\n\n🏟️ Estádio: Levi's Stadium\n📍 Local: São Francisco/Santa Clara, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Áustria vs Jordânia daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-21@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260617T170000Z
+DTEND:20260617T190000Z
+SUMMARY:⚽ Portugal vs RD Congo (Grupo K)
+LOCATION:NRG Stadium\, Houston\, EUA
+DESCRIPTION:Jogo 21 — Grupo K\n\n🏟️ Estádio: NRG Stadium\n📍 Local: Houston, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis) + sinal aberto RTP/SIC/TVI (canal a confirmar)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Portugal vs RD Congo daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-22@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260617T200000Z
+DTEND:20260617T220000Z
+SUMMARY:⚽ Inglaterra vs Croácia (Grupo L)
+LOCATION:AT&T Stadium\, Dallas/Arlington\, EUA
+DESCRIPTION:Jogo 22 — Grupo L\n\n🏟️ Estádio: AT&T Stadium\n📍 Local: Dallas/Arlington, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Inglaterra vs Croácia daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-23@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260617T230000Z
+DTEND:20260618T010000Z
+SUMMARY:⚽ Gana vs Panamá (Grupo L)
+LOCATION:BMO Field\, Toronto\, Canadá
+DESCRIPTION:Jogo 23 — Grupo L\n\n🏟️ Estádio: BMO Field\n📍 Local: Toronto, Canadá\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Gana vs Panamá daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-24@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260618T020000Z
+DTEND:20260618T040000Z
+SUMMARY:⚽ Uzbequistão vs Colômbia (Grupo K)
+LOCATION:Estádio Azteca\, Cidade do México\, México
+DESCRIPTION:Jogo 24 — Grupo K\n\n🏟️ Estádio: Estádio Azteca\n📍 Local: Cidade do México, México\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Uzbequistão vs Colômbia daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-25@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260618T160000Z
+DTEND:20260618T180000Z
+SUMMARY:⚽ Rep. Checa vs África do Sul (Grupo A)
+LOCATION:Mercedes-Benz Stadium\, Atlanta\, EUA
+DESCRIPTION:Jogo 25 — Grupo A\n\n🏟️ Estádio: Mercedes-Benz Stadium\n📍 Local: Atlanta, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Rep. Checa vs África do Sul daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-26@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260618T190000Z
+DTEND:20260618T210000Z
+SUMMARY:⚽ Suíça vs Bósnia-Herzegovina (Grupo B)
+LOCATION:SoFi Stadium\, Los Angeles/Inglewood\, EUA
+DESCRIPTION:Jogo 26 — Grupo B\n\n🏟️ Estádio: SoFi Stadium\n📍 Local: Los Angeles/Inglewood, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Suíça vs Bósnia-Herzegovina daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-27@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260618T220000Z
+DTEND:20260619T000000Z
+SUMMARY:⚽ Canadá vs Catar (Grupo B)
+LOCATION:BC Place\, Vancouver\, Canadá
+DESCRIPTION:Jogo 27 — Grupo B\n\n🏟️ Estádio: BC Place\n📍 Local: Vancouver, Canadá\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Canadá vs Catar daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-28@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260619T010000Z
+DTEND:20260619T030000Z
+SUMMARY:⚽ México vs Coreia do Sul (Grupo A)
+LOCATION:Estádio Akron\, Guadalajara\, México
+DESCRIPTION:Jogo 28 — Grupo A\n\n🏟️ Estádio: Estádio Akron\n📍 Local: Guadalajara, México\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:México vs Coreia do Sul daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-29@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260619T190000Z
+DTEND:20260619T210000Z
+SUMMARY:⚽ EUA vs Austrália (Grupo D)
+LOCATION:Lumen Field\, Seattle\, EUA
+DESCRIPTION:Jogo 29 — Grupo D\n\n🏟️ Estádio: Lumen Field\n📍 Local: Seattle, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:EUA vs Austrália daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-30@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260619T220000Z
+DTEND:20260620T000000Z
+SUMMARY:⚽ Escócia vs Marrocos (Grupo C)
+LOCATION:Gillette Stadium\, Boston/Foxborough\, EUA
+DESCRIPTION:Jogo 30 — Grupo C\n\n🏟️ Estádio: Gillette Stadium\n📍 Local: Boston/Foxborough, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Escócia vs Marrocos daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-31@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260620T003000Z
+DTEND:20260620T023000Z
+SUMMARY:⚽ Brasil vs Haiti (Grupo C)
+LOCATION:Lincoln Financial Field\, Filadélfia\, EUA
+DESCRIPTION:Jogo 31 — Grupo C\n\n🏟️ Estádio: Lincoln Financial Field\n📍 Local: Filadélfia, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Brasil vs Haiti daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-32@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260620T030000Z
+DTEND:20260620T050000Z
+SUMMARY:⚽ Turquia vs Paraguai (Grupo D)
+LOCATION:Levi's Stadium\, São Francisco/Santa Clara\, EUA
+DESCRIPTION:Jogo 32 — Grupo D\n\n🏟️ Estádio: Levi's Stadium\n📍 Local: São Francisco/Santa Clara, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Turquia vs Paraguai daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-33@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260620T170000Z
+DTEND:20260620T190000Z
+SUMMARY:⚽ Países Baixos vs Suécia (Grupo F)
+LOCATION:NRG Stadium\, Houston\, EUA
+DESCRIPTION:Jogo 33 — Grupo F\n\n🏟️ Estádio: NRG Stadium\n📍 Local: Houston, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Países Baixos vs Suécia daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-34@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260620T200000Z
+DTEND:20260620T220000Z
+SUMMARY:⚽ Alemanha vs Costa do Marfim (Grupo E)
+LOCATION:BMO Field\, Toronto\, Canadá
+DESCRIPTION:Jogo 34 — Grupo E\n\n🏟️ Estádio: BMO Field\n📍 Local: Toronto, Canadá\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Alemanha vs Costa do Marfim daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-35@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260621T000000Z
+DTEND:20260621T020000Z
+SUMMARY:⚽ Equador vs Curaçao (Grupo E)
+LOCATION:Arrowhead Stadium\, Kansas City\, EUA
+DESCRIPTION:Jogo 35 — Grupo E\n\n🏟️ Estádio: Arrowhead Stadium\n📍 Local: Kansas City, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Equador vs Curaçao daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-36@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260621T040000Z
+DTEND:20260621T060000Z
+SUMMARY:⚽ Tunísia vs Japão (Grupo F)
+LOCATION:Estádio BBVA\, Monterrey\, México
+DESCRIPTION:Jogo 36 — Grupo F\n\n🏟️ Estádio: Estádio BBVA\n📍 Local: Monterrey, México\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Tunísia vs Japão daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-37@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260621T160000Z
+DTEND:20260621T180000Z
+SUMMARY:⚽ Espanha vs Arábia Saudita (Grupo H)
+LOCATION:Mercedes-Benz Stadium\, Atlanta\, EUA
+DESCRIPTION:Jogo 37 — Grupo H\n\n🏟️ Estádio: Mercedes-Benz Stadium\n📍 Local: Atlanta, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Espanha vs Arábia Saudita daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-38@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260621T190000Z
+DTEND:20260621T210000Z
+SUMMARY:⚽ Bélgica vs Irão (Grupo G)
+LOCATION:SoFi Stadium\, Los Angeles/Inglewood\, EUA
+DESCRIPTION:Jogo 38 — Grupo G\n\n🏟️ Estádio: SoFi Stadium\n📍 Local: Los Angeles/Inglewood, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Bélgica vs Irão daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-39@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260621T220000Z
+DTEND:20260622T000000Z
+SUMMARY:⚽ Uruguai vs Cabo Verde (Grupo H)
+LOCATION:Hard Rock Stadium\, Miami\, EUA
+DESCRIPTION:Jogo 39 — Grupo H\n\n🏟️ Estádio: Hard Rock Stadium\n📍 Local: Miami, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Uruguai vs Cabo Verde daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-40@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260622T010000Z
+DTEND:20260622T030000Z
+SUMMARY:⚽ Nova Zelândia vs Egito (Grupo G)
+LOCATION:BC Place\, Vancouver\, Canadá
+DESCRIPTION:Jogo 40 — Grupo G\n\n🏟️ Estádio: BC Place\n📍 Local: Vancouver, Canadá\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Nova Zelândia vs Egito daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-41@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260622T170000Z
+DTEND:20260622T190000Z
+SUMMARY:⚽ Argentina vs Áustria (Grupo J)
+LOCATION:AT&T Stadium\, Dallas/Arlington\, EUA
+DESCRIPTION:Jogo 41 — Grupo J\n\n🏟️ Estádio: AT&T Stadium\n📍 Local: Dallas/Arlington, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Argentina vs Áustria daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-42@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260622T210000Z
+DTEND:20260622T230000Z
+SUMMARY:⚽ França vs Iraque (Grupo I)
+LOCATION:Lincoln Financial Field\, Filadélfia\, EUA
+DESCRIPTION:Jogo 42 — Grupo I\n\n🏟️ Estádio: Lincoln Financial Field\n📍 Local: Filadélfia, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:França vs Iraque daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-43@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260623T000000Z
+DTEND:20260623T020000Z
+SUMMARY:⚽ Noruega vs Senegal (Grupo I)
+LOCATION:BMO Field\, Toronto\, Canadá
+DESCRIPTION:Jogo 43 — Grupo I\n\n🏟️ Estádio: BMO Field\n📍 Local: Toronto, Canadá\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Noruega vs Senegal daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-44@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260623T030000Z
+DTEND:20260623T050000Z
+SUMMARY:⚽ Jordânia vs Argélia (Grupo J)
+LOCATION:Levi's Stadium\, São Francisco/Santa Clara\, EUA
+DESCRIPTION:Jogo 44 — Grupo J\n\n🏟️ Estádio: Levi's Stadium\n📍 Local: São Francisco/Santa Clara, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Jordânia vs Argélia daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-45@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260623T170000Z
+DTEND:20260623T190000Z
+SUMMARY:⚽ Portugal vs Uzbequistão (Grupo K)
+LOCATION:NRG Stadium\, Houston\, EUA
+DESCRIPTION:Jogo 45 — Grupo K\n\n🏟️ Estádio: NRG Stadium\n📍 Local: Houston, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis) + sinal aberto RTP/SIC/TVI (canal a confirmar)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Portugal vs Uzbequistão daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-46@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260623T200000Z
+DTEND:20260623T220000Z
+SUMMARY:⚽ Inglaterra vs Gana (Grupo L)
+LOCATION:Gillette Stadium\, Boston/Foxborough\, EUA
+DESCRIPTION:Jogo 46 — Grupo L\n\n🏟️ Estádio: Gillette Stadium\n📍 Local: Boston/Foxborough, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Inglaterra vs Gana daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-47@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260623T230000Z
+DTEND:20260624T010000Z
+SUMMARY:⚽ Panamá vs Croácia (Grupo L)
+LOCATION:Gillette Stadium\, Boston/Foxborough\, EUA
+DESCRIPTION:Jogo 47 — Grupo L\n\n🏟️ Estádio: Gillette Stadium\n📍 Local: Boston/Foxborough, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Panamá vs Croácia daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-48@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260624T020000Z
+DTEND:20260624T040000Z
+SUMMARY:⚽ Colômbia vs RD Congo (Grupo K)
+LOCATION:Estádio Akron\, Guadalajara\, México
+DESCRIPTION:Jogo 48 — Grupo K\n\n🏟️ Estádio: Estádio Akron\n📍 Local: Guadalajara, México\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Colômbia vs RD Congo daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-49@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260624T190000Z
+DTEND:20260624T210000Z
+SUMMARY:⚽ Suíça vs Canadá (Grupo B)
+LOCATION:BC Place\, Vancouver\, Canadá
+DESCRIPTION:Jogo 49 — Grupo B\n\n🏟️ Estádio: BC Place\n📍 Local: Vancouver, Canadá\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Suíça vs Canadá daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-50@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260624T190000Z
+DTEND:20260624T210000Z
+SUMMARY:⚽ Bósnia-Herzegovina vs Catar (Grupo B)
+LOCATION:Lumen Field\, Seattle\, EUA
+DESCRIPTION:Jogo 50 — Grupo B\n\n🏟️ Estádio: Lumen Field\n📍 Local: Seattle, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Bósnia-Herzegovina vs Catar daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-51@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260624T220000Z
+DTEND:20260625T000000Z
+SUMMARY:⚽ Marrocos vs Haiti (Grupo C)
+LOCATION:Mercedes-Benz Stadium\, Atlanta\, EUA
+DESCRIPTION:Jogo 51 — Grupo C\n\n🏟️ Estádio: Mercedes-Benz Stadium\n📍 Local: Atlanta, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Marrocos vs Haiti daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-52@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260624T220000Z
+DTEND:20260625T000000Z
+SUMMARY:⚽ Escócia vs Brasil (Grupo C)
+LOCATION:Hard Rock Stadium\, Miami\, EUA
+DESCRIPTION:Jogo 52 — Grupo C\n\n🏟️ Estádio: Hard Rock Stadium\n📍 Local: Miami, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Escócia vs Brasil daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-53@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260625T010000Z
+DTEND:20260625T030000Z
+SUMMARY:⚽ África do Sul vs Coreia do Sul (Grupo A)
+LOCATION:Estádio BBVA\, Monterrey\, México
+DESCRIPTION:Jogo 53 — Grupo A\n\n🏟️ Estádio: Estádio BBVA\n📍 Local: Monterrey, México\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:África do Sul vs Coreia do Sul daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-54@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260625T010000Z
+DTEND:20260625T030000Z
+SUMMARY:⚽ Rep. Checa vs México (Grupo A)
+LOCATION:Estádio Azteca\, Cidade do México\, México
+DESCRIPTION:Jogo 54 — Grupo A\n\n🏟️ Estádio: Estádio Azteca\n📍 Local: Cidade do México, México\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Rep. Checa vs México daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-55@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260625T200000Z
+DTEND:20260625T220000Z
+SUMMARY:⚽ Curaçao vs Costa do Marfim (Grupo E)
+LOCATION:Lincoln Financial Field\, Filadélfia\, EUA
+DESCRIPTION:Jogo 55 — Grupo E\n\n🏟️ Estádio: Lincoln Financial Field\n📍 Local: Filadélfia, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Curaçao vs Costa do Marfim daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-56@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260625T200000Z
+DTEND:20260625T220000Z
+SUMMARY:⚽ Equador vs Alemanha (Grupo E)
+LOCATION:MetLife Stadium\, Nova Iorque/Nova Jérsia\, EUA
+DESCRIPTION:Jogo 56 — Grupo E\n\n🏟️ Estádio: MetLife Stadium\n📍 Local: Nova Iorque/Nova Jérsia, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Equador vs Alemanha daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-57@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260625T230000Z
+DTEND:20260626T010000Z
+SUMMARY:⚽ Tunísia vs Países Baixos (Grupo F)
+LOCATION:Arrowhead Stadium\, Kansas City\, EUA
+DESCRIPTION:Jogo 57 — Grupo F\n\n🏟️ Estádio: Arrowhead Stadium\n📍 Local: Kansas City, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Tunísia vs Países Baixos daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-58@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260625T230000Z
+DTEND:20260626T010000Z
+SUMMARY:⚽ Japão vs Suécia (Grupo F)
+LOCATION:AT&T Stadium\, Dallas/Arlington\, EUA
+DESCRIPTION:Jogo 58 — Grupo F\n\n🏟️ Estádio: AT&T Stadium\n📍 Local: Dallas/Arlington, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Japão vs Suécia daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-59@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260626T020000Z
+DTEND:20260626T040000Z
+SUMMARY:⚽ Turquia vs EUA (Grupo D)
+LOCATION:SoFi Stadium\, Los Angeles/Inglewood\, EUA
+DESCRIPTION:Jogo 59 — Grupo D\n\n🏟️ Estádio: SoFi Stadium\n📍 Local: Los Angeles/Inglewood, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Turquia vs EUA daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-60@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260626T020000Z
+DTEND:20260626T040000Z
+SUMMARY:⚽ Paraguai vs Austrália (Grupo D)
+LOCATION:Levi's Stadium\, São Francisco/Santa Clara\, EUA
+DESCRIPTION:Jogo 60 — Grupo D\n\n🏟️ Estádio: Levi's Stadium\n📍 Local: São Francisco/Santa Clara, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Paraguai vs Austrália daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-61@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260626T190000Z
+DTEND:20260626T210000Z
+SUMMARY:⚽ Noruega vs França (Grupo I)
+LOCATION:Gillette Stadium\, Boston/Foxborough\, EUA
+DESCRIPTION:Jogo 61 — Grupo I\n\n🏟️ Estádio: Gillette Stadium\n📍 Local: Boston/Foxborough, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Noruega vs França daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-62@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260626T190000Z
+DTEND:20260626T210000Z
+SUMMARY:⚽ Senegal vs Iraque (Grupo I)
+LOCATION:BMO Field\, Toronto\, Canadá
+DESCRIPTION:Jogo 62 — Grupo I\n\n🏟️ Estádio: BMO Field\n📍 Local: Toronto, Canadá\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Senegal vs Iraque daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-63@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260627T000000Z
+DTEND:20260627T020000Z
+SUMMARY:⚽ Cabo Verde vs Arábia Saudita (Grupo H)
+LOCATION:NRG Stadium\, Houston\, EUA
+DESCRIPTION:Jogo 63 — Grupo H\n\n🏟️ Estádio: NRG Stadium\n📍 Local: Houston, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Cabo Verde vs Arábia Saudita daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-64@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260627T000000Z
+DTEND:20260627T020000Z
+SUMMARY:⚽ Uruguai vs Espanha (Grupo H)
+LOCATION:Estádio Akron\, Guadalajara\, México
+DESCRIPTION:Jogo 64 — Grupo H\n\n🏟️ Estádio: Estádio Akron\n📍 Local: Guadalajara, México\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Uruguai vs Espanha daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-65@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260627T030000Z
+DTEND:20260627T050000Z
+SUMMARY:⚽ Nova Zelândia vs Bélgica (Grupo G)
+LOCATION:BC Place\, Vancouver\, Canadá
+DESCRIPTION:Jogo 65 — Grupo G\n\n🏟️ Estádio: BC Place\n📍 Local: Vancouver, Canadá\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Nova Zelândia vs Bélgica daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-66@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260627T030000Z
+DTEND:20260627T050000Z
+SUMMARY:⚽ Egito vs Irão (Grupo G)
+LOCATION:Lumen Field\, Seattle\, EUA
+DESCRIPTION:Jogo 66 — Grupo G\n\n🏟️ Estádio: Lumen Field\n📍 Local: Seattle, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Egito vs Irão daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-67@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260627T210000Z
+DTEND:20260627T230000Z
+SUMMARY:⚽ Panamá vs Inglaterra (Grupo L)
+LOCATION:MetLife Stadium\, Nova Iorque/Nova Jérsia\, EUA
+DESCRIPTION:Jogo 67 — Grupo L\n\n🏟️ Estádio: MetLife Stadium\n📍 Local: Nova Iorque/Nova Jérsia, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Panamá vs Inglaterra daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-68@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260627T210000Z
+DTEND:20260627T230000Z
+SUMMARY:⚽ Croácia vs Gana (Grupo L)
+LOCATION:Lincoln Financial Field\, Filadélfia\, EUA
+DESCRIPTION:Jogo 68 — Grupo L\n\n🏟️ Estádio: Lincoln Financial Field\n📍 Local: Filadélfia, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Croácia vs Gana daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-69@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260627T233000Z
+DTEND:20260628T013000Z
+SUMMARY:⚽ Colômbia vs Portugal (Grupo K)
+LOCATION:Hard Rock Stadium\, Miami\, EUA
+DESCRIPTION:Jogo 69 — Grupo K\n\n🏟️ Estádio: Hard Rock Stadium\n📍 Local: Miami, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis) + sinal aberto RTP/SIC/TVI (canal a confirmar)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Colômbia vs Portugal daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-70@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260627T233000Z
+DTEND:20260628T013000Z
+SUMMARY:⚽ RD Congo vs Uzbequistão (Grupo K)
+LOCATION:Mercedes-Benz Stadium\, Atlanta\, EUA
+DESCRIPTION:Jogo 70 — Grupo K\n\n🏟️ Estádio: Mercedes-Benz Stadium\n📍 Local: Atlanta, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:RD Congo vs Uzbequistão daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-71@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260628T020000Z
+DTEND:20260628T040000Z
+SUMMARY:⚽ Argélia vs Áustria (Grupo J)
+LOCATION:Arrowhead Stadium\, Kansas City\, EUA
+DESCRIPTION:Jogo 71 — Grupo J\n\n🏟️ Estádio: Arrowhead Stadium\n📍 Local: Kansas City, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Argélia vs Áustria daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-72@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260628T020000Z
+DTEND:20260628T040000Z
+SUMMARY:⚽ Jordânia vs Argentina (Grupo J)
+LOCATION:AT&T Stadium\, Dallas/Arlington\, EUA
+DESCRIPTION:Jogo 72 — Grupo J\n\n🏟️ Estádio: AT&T Stadium\n📍 Local: Dallas/Arlington, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Jordânia vs Argentina daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-73@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260628T190000Z
+DTEND:20260628T210000Z
+SUMMARY:⚽ 2.º Grupo A vs 2.º Grupo B (16-avos (32 avos))
+LOCATION:SoFi Stadium\, Los Angeles/Inglewood\, EUA
+DESCRIPTION:Jogo 73 — 16-avos (32 avos)\n\n🏟️ Estádio: SoFi Stadium\n📍 Local: Los Angeles/Inglewood, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:2.º Grupo A vs 2.º Grupo B daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-74@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260629T203000Z
+DTEND:20260629T223000Z
+SUMMARY:⚽ 1.º Grupo E vs 3.º lugar (16-avos)
+LOCATION:Gillette Stadium\, Boston/Foxborough\, EUA
+DESCRIPTION:Jogo 74 — 16-avos\n\n🏟️ Estádio: Gillette Stadium\n📍 Local: Boston/Foxborough, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:1.º Grupo E vs 3.º lugar daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-75@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260630T010000Z
+DTEND:20260630T030000Z
+SUMMARY:⚽ 1.º Grupo F vs 2.º Grupo C (16-avos)
+LOCATION:Estádio BBVA\, Monterrey\, México
+DESCRIPTION:Jogo 75 — 16-avos\n\n🏟️ Estádio: Estádio BBVA\n📍 Local: Monterrey, México\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:1.º Grupo F vs 2.º Grupo C daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-76@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260629T170000Z
+DTEND:20260629T190000Z
+SUMMARY:⚽ 1.º Grupo C vs 2.º Grupo F (16-avos)
+LOCATION:NRG Stadium\, Houston\, EUA
+DESCRIPTION:Jogo 76 — 16-avos\n\n🏟️ Estádio: NRG Stadium\n📍 Local: Houston, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:1.º Grupo C vs 2.º Grupo F daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-77@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260630T210000Z
+DTEND:20260630T230000Z
+SUMMARY:⚽ 1.º Grupo I vs 3.º lugar (16-avos)
+LOCATION:MetLife Stadium\, Nova Iorque/Nova Jérsia\, EUA
+DESCRIPTION:Jogo 77 — 16-avos\n\n🏟️ Estádio: MetLife Stadium\n📍 Local: Nova Iorque/Nova Jérsia, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:1.º Grupo I vs 3.º lugar daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-78@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260630T170000Z
+DTEND:20260630T190000Z
+SUMMARY:⚽ 2.º Grupo E vs 2.º Grupo I (16-avos)
+LOCATION:AT&T Stadium\, Dallas/Arlington\, EUA
+DESCRIPTION:Jogo 78 — 16-avos\n\n🏟️ Estádio: AT&T Stadium\n📍 Local: Dallas/Arlington, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:2.º Grupo E vs 2.º Grupo I daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-79@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260701T010000Z
+DTEND:20260701T030000Z
+SUMMARY:⚽ 1.º Grupo A vs 3.º lugar (16-avos)
+LOCATION:Estádio Azteca\, Cidade do México\, México
+DESCRIPTION:Jogo 79 — 16-avos\n\n🏟️ Estádio: Estádio Azteca\n📍 Local: Cidade do México, México\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:1.º Grupo A vs 3.º lugar daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-80@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260701T160000Z
+DTEND:20260701T180000Z
+SUMMARY:⚽ 1.º Grupo L vs 3.º lugar (16-avos)
+LOCATION:Mercedes-Benz Stadium\, Atlanta\, EUA
+DESCRIPTION:Jogo 80 — 16-avos\n\n🏟️ Estádio: Mercedes-Benz Stadium\n📍 Local: Atlanta, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:1.º Grupo L vs 3.º lugar daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-81@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260702T000000Z
+DTEND:20260702T020000Z
+SUMMARY:⚽ 1.º Grupo D vs 3.º lugar (16-avos)
+LOCATION:Levi's Stadium\, São Francisco/Santa Clara\, EUA
+DESCRIPTION:Jogo 81 — 16-avos\n\n🏟️ Estádio: Levi's Stadium\n📍 Local: São Francisco/Santa Clara, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:1.º Grupo D vs 3.º lugar daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-82@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260701T200000Z
+DTEND:20260701T220000Z
+SUMMARY:⚽ 1.º Grupo G vs 3.º lugar (16-avos)
+LOCATION:Lumen Field\, Seattle\, EUA
+DESCRIPTION:Jogo 82 — 16-avos\n\n🏟️ Estádio: Lumen Field\n📍 Local: Seattle, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:1.º Grupo G vs 3.º lugar daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-83@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260702T230000Z
+DTEND:20260703T010000Z
+SUMMARY:⚽ 2.º Grupo K vs 2.º Grupo L (16-avos)
+LOCATION:BMO Field\, Toronto\, Canadá
+DESCRIPTION:Jogo 83 — 16-avos\n\n🏟️ Estádio: BMO Field\n📍 Local: Toronto, Canadá\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:2.º Grupo K vs 2.º Grupo L daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-84@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260702T190000Z
+DTEND:20260702T210000Z
+SUMMARY:⚽ 1.º Grupo H vs 2.º Grupo J (16-avos)
+LOCATION:SoFi Stadium\, Los Angeles/Inglewood\, EUA
+DESCRIPTION:Jogo 84 — 16-avos\n\n🏟️ Estádio: SoFi Stadium\n📍 Local: Los Angeles/Inglewood, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:1.º Grupo H vs 2.º Grupo J daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-85@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260703T030000Z
+DTEND:20260703T050000Z
+SUMMARY:⚽ 1.º Grupo B vs 3.º lugar (16-avos)
+LOCATION:BC Place\, Vancouver\, Canadá
+DESCRIPTION:Jogo 85 — 16-avos\n\n🏟️ Estádio: BC Place\n📍 Local: Vancouver, Canadá\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:1.º Grupo B vs 3.º lugar daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-86@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260703T220000Z
+DTEND:20260704T000000Z
+SUMMARY:⚽ 1.º Grupo J vs 2.º Grupo H (16-avos)
+LOCATION:Hard Rock Stadium\, Miami\, EUA
+DESCRIPTION:Jogo 86 — 16-avos\n\n🏟️ Estádio: Hard Rock Stadium\n📍 Local: Miami, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:1.º Grupo J vs 2.º Grupo H daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-87@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260704T013000Z
+DTEND:20260704T033000Z
+SUMMARY:⚽ 1.º Grupo K vs 3.º lugar (16-avos)
+LOCATION:Arrowhead Stadium\, Kansas City\, EUA
+DESCRIPTION:Jogo 87 — 16-avos\n\n🏟️ Estádio: Arrowhead Stadium\n📍 Local: Kansas City, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:1.º Grupo K vs 3.º lugar daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-88@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260703T180000Z
+DTEND:20260703T200000Z
+SUMMARY:⚽ 2.º Grupo D vs 2.º Grupo G (16-avos)
+LOCATION:AT&T Stadium\, Dallas/Arlington\, EUA
+DESCRIPTION:Jogo 88 — 16-avos\n\n🏟️ Estádio: AT&T Stadium\n📍 Local: Dallas/Arlington, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:2.º Grupo D vs 2.º Grupo G daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-89@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260704T210000Z
+DTEND:20260704T230000Z
+SUMMARY:⚽ Vencedor J74 vs Vencedor J77 (Oitavos)
+LOCATION:Lincoln Financial Field\, Filadélfia\, EUA
+DESCRIPTION:Jogo 89 — Oitavos\n\n🏟️ Estádio: Lincoln Financial Field\n📍 Local: Filadélfia, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J74 vs Vencedor J77 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-90@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260704T170000Z
+DTEND:20260704T190000Z
+SUMMARY:⚽ Vencedor J73 vs Vencedor J75 (Oitavos)
+LOCATION:NRG Stadium\, Houston\, EUA
+DESCRIPTION:Jogo 90 — Oitavos\n\n🏟️ Estádio: NRG Stadium\n📍 Local: Houston, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J73 vs Vencedor J75 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-91@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260705T200000Z
+DTEND:20260705T220000Z
+SUMMARY:⚽ Vencedor J76 vs Vencedor J78 (Oitavos)
+LOCATION:MetLife Stadium\, Nova Iorque/Nova Jérsia\, EUA
+DESCRIPTION:Jogo 91 — Oitavos\n\n🏟️ Estádio: MetLife Stadium\n📍 Local: Nova Iorque/Nova Jérsia, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J76 vs Vencedor J78 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-92@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260706T000000Z
+DTEND:20260706T020000Z
+SUMMARY:⚽ Vencedor J79 vs Vencedor J80 (Oitavos)
+LOCATION:Estádio Azteca\, Cidade do México\, México
+DESCRIPTION:Jogo 92 — Oitavos\n\n🏟️ Estádio: Estádio Azteca\n📍 Local: Cidade do México, México\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J79 vs Vencedor J80 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-93@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260706T190000Z
+DTEND:20260706T210000Z
+SUMMARY:⚽ Vencedor J83 vs Vencedor J84 (Oitavos)
+LOCATION:AT&T Stadium\, Dallas/Arlington\, EUA
+DESCRIPTION:Jogo 93 — Oitavos\n\n🏟️ Estádio: AT&T Stadium\n📍 Local: Dallas/Arlington, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J83 vs Vencedor J84 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-94@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260707T000000Z
+DTEND:20260707T020000Z
+SUMMARY:⚽ Vencedor J81 vs Vencedor J82 (Oitavos)
+LOCATION:Lumen Field\, Seattle\, EUA
+DESCRIPTION:Jogo 94 — Oitavos\n\n🏟️ Estádio: Lumen Field\n📍 Local: Seattle, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J81 vs Vencedor J82 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-95@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260707T160000Z
+DTEND:20260707T180000Z
+SUMMARY:⚽ Vencedor J86 vs Vencedor J88 (Oitavos)
+LOCATION:Mercedes-Benz Stadium\, Atlanta\, EUA
+DESCRIPTION:Jogo 95 — Oitavos\n\n🏟️ Estádio: Mercedes-Benz Stadium\n📍 Local: Atlanta, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J86 vs Vencedor J88 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-96@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260707T200000Z
+DTEND:20260707T220000Z
+SUMMARY:⚽ Vencedor J85 vs Vencedor J87 (Oitavos)
+LOCATION:BC Place\, Vancouver\, Canadá
+DESCRIPTION:Jogo 96 — Oitavos\n\n🏟️ Estádio: BC Place\n📍 Local: Vancouver, Canadá\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J85 vs Vencedor J87 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-97@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260709T200000Z
+DTEND:20260709T220000Z
+SUMMARY:🏆 Vencedor J89 vs Vencedor J90 (Quartos de final)
+LOCATION:Gillette Stadium\, Boston/Foxborough\, EUA
+DESCRIPTION:Jogo 97 — Quartos de final\n\n🏟️ Estádio: Gillette Stadium\n📍 Local: Boston/Foxborough, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J89 vs Vencedor J90 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-98@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260710T190000Z
+DTEND:20260710T210000Z
+SUMMARY:🏆 Vencedor J93 vs Vencedor J94 (Quartos de final)
+LOCATION:SoFi Stadium\, Los Angeles/Inglewood\, EUA
+DESCRIPTION:Jogo 98 — Quartos de final\n\n🏟️ Estádio: SoFi Stadium\n📍 Local: Los Angeles/Inglewood, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J93 vs Vencedor J94 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-99@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260711T210000Z
+DTEND:20260711T230000Z
+SUMMARY:🏆 Vencedor J91 vs Vencedor J92 (Quartos de final)
+LOCATION:Hard Rock Stadium\, Miami\, EUA
+DESCRIPTION:Jogo 99 — Quartos de final\n\n🏟️ Estádio: Hard Rock Stadium\n📍 Local: Miami, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J91 vs Vencedor J92 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-100@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260712T010000Z
+DTEND:20260712T030000Z
+SUMMARY:🏆 Vencedor J95 vs Vencedor J96 (Quartos de final)
+LOCATION:Arrowhead Stadium\, Kansas City\, EUA
+DESCRIPTION:Jogo 100 — Quartos de final\n\n🏟️ Estádio: Arrowhead Stadium\n📍 Local: Kansas City, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J95 vs Vencedor J96 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-101@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260714T190000Z
+DTEND:20260714T210000Z
+SUMMARY:🏆 Vencedor J97 vs Vencedor J98 (Meia-final)
+LOCATION:AT&T Stadium\, Dallas/Arlington\, EUA
+DESCRIPTION:Jogo 101 — Meia-final\n\n🏟️ Estádio: AT&T Stadium\n📍 Local: Dallas/Arlington, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J97 vs Vencedor J98 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-102@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260715T190000Z
+DTEND:20260715T210000Z
+SUMMARY:🏆 Vencedor J99 vs Vencedor J100 (Meia-final)
+LOCATION:Mercedes-Benz Stadium\, Atlanta\, EUA
+DESCRIPTION:Jogo 102 — Meia-final\n\n🏟️ Estádio: Mercedes-Benz Stadium\n📍 Local: Atlanta, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J99 vs Vencedor J100 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-103@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260718T210000Z
+DTEND:20260718T230000Z
+SUMMARY:🏆 Perdedor J101 vs Perdedor J102 (3.º/4.º lugar)
+LOCATION:Hard Rock Stadium\, Miami\, EUA
+DESCRIPTION:Jogo 103 — 3.º/4.º lugar\n\n🏟️ Estádio: Hard Rock Stadium\n📍 Local: Miami, EUA\n📺 Onde ver: Sport TV\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Perdedor J101 vs Perdedor J102 daqui a 30 min
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:wc2026-jogo-104@martinsnuno.com
+DTSTAMP:20260602T000000Z
+DTSTART:20260719T190000Z
+DTEND:20260719T210000Z
+SUMMARY:🏆 Vencedor J101 vs Vencedor J102 (FINAL)
+LOCATION:MetLife Stadium\, Nova Iorque/Nova Jérsia\, EUA
+DESCRIPTION:Jogo 104 — FINAL\n\n🏟️ Estádio: MetLife Stadium\n📍 Local: Nova Iorque/Nova Jérsia, EUA\n📺 Onde ver: Sport TV + LiveModeTV (YouTube, grátis)\n\n🎯 Bolão da app: https://wc26.martinsnuno.com/
+URL:https://wc26.martinsnuno.com/
+BEGIN:VALARM
+TRIGGER:-PT30M
+ACTION:DISPLAY
+DESCRIPTION:Vencedor J101 vs Vencedor J102 daqui a 30 min
+END:VALARM
+END:VEVENT
+END:VCALENDAR

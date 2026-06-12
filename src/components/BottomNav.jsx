@@ -1,8 +1,27 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '../i18n/LanguageContext';
 
+// iOS Safari anchors position:fixed elements to the visual viewport, so the
+// keyboard pushes the nav to the middle of the screen, over the content.
+// While the keyboard is open the nav is useless anyway — hide it.
+function useKeyboardOpen() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return undefined;
+    const onResize = () => setOpen(window.innerHeight - vv.height > 150);
+    vv.addEventListener('resize', onResize);
+    return () => vv.removeEventListener('resize', onResize);
+  }, []);
+
+  return open;
+}
+
 export default function BottomNav({ active, onNavigate, favoriteCount }) {
   const { t } = useLanguage();
+  const keyboardOpen = useKeyboardOpen();
 
   const tabs = [
     { id: 'schedule', label: t('navSchedule'), icon: '🏆' },
@@ -12,7 +31,7 @@ export default function BottomNav({ active, onNavigate, favoriteCount }) {
   ];
 
   return (
-    <nav className="bottom-nav">
+    <nav className={`bottom-nav ${keyboardOpen ? 'bottom-nav--keyboard-open' : ''}`}>
       {tabs.map((tab) => (
         <button
           key={tab.id}

@@ -4,10 +4,14 @@ import PhaseFilter from '../components/PhaseFilter';
 import MatchCard from '../components/MatchCard';
 import { useLanguage } from '../i18n/LanguageContext';
 import { downloadMultipleICS } from '../utils/calendar';
+import { groupMatchesByDate } from '../utils/matchOrder';
+import { useCachedScores } from '../hooks/useLiveScores';
+import TimezoneNote from '../components/TimezoneNote';
 
 export default function MyMatches({ favorites, onNavigate, onTeamClick }) {
   const [activePhase, setActivePhase] = useState('group');
   const { t } = useLanguage();
+  const cachedScores = useCachedScores();
 
   const translatedPhases = useMemo(
     () => schedule.phases.map((p) => ({ ...p, name: t(`phase.${p.id}`) })),
@@ -64,11 +68,7 @@ export default function MyMatches({ favorites, onNavigate, onTeamClick }) {
     );
   }
 
-  const matchesByDate = {};
-  for (const match of filteredMatches) {
-    if (!matchesByDate[match.date]) matchesByDate[match.date] = [];
-    matchesByDate[match.date].push(match);
-  }
+  const matchesByDate = groupMatchesByDate(filteredMatches);
 
   return (
     <div className="my-matches">
@@ -77,6 +77,8 @@ export default function MyMatches({ favorites, onNavigate, onTeamClick }) {
         active={activePhase}
         onSelect={setActivePhase}
       />
+
+      <TimezoneNote />
 
       {filteredMatches.length === 0 ? (
         <div className="my-matches__no-results">
@@ -95,7 +97,7 @@ export default function MyMatches({ favorites, onNavigate, onTeamClick }) {
               <div key={date} className="schedule__day">
                 <h3 className="schedule__day-label">{label}</h3>
                 {matches.map((match, i) => (
-                  <MatchCard key={match.id} match={match} onTeamClick={onTeamClick} index={i} />
+                  <MatchCard key={match.id} match={match} matchScore={cachedScores[String(match.id)]} onTeamClick={onTeamClick} index={i} />
                 ))}
               </div>
             );
