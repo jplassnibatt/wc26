@@ -5,8 +5,11 @@ import { LanguageProvider } from './i18n/LanguageContext'
 import { AuthProvider } from './hooks/useAuth'
 import { PoolProvider } from './hooks/usePools'
 import ErrorBoundary from './components/ErrorBoundary'
+import { applyTheme, getTheme } from './theme'
 import './index.css'
 import App from './App.jsx'
+
+applyTheme(getTheme())
 
 const SENTRY_DSN = import.meta.env.VITE_SENTRY_DSN;
 const APP_VERSION = import.meta.env.VITE_APP_VERSION || '0.0.0';

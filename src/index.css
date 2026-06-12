@@ -28,9 +28,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Dark mode follows the system preference. */
+/* Dark mode follows the system preference unless overridden via data-theme on
+   <html> (set from the hamburger menu — see src/theme.js). The two dark blocks
+   below must stay in sync. */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme='light']) {
     --surface: #1E1F23;
     --off-white: #131417;
     --green-dark: #0F8C5F;
@@ -43,6 +45,20 @@
     --warn: #E08A5E;
     color-scheme: dark;
   }
+}
+
+:root[data-theme='dark'] {
+  --surface: #1E1F23;
+  --off-white: #131417;
+  --green-dark: #0F8C5F;
+  --gold: #D6B65F;
+  --dark: #ECEDEE;
+  --gray: #A2A8B3;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.18);
+  --chip: rgba(255, 255, 255, 0.07);
+  --warn: #E08A5E;
+  color-scheme: dark;
 }
 
 * {

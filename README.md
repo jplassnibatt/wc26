@@ -23,7 +23,7 @@ Mobile-first web app for the FIFA World Cup 2026 (USA, Canada & Mexico). Browse 
 - **Anti-cheat** — Other players' picks stay unreadable until the relevant deadline — enforced server-side in Firestore rules (no peeking via dev tools)
 - **Push notifications** — Optional, free web push: a match opening its predictions, a posted result, the specials deadline, and a heads-up about tomorrow's games
 - **Leaderboard** — Ranking with points (5 exact / 3 outcome / 1 partial / 0 miss, plus 10 per special), **updated automatically** as results land
-- **Automatic results** — A GitHub Actions cron (every 15 min) pulls finished matches and goalscorers from ESPN's public scoreboard, writes the results and scores every pool's bets — no manual entry
+- **Automatic results** — A self-perpetuating GitHub Actions loop polls ESPN's public scoreboard every ~3 min during match windows, pulls finished matches and goalscorers, writes the results and scores every pool's bets — no manual entry (a 15-min cron acts only as a watchdog, since GitHub's scheduler is best-effort)
 - **Dark mode** — Follows the system preference (`prefers-color-scheme`)
 - **Bilingual** — Full Portuguese (PT) and English (EN) support
 
@@ -37,7 +37,7 @@ Mobile-first web app for the FIFA World Cup 2026 (USA, Canada & Mexico). Browse 
 | Auth | Firebase Auth (anonymous + Google / email linking) |
 | Database | Cloud Firestore (security rules enforce anti-cheat reveals) |
 | Push | Firebase Cloud Messaging + service worker |
-| Results sync | ESPN public scoreboard + GitHub Actions cron + Firebase Admin SDK |
+| Results sync | ESPN public scoreboard + GitHub Actions self-re-dispatching loop + Firebase Admin SDK |
 | Deploy | GitHub Pages + Firestore rules, via GitHub Actions |
 | Notifications sender | GitHub Actions cron + Firebase Admin SDK (no Cloud Functions) |
 
@@ -120,7 +120,8 @@ src/
 
 public/firebase-messaging-sw.js   # FCM background service worker
 scripts/send-notifications.mjs    # Notification sender (GitHub Actions cron)
-scripts/sync-results.mjs          # ESPN results + scorers + pool scoring (cron)
+scripts/sync-results.mjs          # ESPN results + scorers + pool scoring (one pass)
+scripts/sync-loop.mjs             # ~55 min polling loop around sync-results (CI)
 .github/workflows/                # deploy (Pages + rules), notifications, sync-results, health
 firestore.rules                   # Security rules (incl. time-gated reveals)
 ```

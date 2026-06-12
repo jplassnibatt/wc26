@@ -1,15 +1,20 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import schedule from '../data/schedule.json';
 import { teamConfederation, confederationOrder } from '../data/confederations';
 import TeamCard from '../components/TeamCard';
+import GroupTable from '../components/GroupTable';
+import { useCachedScores } from '../hooks/useLiveScores';
+import { computeStandings } from '../utils/standings';
 import { useLanguage } from '../i18n/LanguageContext';
 
-const VIEW_MODES = ['az', 'group', 'confederation'];
+const VIEW_MODES = ['group', 'az', 'confederation'];
 
 export default function Teams({ favorites, toggleFavorite, isFavorite, onTeamClick }) {
   const [search, setSearch] = useState('');
-  const [viewMode, setViewMode] = useState('az');
+  const [viewMode, setViewMode] = useState('group');
   const { t } = useLanguage();
+  const scores = useCachedScores();
+  const standings = useMemo(() => computeStandings(scores), [scores]);
 
   const viewLabels = {
     az: t('viewAZ'),
@@ -32,14 +37,17 @@ export default function Teams({ favorites, toggleFavorite, isFavorite, onTeamCli
   }, [search, t]);
 
   // Sort helper: favourites first, then alphabetical by translated name
-  const sortTeams = (teams) =>
-    [...teams].sort((a, b) => {
-      const aFav = favorites.includes(a.iso);
-      const bFav = favorites.includes(b.iso);
-      if (aFav && !bFav) return -1;
-      if (!aFav && bFav) return 1;
-      return t(`team.${a.iso}`).localeCompare(t(`team.${b.iso}`));
-    });
+  const sortTeams = useCallback(
+    (teams) =>
+      [...teams].sort((a, b) => {
+        const aFav = favorites.includes(a.iso);
+        const bFav = favorites.includes(b.iso);
+        if (aFav && !bFav) return -1;
+        if (!aFav && bFav) return 1;
+        return t(`team.${a.iso}`).localeCompare(t(`team.${b.iso}`));
+      }),
+    [favorites, t]
+  );
 
   // Build grouped data based on view mode
   const sections = useMemo(() => {
@@ -48,19 +56,19 @@ export default function Teams({ favorites, toggleFavorite, isFavorite, onTeamCli
     }
 
     if (viewMode === 'group') {
-      const groups = {};
-      for (const team of filtered) {
-        const g = team.group;
-        if (!groups[g]) groups[g] = [];
-        groups[g].push(team);
-      }
-      return Object.keys(groups)
+      // Standings rows in table order; search hides non-matching rows but
+      // keeps each row's real position in the group.
+      const visible = new Set(filtered.map((team) => team.iso));
+      return Object.keys(standings.groups)
         .sort()
         .map((g) => ({
           key: g,
           label: `${t('group')} ${g}`,
-          teams: sortTeams(groups[g]),
-        }));
+          rows: standings.groups[g]
+            .map((r, idx) => ({ ...r, pos: idx + 1 }))
+            .filter((r) => visible.has(r.iso)),
+        }))
+        .filter((s) => s.rows.length > 0);
     }
 
     if (viewMode === 'confederation') {
@@ -80,7 +88,12 @@ export default function Teams({ favorites, toggleFavorite, isFavorite, onTeamCli
     }
 
     return [];
-  }, [filtered, viewMode, favorites, t]);
+  }, [filtered, viewMode, sortTeams, t, standings]);
+
+  const bestThirdIsos = useMemo(
+    () => new Set(standings.thirds.slice(0, 8).map((r) => r.iso)),
+    [standings]
+  );
 
   return (
     <div className="teams">
@@ -111,19 +124,31 @@ export default function Teams({ favorites, toggleFavorite, isFavorite, onTeamCli
           {section.label && (
             <h3 className="teams__section-label">{section.label}</h3>
           )}
-          <div className="teams__grid">
-            {section.teams.map((team) => (
-              <TeamCard
-                key={team.iso}
-                team={team}
-                isFav={isFavorite(team.iso)}
-                onToggle={toggleFavorite}
-                onTeamClick={onTeamClick}
-              />
-            ))}
-          </div>
+          {section.rows ? (
+            <GroupTable rows={section.rows} bestThirdIsos={bestThirdIsos} onTeamClick={onTeamClick} />
+          ) : (
+            <div className="teams__grid">
+              {section.teams.map((team) => (
+                <TeamCard
+                  key={team.iso}
+                  team={team}
+                  isFav={isFavorite(team.iso)}
+                  onToggle={toggleFavorite}
+                  onTeamClick={onTeamClick}
+                />
+              ))}
+            </div>
+          )}
         </div>
       ))}
+
+      {viewMode === 'group' && !search && (
+        <div className="teams__section">
+          <h3 className="teams__section-label">{t('bestThirds')}</h3>
+          <p className="teams__thirds-hint">{t('bestThirdsHint')}</p>
+          <GroupTable rows={standings.thirds} thirds onTeamClick={onTeamClick} />
+        </div>
+      )}
     </div>
   );
 }
