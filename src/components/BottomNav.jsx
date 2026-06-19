@@ -23,10 +23,12 @@ export default function BottomNav({ active, onNavigate, favoriteCount }) {
   const { t } = useLanguage();
   const keyboardOpen = useKeyboardOpen();
 
+  // Added 'recap' tab
   const tabs = [
     { id: 'schedule', label: t('navSchedule'), icon: '🏆' },
     { id: 'teams', label: t('navTeams'), icon: '🌍' },
     { id: 'bets', label: t('navBets'), icon: '🎯' },
+    { id: 'recap', label: t('navPhaseRecap'), icon: '📋' }, // <-- new
     { id: 'my-matches', label: t('navMyMatches'), icon: '⭐' },
   ];
 

@@ -11,7 +11,8 @@ import { groupMatchesByDate } from '../utils/matchOrder';
 import { kickoffMs } from '../utils/matchTime';
 import TimezoneNote from '../components/TimezoneNote';
 
-// Lazy sub-views
+// Lazy sub-views: Especiais/Bracket pull in the player index; defer them so the
+// default "Apostar" (match betting) tab stays in the light initial chunk.
 const SpecialBets = lazy(() => import('../components/SpecialBets'));
 const BracketPredictor = lazy(() => import('../components/BracketPredictor'));
 const PhaseSummary = lazy(() => import('../components/PhaseSummary'));
@@ -34,12 +35,13 @@ function alignElementToOffset(el, offset = 0, smooth = true) {
   // corrective loop
   let attempts = 0;
   const maxAttempts = 8;
-  const tolerance = 4;
+  const tolerance = 4; // px
   const check = () => {
     const rect = el.getBoundingClientRect();
     const currentTop = rect.top;
     const delta = currentTop - offset;
     if (Math.abs(delta) > tolerance && attempts < maxAttempts) {
+      // scroll by delta to place element at desired offset
       window.scrollBy({ top: Math.round(delta), behavior: 'auto' });
       attempts += 1;
       setTimeout(check, 80);
@@ -48,9 +50,9 @@ function alignElementToOffset(el, offset = 0, smooth = true) {
   setTimeout(check, 120);
 }
 
-export default function Bets({ onTeamClick }) {
+export default function Bets({ onTeamClick, initialView }) {
   const [activePhase, setActivePhase] = useState('group');
-  const [view, setView] = useState('bet');
+  const [view, setView] = useState(initialView ?? 'bet');
   const { t } = useLanguage();
   const { activePoolId, activePool } = usePools();
   const { saveBet } = useBets();
@@ -186,6 +188,7 @@ export default function Bets({ onTeamClick }) {
         >
           🎯 {t('betTab')}
         </button>
+        {/* keep special/bracket commented out if not desired in bottom toggle */}
         <button
           className={`teams__view-chip ${view === 'summary' ? 'teams__view-chip--active' : ''}`}
           onClick={() => setView('summary')}

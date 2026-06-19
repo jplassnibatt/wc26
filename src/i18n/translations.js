@@ -128,6 +128,7 @@ export const translations = {
 
     // Bets / Bolão
     navBets: 'Bolão',
+    navPhaseRecap: 'Fase Resumo',
     betTab: 'Apostar',
     rankingTab: 'Ranking',
     goals: 'golos',
@@ -483,6 +484,7 @@ export const translations = {
 
     // Bets / Pool
     navBets: 'Pool',
+    navPhaseRecap: 'Phase Recap',
     betTab: 'Bet',
     rankingTab: 'Ranking',
     goals: 'goals',

@@ -133,6 +133,7 @@ export default function App() {
                   />
                 )}
                 {page === 'bets' && <Bets onTeamClick={navigateToTeam} />}
+                {page === 'recap' && <Bets onTeamClick={navigateToTeam} initialView="summary" />}
                 {page === 'team' && (
                   <TeamProfile
                     iso={teamIso}
