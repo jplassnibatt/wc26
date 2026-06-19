@@ -27,10 +27,10 @@ const Missing = lazy(() => import('./pages/Missing'));
 const ADMIN_UID = import.meta.env.VITE_ADMIN_UID;
 
 export default function App() {
-  const [page, setPage] = useState('schedule');
+  const [page, setPage] = useState('bets');
   const [animClass, setAnimClass] = useState('page-enter-done');
   const [teamIso, setTeamIso] = useState(null);
-  const prevPageRef = useRef('schedule');
+  const prevPageRef = useRef('bets');
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
   const { t } = useLanguage();
   const { user, profile, loading } = useAuth();
