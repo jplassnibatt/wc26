@@ -38,6 +38,7 @@ const ALIASES = {
   unitedstates: 'USA',
   usmnt: 'USA',
   bosniaandherzegovina: 'Bosnia',
+  bosniaherzegovina: 'Bosnia',
   czechrepublic: 'Czechia',
   southkorea: 'South Korea',
   korearepublic: 'South Korea',
