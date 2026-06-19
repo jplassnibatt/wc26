@@ -33,7 +33,8 @@ export default function MatchCard({ match, matchScore, isNext, showCalButton = f
   };
 
   return (
-    <div className={`match-card ${isNext ? 'match-card--next' : ''}`}>
+    // data-match-id added so pages/Schedule can locate this exact element
+    <div className={`match-card ${isNext ? 'match-card--next' : ''}`} data-match-id={match.id}>
       {isNext && (
         <div className="match-card__next-badge">
           <span className="match-card__pulse" />

@@ -17,13 +17,39 @@ function getNextMatchId(matches) {
   return null;
 }
 
-// Scroll helper that accounts for sticky header + sticky phase filter heights.
-function scrollElementToTopWithOffset(el, offset = 0, smooth = true) {
-  if (!el) return;
+function absoluteTopOf(el) {
   const rect = el.getBoundingClientRect();
-  const absoluteTop = window.scrollY + rect.top;
-  const top = Math.max(0, absoluteTop - offset);
-  window.scrollTo({ top, behavior: smooth ? 'smooth' : 'auto' });
+  return window.scrollY + rect.top;
+}
+
+// Scroll so element's top ends up `offset` pixels below the viewport top.
+// Then run a short corrective loop to re-align if layout shifts happen.
+function alignElementToOffset(el, offset = 0, smooth = true) {
+  if (!el) return;
+  // initial aligned top (document coordinates)
+  const absoluteTop = absoluteTopOf(el);
+  const targetScrollTop = Math.max(0, Math.round(absoluteTop - offset));
+  window.scrollTo({ top: targetScrollTop, behavior: smooth ? 'smooth' : 'auto' });
+
+  // corrective loop: re-check element position after short delays and correct if needed.
+  let attempts = 0;
+  const maxAttempts = 8;
+  const tolerance = 4; // px
+  const check = () => {
+    const rect = el.getBoundingClientRect();
+    const currentTop = rect.top;
+    const delta = currentTop - offset;
+    if (Math.abs(delta) > tolerance && attempts < maxAttempts) {
+      // scroll by delta to place element at desired offset
+      // use 'auto' for corrections to avoid long smooth animations stacking
+      window.scrollBy({ top: Math.round(delta), behavior: 'auto' });
+      attempts += 1;
+      // next check after a small delay to let layout settle
+      setTimeout(check, 80);
+    }
+  };
+  // start checks after a bit of time for images/fonts to settle
+  setTimeout(check, 120);
 }
 
 export default function Schedule({ onTeamClick }) {
@@ -31,7 +57,6 @@ export default function Schedule({ onTeamClick }) {
   const { t } = useLanguage();
   const cachedScores = useCachedScores();
 
-  // refs for the list container and to avoid repeated auto-scrolls
   const listRef = useRef(null);
   const scrolledRef = useRef(false);
 
@@ -42,7 +67,7 @@ export default function Schedule({ onTeamClick }) {
 
   const phase = schedule.phases.find((p) => p.id === activePhase);
 
-  // Compute the "next" match id for the currently visible phase
+  // Compute nextMatchId from currently visible phase matches
   const nextMatchId = useMemo(() => getNextMatchId(phase?.matches || []), [phase]);
 
   const matchesByDate = useMemo(
@@ -50,14 +75,11 @@ export default function Schedule({ onTeamClick }) {
     [phase]
   );
 
-  // reset scrolled flag when the visible phase or next match changes so auto-scroll can re-run
+  // Reset scrolled flag when phase or nextMatchId changes so auto-scroll runs again.
   useEffect(() => {
     scrolledRef.current = false;
   }, [activePhase, nextMatchId]);
 
-  // Auto-scroll to today's date block (viewer timezone). If none, scroll to the
-  // first upcoming date (kickoff >= now). Uses a small offset so the sticky header
-  // and phase filter do not cover the entry.
   useEffect(() => {
     if (scrolledRef.current) return;
     if (!matchesByDate || Object.keys(matchesByDate).length === 0) return;
@@ -73,8 +95,60 @@ export default function Schedule({ onTeamClick }) {
     const gap = 8;
     const totalOffset = headerHeight + phaseFilterHeight + gap;
 
-    const run = () => {
-      // 1) Try to find today's date key in the same format used by groupMatchesByDate (YYYY-MM-DD in viewer timezone)
+    let attempts = 0;
+    const maxAttempts = 16;
+
+    const tryFindAndScroll = () => {
+      if (scrolledRef.current) return;
+
+      // 0) Global badge search: if the UI shows the Next Match badge anywhere, prefer that exact card.
+      const globalBadge = document.querySelector('.match-card__next-badge');
+      if (globalBadge) {
+        const card = globalBadge.closest('.match-card');
+        if (card) {
+          alignElementToOffset(card, totalOffset, true);
+          scrolledRef.current = true;
+          return;
+        }
+      }
+
+      // 1) Exact element lookup by computed nextMatchId (if available)
+      if (nextMatchId != null) {
+        const matchEl = root.querySelector(`[data-match-id="${nextMatchId}"]`);
+        if (matchEl) {
+          alignElementToOffset(matchEl, totalOffset, true);
+          scrolledRef.current = true;
+          return;
+        }
+      }
+
+      // 2) Look for a local badge inside the list
+      const badgeEl = root.querySelector('.match-card__next-badge');
+      if (badgeEl) {
+        const card = badgeEl.closest('.match-card');
+        if (card) {
+          alignElementToOffset(card, totalOffset, true);
+          scrolledRef.current = true;
+          return;
+        }
+      }
+
+      // 3) Class-based fallback inside the list
+      const nextClassEl = root.querySelector('.match-card--next');
+      if (nextClassEl) {
+        alignElementToOffset(nextClassEl, totalOffset, true);
+        scrolledRef.current = true;
+        return;
+      }
+
+      // 4) Retry a few frames while DOM settles
+      attempts++;
+      if (attempts < maxAttempts) {
+        requestAnimationFrame(tryFindAndScroll);
+        return;
+      }
+
+      // 5) Fallback: today's block (viewer timezone)
       const now = new Date();
       const y = now.getFullYear();
       const mo = String(now.getMonth() + 1).padStart(2, '0');
@@ -84,17 +158,16 @@ export default function Schedule({ onTeamClick }) {
       if (matchesByDate[todayKey]) {
         const el = root.querySelector(`[data-date="${todayKey}"]`);
         if (el) {
-          scrollElementToTopWithOffset(el, totalOffset, true);
+          alignElementToOffset(el, totalOffset, true);
           scrolledRef.current = true;
           return;
         }
       }
 
-      // 2) Fallback: find the first date with an upcoming match (kickoff >= now)
+      // 6) Final fallback: first upcoming date (kickoff >= now) or first date
       const nowMs = Date.now();
       const dateKeys = Object.keys(matchesByDate).sort();
       let targetDateKey = null;
-
       for (const dateKey of dateKeys) {
         const matches = matchesByDate[dateKey];
         for (const match of matches) {
@@ -106,23 +179,19 @@ export default function Schedule({ onTeamClick }) {
         }
         if (targetDateKey) break;
       }
-
-      // 3) If none upcoming, use the first available date
-      if (!targetDateKey && dateKeys.length > 0) {
-        targetDateKey = dateKeys[0];
-      }
+      if (!targetDateKey && dateKeys.length > 0) targetDateKey = dateKeys[0];
 
       if (targetDateKey) {
         const el = root.querySelector(`[data-date="${targetDateKey}"]`);
         if (el) {
-          scrollElementToTopWithOffset(el, totalOffset, true);
+          alignElementToOffset(el, totalOffset, true);
           scrolledRef.current = true;
         }
       }
     };
 
-    // Defer the measurement/scroll to after paint/layout to make scroll positioning reliable.
-    requestAnimationFrame(() => requestAnimationFrame(run));
+    // wait a couple of paints for DOM & layout to stabilize
+    requestAnimationFrame(() => requestAnimationFrame(tryFindAndScroll));
   }, [matchesByDate, nextMatchId]);
 
   return (
