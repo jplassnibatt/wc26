@@ -6,7 +6,7 @@ import { useMatchStats } from '../hooks/useMatchStats';
 export default function MatchBets({ matchId, homeName, awayName, finished, actualA, actualB }) {
   const { t } = useLanguage();
   const { user } = useAuth();
-  const { bets, loading } = useMatchStats(matchId, true);
+  const { bets, loading, error, reload } = useMatchStats(matchId, true);
 
   const stats = useMemo(() => {
     const total = bets.length;
@@ -38,6 +38,16 @@ export default function MatchBets({ matchId, homeName, awayName, finished, actua
 
   if (loading) {
     return <div className="match-bets__loading">{t('loading')}</div>;
+  }
+  if (error) {
+    return (
+      <div className="match-bets__error">
+        <span>{t('matchBetsError')}</span>
+        <button type="button" className="match-bets__retry" onClick={reload}>
+          {t('retry')}
+        </button>
+      </div>
+    );
   }
   if (!stats) {
     return <div className="match-bets__empty">{t('matchBetsEmpty')}</div>;

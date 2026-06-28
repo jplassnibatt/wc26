@@ -1,0 +1,25 @@
+// Legend photo avatars — bundled static images (served from /avatars/legends/,
+// no Storage needed). Order matches the source grid (5 cols × 4 rows, read
+// left→right, top→bottom). The profile stores `avatar: 'legend:<file>'`.
+export const LEGEND_PHOTOS = [
+  { file: 'pele', name: 'Pelé', tagline: 'Lenda do Escrete' },
+  { file: 'garrincha', name: 'Garrincha', tagline: 'A Alegria do Povo' },
+  { file: 'johan-cruyff', name: 'Johan Cruyff', tagline: 'O Futebol Total' },
+  { file: 'diego-maradona', name: 'Diego Maradona', tagline: 'El Pibe de Oro' },
+  { file: 'franz-beckenbauer', name: 'Franz Beckenbauer', tagline: 'Der Kaiser' },
+  { file: 'paolo-maldini', name: 'Paolo Maldini', tagline: 'Il Capitano' },
+  { file: 'alfredo-di-stefano', name: 'Alfredo Di Stéfano', tagline: 'La Saeta Rubia' },
+  { file: 'michel-platini', name: 'Michel Platini', tagline: 'Le Roi' },
+  { file: 'zico', name: 'Zico', tagline: 'O Galinho de Quintino' },
+  { file: 'zinedine-zidane', name: 'Zinedine Zidane', tagline: 'Zizou' },
+  { file: 'ronaldo-nazario', name: 'Ronaldo Nazário', tagline: 'O Fenómeno' },
+  { file: 'eusebio', name: 'Eusébio', tagline: 'O Pantera Negra' },
+  { file: 'gerd-muller', name: 'Gerd Müller', tagline: 'Der Bomber' },
+  { file: 'romario', name: 'Romário', tagline: 'O Baixinho' },
+  { file: 'lev-yashin', name: 'Lev Yashin', tagline: 'A Aranha Negra' },
+  { file: 'ferenc-puskas', name: 'Ferenc Puskás', tagline: 'O Major Galopante' },
+  { file: 'ronaldinho', name: 'Ronaldinho', tagline: 'O Bruxo' },
+  { file: 'marega', name: 'Marega', tagline: 'O Deus do Dragão (Lenda dos Memes)' },
+  { file: 'freddy-adu', name: 'Freddy Adu', tagline: 'O Novo Pelé (Que não foi)' },
+  { file: 'xandao', name: 'Xandão', tagline: 'O Xerife do Alvalade' },
+];

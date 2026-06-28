@@ -1,21 +1,25 @@
 import { useLanguage } from '../i18n/LanguageContext';
 import { downloadICS } from '../utils/calendar';
 import { kickoffDateStr, kickoffTimeStr } from '../utils/matchTime';
+import { slotLabel } from '../utils/knockout';
 
 function getFlagUrl(iso) {
   return `https://flagcdn.com/w80/${iso}.png`;
 }
 
-export default function MatchCard({ match, matchScore, isNext, showCalButton = false, onTeamClick }) {
+export default function MatchCard({ match, matchScore, isNext, showCalButton = false, onTeamClick, resolvedHome, resolvedAway }) {
   const { t } = useLanguage();
-  const hasTeams = !!match.home_iso;
-  const isKnockout = !hasTeams;
+  const isKnockout = !match.home_iso;
+  // Knockout slots fall back to the resolver's certain teams as the bracket fills.
+  const homeIso = match.home_iso || resolvedHome || null;
+  const awayIso = match.away_iso || resolvedAway || null;
+  const bothReal = !!homeIso && !!awayIso;
   const isFinished = matchScore?.status === 'finished' && matchScore.scoreHome != null;
   const scorersA = isFinished ? (matchScore.scorers || []).filter((s) => s.side === 'A') : [];
   const scorersB = isFinished ? (matchScore.scorers || []).filter((s) => s.side === 'B') : [];
 
-  const homeName = hasTeams ? t(`team.${match.home_iso}`) : match.home;
-  const awayName = hasTeams ? t(`team.${match.away_iso}`) : match.away;
+  const homeName = homeIso ? t(`team.${homeIso}`) : slotLabel(match.home, t);
+  const awayName = awayIso ? t(`team.${awayIso}`) : slotLabel(match.away, t);
 
   const dateStr = kickoffDateStr(match, t('dateLocale'), {
     weekday: 'short',
@@ -33,8 +37,7 @@ export default function MatchCard({ match, matchScore, isNext, showCalButton = f
   };
 
   return (
-    // data-match-id added so pages/Schedule can locate this exact element
-    <div className={`match-card ${isNext ? 'match-card--next' : ''}`} data-match-id={match.id}>
+    <div className={`match-card ${isNext ? 'match-card--next' : ''}`}>
       {isNext && (
         <div className="match-card__next-badge">
           <span className="match-card__pulse" />
@@ -52,7 +55,7 @@ export default function MatchCard({ match, matchScore, isNext, showCalButton = f
 
       <div className="match-card__date">
         {dateStr} &middot; {kickoffTimeStr(match)}
-        {showCalButton && hasTeams && (
+        {showCalButton && bothReal && (
           <button
             className={`match-card__cal-pill ${isNext ? 'match-card__cal-pill--next' : ''}`}
             onClick={handleAddToCalendar}
@@ -71,11 +74,16 @@ export default function MatchCard({ match, matchScore, isNext, showCalButton = f
       )}
 
       <div className="match-card__teams">
-        <div className="match-card__team" onClick={() => hasTeams && onTeamClick?.(match.home_iso)} style={hasTeams && onTeamClick ? { cursor: 'pointer' } : undefined}>
-          {hasTeams ? (
+        <button
+          type="button"
+          className="match-card__team"
+          onClick={() => onTeamClick?.(homeIso)}
+          disabled={!homeIso || !onTeamClick}
+        >
+          {homeIso ? (
             <img
-              src={getFlagUrl(match.home_iso)}
-              alt={homeName}
+              src={getFlagUrl(homeIso)}
+              alt=""
               className="match-card__flag match-card__flag--clickable"
               loading="lazy"
             />
@@ -83,7 +91,7 @@ export default function MatchCard({ match, matchScore, isNext, showCalButton = f
             <div className="match-card__flag-placeholder" />
           )}
           <span className="match-card__name">{homeName}</span>
-        </div>
+        </button>
 
         {isFinished ? (
           <span className="match-card__score">
@@ -93,11 +101,16 @@ export default function MatchCard({ match, matchScore, isNext, showCalButton = f
           <span className="match-card__vs">{t('vs')}</span>
         )}
 
-        <div className="match-card__team" onClick={() => hasTeams && onTeamClick?.(match.away_iso)} style={hasTeams && onTeamClick ? { cursor: 'pointer' } : undefined}>
-          {hasTeams ? (
+        <button
+          type="button"
+          className="match-card__team"
+          onClick={() => onTeamClick?.(awayIso)}
+          disabled={!awayIso || !onTeamClick}
+        >
+          {awayIso ? (
             <img
-              src={getFlagUrl(match.away_iso)}
-              alt={awayName}
+              src={getFlagUrl(awayIso)}
+              alt=""
               className="match-card__flag match-card__flag--clickable"
               loading="lazy"
             />
@@ -105,7 +118,7 @@ export default function MatchCard({ match, matchScore, isNext, showCalButton = f
             <div className="match-card__flag-placeholder" />
           )}
           <span className="match-card__name">{awayName}</span>
-        </div>
+        </button>
       </div>
 
       {isFinished && (scorersA.length > 0 || scorersB.length > 0) && (

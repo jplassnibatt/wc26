@@ -11,12 +11,32 @@
   --green-mid: #00A651;
   --gold: #C9A84C;
   --gold-light: #E8C97A;
+  /* Gold legible as *text* on light surfaces (>=4.5:1). --gold itself is a
+     decorative/accent tone and fails AA for small text on white. */
+  --gold-text: #8A6D1E;
   --dark: #1A1A1A;
   --gray: #6B7280;
   --border: rgba(0, 0, 0, 0.06);
   --border-strong: rgba(0, 0, 0, 0.12);
   --chip: rgba(0, 0, 0, 0.05);
   --warn: #9a3412;
+  --danger: #D32F2F;
+  --danger-soft: rgba(211, 47, 47, 0.1);
+
+  /* Shape & rhythm tokens (theme-independent — defined once). Used to keep
+     pills, buttons, modals and badges visually consistent across the app. */
+  --r-xs: 4px;    /* badges / status tags */
+  --r-sm: 8px;    /* inputs, list items, small controls, close buttons */
+  --r-md: 12px;   /* cards, panels, buttons */
+  --r-lg: 16px;   /* modals */
+  --r-pill: 999px;/* chips / pills / premium tags */
+  --h-control: 44px;    /* tappable chips & buttons (min touch target) */
+  --h-control-sm: 36px; /* compact controls */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
   color-scheme: light;
 
   font-family: 'DM Sans', system-ui, sans-serif;
@@ -37,12 +57,15 @@
     --off-white: #131417;
     --green-dark: #0F8C5F;
     --gold: #D6B65F;
+    --gold-text: #D6B65F;
     --dark: #ECEDEE;
     --gray: #A2A8B3;
     --border: rgba(255, 255, 255, 0.09);
     --border-strong: rgba(255, 255, 255, 0.18);
     --chip: rgba(255, 255, 255, 0.07);
     --warn: #E08A5E;
+    --danger: #E5534B;
+    --danger-soft: rgba(229, 83, 75, 0.2);
     color-scheme: dark;
   }
 }
@@ -52,12 +75,15 @@
   --off-white: #131417;
   --green-dark: #0F8C5F;
   --gold: #D6B65F;
+  --gold-text: #D6B65F;
   --dark: #ECEDEE;
   --gray: #A2A8B3;
   --border: rgba(255, 255, 255, 0.09);
   --border-strong: rgba(255, 255, 255, 0.18);
   --chip: rgba(255, 255, 255, 0.07);
   --warn: #E08A5E;
+  --danger: #E5534B;
+  --danger-soft: rgba(229, 83, 75, 0.2);
   color-scheme: dark;
 }
 
@@ -97,4 +123,27 @@ button {
 
 img {
   display: block;
+}
+
+/* Visible keyboard-focus ring. Only applies to keyboard navigation (not mouse
+   or touch), so it doesn't intrude on pointer users. Inputs that set their own
+   focus border/box-shadow in App.css keep those as their indicator. */
+:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Respect users who ask the OS to minimise motion: near-instant transitions
+   and a single iteration for any looping animation (CSS keyframes + the page
+   transitions / framer-motion fallbacks). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

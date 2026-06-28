@@ -33,10 +33,20 @@ self.addEventListener('notificationclick', (event) => {
   event.notification.close();
   const url = (event.notification.data && event.notification.data.url) || '/';
   event.waitUntil(
-    clients.matchAll({ type: 'window', includeUncontrolled: true }).then((wins) => {
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(async (wins) => {
+      // Reuse an open tab/PWA window: focus it and tell the running app to route
+      // to the notification's target (App.jsx applies the hash). Without this the
+      // window just regains focus on whatever page it was already showing.
       for (const w of wins) {
-        if ('focus' in w) return w.focus();
+        if ('focus' in w) {
+          w.postMessage({ type: 'notif-nav', url });
+          try { await w.focus(); } catch { /* focus can reject if not allowed */ }
+          // navigate() also works when the window is SW-controlled (cold tabs).
+          if ('navigate' in w) { try { await w.navigate(url); } catch { /* ignore */ } }
+          return;
+        }
       }
+      // No window open — open a fresh one straight at the target URL.
       return clients.openWindow(url);
     })
   );

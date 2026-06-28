@@ -5,11 +5,12 @@ import MatchCard from '../components/MatchCard';
 import { useLanguage } from '../i18n/LanguageContext';
 import { downloadMultipleICS } from '../utils/calendar';
 import { groupMatchesByDate } from '../utils/matchOrder';
+import { currentPhase } from '../utils/phases';
 import { useCachedScores } from '../hooks/useLiveScores';
 import TimezoneNote from '../components/TimezoneNote';
 
 export default function MyMatches({ favorites, onNavigate, onTeamClick }) {
-  const [activePhase, setActivePhase] = useState('group');
+  const [activePhase, setActivePhase] = useState(currentPhase);
   const { t } = useLanguage();
   const cachedScores = useCachedScores();
 

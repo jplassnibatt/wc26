@@ -85,18 +85,27 @@ service cloud.firestore {
               || isAdmin()
               || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy);
         // Owner creates picks before the deadline and can't self-award points.
+        // One-off exception: two named users got a late extension in WC26-GXFD
+        // (until 2026-06-28 23:00Z) — see src/data/specialBets.js SPECIAL_EXCEPTION.
         allow create: if request.auth != null
           && request.auth.uid == uid
           && request.auth.uid == request.resource.data.userId
           && request.resource.data.get('pointsAwarded', null) == null
-          && request.time.toMillis() < 1781193600000;
+          && (request.time.toMillis() < 1781193600000
+              || (request.auth.token.email in ['22444@aegmmaia.pt', 'tatianalopes4@hotmail.com', 'ricardojbd@gmail.com']
+                  && request.time.toMillis() < 1782687600000
+                  && get(/databases/$(database)/documents/pools/$(poolId)).data.get('inviteCode', '') == 'WC26-GXFD'));
         // Owner edits picks before the deadline (points unchanged); admin / pool
-        // creator write awarded points on resolve.
+        // creator write awarded points on resolve. One-off late extension for two
+        // named users in WC26-GXFD — see src/data/specialBets.js SPECIAL_EXCEPTION.
         allow update: if request.auth != null
           && (
             (request.auth.uid == uid
-              && request.time.toMillis() < 1781193600000
-              && request.resource.data.get('pointsAwarded', null) == resource.data.get('pointsAwarded', null))
+              && request.resource.data.get('pointsAwarded', null) == resource.data.get('pointsAwarded', null)
+              && (request.time.toMillis() < 1781193600000
+                  || (request.auth.token.email in ['22444@aegmmaia.pt', 'tatianalopes4@hotmail.com', 'ricardojbd@gmail.com']
+                      && request.time.toMillis() < 1782687600000
+                      && get(/databases/$(database)/documents/pools/$(poolId)).data.get('inviteCode', '') == 'WC26-GXFD')))
             || isAdmin()
             || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy);
         allow delete: if request.auth != null
@@ -111,6 +120,16 @@ service cloud.firestore {
         allow write: if request.auth != null
           && (request.auth.uid == uid
               || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy
+              || isAdmin());
+      }
+
+      // Audit trail of MANUAL leaderboard adjustments. Read by everyone for
+      // transparency; written only by the pool creator / admin (and the Admin
+      // SDK, which bypasses rules). This is the visible "histórico de ajustes".
+      match /adjustments/{adjId} {
+        allow read: if request.auth != null;
+        allow create, update, delete: if request.auth != null
+          && (request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy
               || isAdmin());
       }
 
@@ -160,6 +179,15 @@ service cloud.firestore {
     match /matchResults/{matchId} {
       allow read: if request.auth != null;
       allow write: if isAdmin();
+    }
+
+    // Tournament-wide notification feed (kickoffs, results, reminders). Written
+    // only by the server (Admin SDK bypasses rules); everyone can read it for
+    // the in-app notification center. "Clear" is per-user (a timestamp on the
+    // user doc), so the feed itself is read-only to clients.
+    match /notifications/{notifId} {
+      allow read: if request.auth != null;
+      allow write: if false;
     }
 
     // Special-bet correct answers (tournament-wide): admin writes, all read

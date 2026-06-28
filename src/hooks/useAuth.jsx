@@ -4,6 +4,9 @@ import {
   onAuthStateChanged,
   signInWithPopup,
   linkWithPopup,
+  signInWithRedirect,
+  linkWithRedirect,
+  getRedirectResult,
   linkWithCredential,
   EmailAuthProvider,
   createUserWithEmailAndPassword,
@@ -33,6 +36,19 @@ import * as Sentry from '@sentry/react';
 const AuthContext = createContext(null);
 
 const APP_VERSION = import.meta.env.VITE_APP_VERSION || '0.0.0';
+
+// Stashes the anonymous uid across a redirect-based Google sign-in so the
+// redirect result handler can merge data after the page reloads.
+const REDIRECT_UID_KEY = 'wc26-google-redirect-uid';
+
+// Mobile browsers (and some in-app/embedded webviews) frequently block popups.
+// These error codes mean "popup couldn't open" — fall back to a full redirect.
+function isPopupBlockedError(err) {
+  return (
+    err?.code === 'auth/popup-blocked' ||
+    err?.code === 'auth/operation-not-supported-in-this-environment'
+  );
+}
 
 // ── Helpers ──────────────────────────────────────────────
 
@@ -176,50 +192,97 @@ export function AuthProvider({ children }) {
   // Prevent onAuthStateChanged from overwriting profile while signIn is in progress
   const signInInProgress = useRef(false);
 
-  // Single source of truth: onAuthStateChanged
+  // Single source of truth: onAuthStateChanged. Before subscribing, drain any
+  // pending redirect-based Google sign-in (the popup fallback used on mobile)
+  // so the merge completes first and the listener loads the merged profile.
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, async (firebaseUser) => {
+    let cancelledEffect = false;
+    let unsub = () => {};
+
+    // Resolve a redirect sign-in: merge anonymous data into the new account.
+    // Profile loading is left to onAuthStateChanged below.
+    async function drainRedirect() {
+      const oldUid = (() => {
+        try { return sessionStorage.getItem(REDIRECT_UID_KEY); } catch { return null; }
+      })();
+      if (oldUid) {
+        try { sessionStorage.removeItem(REDIRECT_UID_KEY); } catch {}
+      }
       try {
-        if (!firebaseUser) {
-          // No user at all — create anonymous session
-          setUser(null);
-          setProfile(null);
-          await signInAnonymously(auth);
-          return;
-        }
-
-        setUser(firebaseUser);
-        Sentry.setUser({ id: firebaseUser.uid, email: firebaseUser.email || undefined });
-
-        // If a signIn function is handling the profile, let it finish
-        if (signInInProgress.current) {
-          setLoading(false);
-          return;
-        }
-
-        if (firebaseUser.isAnonymous) {
-          // Anonymous users don't get a profile until they pick a nickname
-          setProfile(null);
-        } else {
-          // Real user — ensure doc exists, load profile
-          const data = await ensureUserDoc(firebaseUser);
-
-          // Legacy migration
-          if (data.groupCode && (!data.pools || data.pools.length === 0)) {
-            await migrateGroupToPool(firebaseUser.uid, data.groupCode, data.nickname);
-            const updated = await getDoc(doc(db, 'users', firebaseUser.uid));
-            setProfile(updated.data());
-          } else {
-            setProfile(data);
-          }
+        const result = await getRedirectResult(auth);
+        if (result && oldUid && oldUid !== result.user.uid) {
+          await mergeAnonymousData(oldUid, result.user.uid);
         }
       } catch (err) {
-        console.error('Auth error:', err);
+        if (err.code === 'auth/credential-already-in-use' || err.code === 'auth/email-already-in-use') {
+          const credential = GoogleAuthProvider.credentialFromError(err);
+          if (credential) {
+            const result = await signInWithCredential(auth, credential);
+            if (oldUid && oldUid !== result.user.uid) {
+              await mergeAnonymousData(oldUid, result.user.uid);
+            }
+            return;
+          }
+        }
+        const cancelled = err.code === 'auth/popup-closed-by-user'
+          || err.code === 'auth/cancelled-popup-request';
+        if (!cancelled) {
+          Sentry.captureException(err, {
+            tags: { flow: 'google-redirect' },
+            extra: { code: err.code, userAgent: navigator.userAgent },
+          });
+        }
       }
-      setLoading(false);
+    }
+
+    drainRedirect().finally(() => {
+      if (cancelledEffect) return;
+      unsub = onAuthStateChanged(auth, async (firebaseUser) => {
+        try {
+          if (!firebaseUser) {
+            // No user at all — create anonymous session
+            setUser(null);
+            setProfile(null);
+            await signInAnonymously(auth);
+            return;
+          }
+
+          setUser(firebaseUser);
+          Sentry.setUser({ id: firebaseUser.uid, email: firebaseUser.email || undefined });
+
+          // If a signIn function is handling the profile, let it finish
+          if (signInInProgress.current) {
+            setLoading(false);
+            return;
+          }
+
+          if (firebaseUser.isAnonymous) {
+            // Anonymous users don't get a profile until they pick a nickname
+            setProfile(null);
+          } else {
+            // Real user — ensure doc exists, load profile
+            const data = await ensureUserDoc(firebaseUser);
+
+            // Legacy migration
+            if (data.groupCode && (!data.pools || data.pools.length === 0)) {
+              await migrateGroupToPool(firebaseUser.uid, data.groupCode, data.nickname);
+              const updated = await getDoc(doc(db, 'users', firebaseUser.uid));
+              setProfile(updated.data());
+            } else {
+              setProfile(data);
+            }
+          }
+        } catch (err) {
+          console.error('Auth error:', err);
+        }
+        setLoading(false);
+      });
     });
 
-    return unsub;
+    return () => {
+      cancelledEffect = true;
+      unsub();
+    };
   }, []);
 
   const signInWithGoogle = useCallback(async () => {
@@ -259,6 +322,20 @@ export function AuthProvider({ children }) {
           setProfile(data);
           return result.user;
         }
+      }
+      // Popup blocked (common on mobile / in-app browsers): fall back to a
+      // full-page redirect. The page navigates away and the result is handled
+      // by getRedirectResult on reload, so this call does not return.
+      if (isPopupBlockedError(err)) {
+        try {
+          if (wasAnonymous && oldUid) sessionStorage.setItem(REDIRECT_UID_KEY, oldUid);
+        } catch {}
+        if (wasAnonymous) {
+          await linkWithRedirect(currentUser, googleProvider);
+        } else {
+          await signInWithRedirect(auth, googleProvider);
+        }
+        return;
       }
       throw err;
     } finally {
@@ -337,6 +414,38 @@ export function AuthProvider({ children }) {
     setProfile((prev) => ({ ...prev, nickname }));
   }, [user]);
 
+  // Edit profile after onboarding: nickname and/or avatar. Denormalized fields
+  // (nickname, avatar, customPhotoURL, avatarKind) are mirrored into the user's
+  // leaderboard entry in every pool so the change shows up everywhere.
+  const updateUserProfile = useCallback(async (fields) => {
+    if (!user) return;
+    const allowed = ['nickname', 'avatar', 'customPhotoURL', 'avatarKind'];
+    const update = {};
+    for (const k of allowed) if (fields[k] !== undefined) update[k] = fields[k];
+    if (Object.keys(update).length === 0) return;
+
+    await updateDoc(doc(db, 'users', user.uid), update);
+    setProfile((prev) => ({ ...prev, ...update }));
+
+    const pools = profile?.pools || [];
+    await Promise.all(pools.map((poolId) =>
+      setDoc(doc(db, 'pools', poolId, 'leaderboard', user.uid), update, { merge: true })
+        .catch(() => { /* best-effort per pool */ })
+    ));
+  }, [user, profile]);
+
+  // Per-user notification-center state: `notificationsSeenAt` clears the unread
+  // badge; `notificationsClearedAt` hides everything older from the inbox.
+  const markNotifications = useCallback(async (fields) => {
+    if (!user) return;
+    const update = {};
+    if (fields.seenAt !== undefined) update.notificationsSeenAt = fields.seenAt;
+    if (fields.clearedAt !== undefined) update.notificationsClearedAt = fields.clearedAt;
+    if (Object.keys(update).length === 0) return;
+    setProfile((prev) => ({ ...prev, ...update }));
+    await updateDoc(doc(db, 'users', user.uid), update).catch(() => {});
+  }, [user]);
+
   const isAnonymous = user?.isAnonymous ?? true;
 
   return (
@@ -346,6 +455,8 @@ export function AuthProvider({ children }) {
       loading,
       isAnonymous,
       saveProfile,
+      updateUserProfile,
+      markNotifications,
       signInWithGoogle,
       signInWithEmail,
       signOutUser,

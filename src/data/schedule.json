@@ -85,7 +85,7 @@
       "name": "16-avos de Final",
       "matches": [
         { "id": 73, "date": "2026-06-28", "day": "Sun", "kickoff_bst": "20:00", "home": "2A", "away": "2B", "label": "Jogo 73", "venue": "SoFi Stadium", "city": "Los Angeles", "country": "USA" },
-        { "id": 74, "date": "2026-06-29", "day": "Mon", "kickoff_bst": "21:30", "home": "1C", "away": "2F/B/C/D/F", "label": "Jogo 74", "venue": "Gillette Stadium", "city": "Boston", "country": "USA" },
+        { "id": 74, "date": "2026-06-29", "day": "Mon", "kickoff_bst": "21:30", "home": "1C", "away": "2F", "label": "Jogo 74", "venue": "Gillette Stadium", "city": "Boston", "country": "USA" },
         { "id": 75, "date": "2026-06-30", "day": "Tue", "kickoff_bst": "02:00", "home": "1E", "away": "3A/B/C/D/F", "label": "Jogo 75", "venue": "Estadio BBVA", "city": "Monterrey", "country": "Mexico" },
         { "id": 76, "date": "2026-06-29", "day": "Mon", "kickoff_bst": "18:00", "home": "1F", "away": "2C", "label": "Jogo 76", "venue": "NRG Stadium", "city": "Houston", "country": "USA" },
         { "id": 77, "date": "2026-06-30", "day": "Tue", "kickoff_bst": "22:00", "home": "2E", "away": "2I", "label": "Jogo 77", "venue": "MetLife Stadium", "city": "New York/New Jersey", "country": "USA" },

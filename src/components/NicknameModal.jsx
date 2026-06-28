@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useModalA11y } from '../hooks/useModalA11y';
 
 export default function NicknameModal() {
   const { saveProfile } = useAuth();
   const { t } = useLanguage();
+  const ref = useModalA11y();
   const [nickname, setNickname] = useState('');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -30,9 +32,16 @@ export default function NicknameModal() {
 
   return (
     <div className="modal-overlay">
-      <form className="modal" onSubmit={handleSubmit}>
-        <span className="modal__icon">⚽</span>
-        <h2 className="modal__title">{t('welcomeTitle')}</h2>
+      <form
+        className="modal"
+        onSubmit={handleSubmit}
+        ref={ref}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="nickname-modal-title"
+      >
+        <span className="modal__icon" aria-hidden="true">⚽</span>
+        <h2 className="modal__title" id="nickname-modal-title">{t('welcomeTitle')}</h2>
         <p className="modal__subtitle">{t('welcomeSubtitleSimple')}</p>
 
         <label className="modal__label">

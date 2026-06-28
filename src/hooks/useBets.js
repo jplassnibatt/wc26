@@ -21,7 +21,7 @@ export function useBets() {
   const { activePoolId } = usePools();
 
   const saveBet = useCallback(
-    async (matchId, predictedScoreA, predictedScoreB) => {
+    async (matchId, predictedScoreA, predictedScoreB, extra = {}) => {
       if (!user || !activePoolId) {
         logError('NO_POOL', 'Tentativa de guardar aposta sem pool activo', {
           userId: user?.uid,
@@ -38,6 +38,11 @@ export function useBets() {
         matchId,
         predictedScoreA,
         predictedScoreB,
+        // Knockout-only prediction layers (null when not applicable / not a 90'
+        // draw): who advances, and how it's decided ('et' | 'pens'). Scored by
+        // scoreKnockout (Track A). Always written so clearing a draw resets them.
+        predictedAdvancer: extra.predictedAdvancer ?? null,
+        predictedDecidedBy: extra.predictedDecidedBy ?? null,
         // Kickoff time (epoch ms). The rules use this to reveal this bet to
         // other players only once the match has started (anti-copy).
         lockAt: matchLockAt(matchId),

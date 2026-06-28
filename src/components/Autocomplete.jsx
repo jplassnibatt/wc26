@@ -1,4 +1,4 @@
-import { useState, useMemo, useRef, useEffect } from 'react';
+import { useState, useMemo, useRef, useEffect, useId } from 'react';
 
 function normalize(str) {
   return String(str)
@@ -21,6 +21,8 @@ export default function Autocomplete({
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(0);
   const wrapRef = useRef(null);
+  const listId = useId();
+  const optionId = (i) => `${listId}-opt-${i}`;
 
   const selected = useMemo(
     () => options.find((o) => o.id === value) || null,
@@ -110,6 +112,11 @@ export default function Autocomplete({
         placeholder={placeholder}
         aria-label={placeholder || 'Pesquisar'}
         autoComplete="off"
+        role="combobox"
+        aria-expanded={open && matches.length > 0}
+        aria-controls={listId}
+        aria-autocomplete="list"
+        aria-activedescendant={open && matches[active] ? optionId(active) : undefined}
         onFocus={() => setOpen(true)}
         onChange={(e) => { setQuery(e.target.value); setOpen(true); setActive(0); }}
         onKeyDown={(e) => {
@@ -120,10 +127,13 @@ export default function Autocomplete({
         }}
       />
       {open && matches.length > 0 && (
-        <ul className="autocomplete__list">
+        <ul className="autocomplete__list" id={listId} role="listbox">
           {matches.map((opt, i) => (
             <li
               key={opt.id}
+              id={optionId(i)}
+              role="option"
+              aria-selected={i === active}
               className={`autocomplete__option ${i === active ? 'autocomplete__option--active' : ''}`}
               onMouseEnter={() => setActive(i)}
               onMouseDown={(e) => { e.preventDefault(); pick(opt); }}

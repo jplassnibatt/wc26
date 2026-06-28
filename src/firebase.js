@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
 import { initializeFirestore } from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 import { getMessaging, isSupported } from 'firebase/messaging';
 
 export const firebaseConfig = {
@@ -17,6 +18,7 @@ export const auth = getAuth(app);
 // ignoreUndefinedProperties: a stray `undefined` field drops silently instead
 // of throwing on write (Firestore otherwise rejects undefined values).
 export const db = initializeFirestore(app, { ignoreUndefinedProperties: true });
+export const storage = getStorage(app);
 export const googleProvider = new GoogleAuthProvider();
 
 // Cloud Messaging is only available in secure contexts that support service

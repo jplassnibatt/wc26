@@ -52,9 +52,16 @@ export function useSpecialBets() {
       const prevPicks = existing.exists() ? existing.data().picks || {} : {};
       const nextPicks = { ...prevPicks, [categoryId]: optionId || null };
 
+      // Per-category timestamp (epoch ms). Picks made on time predate this field
+      // (so they have no stamp); late picks under an exception are stamped, which
+      // lets scoring exclude only the late ones from the final total.
+      const prevPickedAt = existing.exists() ? existing.data().pickedAt || {} : {};
+      const nextPickedAt = { ...prevPickedAt, [categoryId]: Date.now() };
+
       const data = {
         userId: user.uid,
         picks: nextPicks,
+        pickedAt: nextPickedAt,
         updatedAt: serverTimestamp(),
       };
       if (!existing.exists()) data.createdAt = serverTimestamp();

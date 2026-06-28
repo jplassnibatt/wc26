@@ -5,6 +5,9 @@ import { getTheme, setTheme } from '../theme';
 import { useAuth } from '../hooks/useAuth';
 import { usePools } from '../hooks/usePools';
 import { useNotifications } from '../hooks/useNotifications';
+import { useModalA11y } from '../hooks/useModalA11y';
+import Avatar from './Avatar';
+import ProfileModal from './ProfileModal';
 
 const THEME_OPTIONS = [
   { value: 'system', icon: '🌗', labelKey: 'themeSystem' },
@@ -12,11 +15,16 @@ const THEME_OPTIONS = [
   { value: 'dark', icon: '🌙', labelKey: 'themeDark' },
 ];
 
+const LANG_OPTIONS = [
+  { value: 'pt-PT', icon: '🇵🇹', label: 'PT' },
+  { value: 'en-GB', icon: '🇬🇧', label: 'EN' },
+];
+
 export default function HamburgerMenu({ onNavigate }) {
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const [theme, setThemeState] = useState(getTheme);
-  const { t } = useLanguage();
+  const { t, lang, setLang } = useLanguage();
   const { user, profile, isAnonymous, signInWithGoogle, signOutUser } = useAuth();
   const { activePool } = usePools();
   const {
@@ -28,7 +36,9 @@ export default function HamburgerMenu({ onNavigate }) {
     disable: disableNotifs,
   } = useNotifications();
   const [linkingAccount, setLinkingAccount] = useState(false);
+  const [editingProfile, setEditingProfile] = useState(false);
   const isAdmin = user?.uid && user.uid === import.meta.env.VITE_ADMIN_UID;
+  const menuRef = useModalA11y({ active: open, onEscape: () => setOpen(false) });
 
   const handleNav = (page) => {
     setOpen(false);
@@ -71,23 +81,46 @@ export default function HamburgerMenu({ onNavigate }) {
 
       {open && <div className="hamburger-overlay" onClick={() => setOpen(false)} />}
 
-      <div className={`hamburger-menu ${open ? 'hamburger-menu--open' : ''}`}>
+      <div
+        className={`hamburger-menu ${open ? 'hamburger-menu--open' : ''}`}
+        ref={menuRef}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu"
+        aria-hidden={!open}
+        inert={!open}
+      >
         <button className="hamburger-menu__close" onClick={() => setOpen(false)} aria-label="Close menu">
           ✕
         </button>
         {profile && (
-          <div className="hamburger-menu__profile">
-            <span className="hamburger-menu__avatar">{profile.nickname?.charAt(0).toUpperCase()}</span>
+          <button
+            type="button"
+            className="hamburger-menu__profile hamburger-menu__profile--btn"
+            onClick={() => { setOpen(false); setEditingProfile(true); }}
+            aria-label={t('editProfileTitle')}
+          >
+            <Avatar
+              nickname={profile.nickname}
+              avatar={profile.avatar}
+              customPhotoURL={profile.customPhotoURL}
+              avatarKind={profile.avatarKind}
+              className="hamburger-menu__avatar"
+            />
             <div>
               <span className="hamburger-menu__nick">{profile.nickname}</span>
               {activePool && (
                 <span className="hamburger-menu__group">{activePool.name}</span>
               )}
             </div>
-          </div>
+            <span className="hamburger-menu__profile-edit" aria-hidden="true">✏️</span>
+          </button>
         )}
 
         <nav className="hamburger-menu__nav">
+          <button className="hamburger-menu__item" onClick={() => handleNav('my-matches')}>
+            <span>⭐</span> {t('navMyMatches')}
+          </button>
           <button className="hamburger-menu__item" onClick={() => handleNav('pools')}>
             <span>🎱</span> {t('poolMyPools')}
           </button>
@@ -126,6 +159,23 @@ export default function HamburgerMenu({ onNavigate }) {
             </button>
           )}
         </nav>
+
+        <div className="hamburger-menu__theme">
+          <span className="hamburger-menu__theme-label">{t('langTitle')}</span>
+          <div className="hamburger-menu__theme-options" role="radiogroup" aria-label={t('langTitle')}>
+            {LANG_OPTIONS.map((opt) => (
+              <button
+                key={opt.value}
+                role="radio"
+                aria-checked={lang === opt.value}
+                className={`hamburger-menu__theme-btn ${lang === opt.value ? 'hamburger-menu__theme-btn--active' : ''}`}
+                onClick={() => setLang(opt.value)}
+              >
+                <span>{opt.icon}</span> {opt.label}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <div className="hamburger-menu__theme">
           <span className="hamburger-menu__theme-label">{t('themeTitle')}</span>
@@ -191,6 +241,8 @@ export default function HamburgerMenu({ onNavigate }) {
           )}
         </div>
       </div>
+
+      {editingProfile && <ProfileModal onClose={() => setEditingProfile(false)} />}
     </>
   );
 }

@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth';
 import { usePools } from '../hooks/usePools';
 import { useLanguage } from '../i18n/LanguageContext';
 import ConfirmModal from './ConfirmModal';
+import Avatar from './Avatar';
 
 export default function PoolAdmin({ poolId, onBack }) {
   const { user } = useAuth();
@@ -163,9 +164,13 @@ export default function PoolAdmin({ poolId, onBack }) {
             {members.map((member) => (
               <div key={member.uid} className="pool-admin__member">
                 <div className="pool-admin__member-info">
-                  <span className="pool-admin__member-avatar">
-                    {member.nickname?.charAt(0).toUpperCase() || '?'}
-                  </span>
+                  <Avatar
+                    nickname={member.nickname}
+                    avatar={member.avatar}
+                    customPhotoURL={member.customPhotoURL}
+                    avatarKind={member.avatarKind}
+                    className="pool-admin__member-avatar"
+                  />
                   <div>
                     <span className="pool-admin__member-name">
                       {member.nickname}
@@ -184,6 +189,8 @@ export default function PoolAdmin({ poolId, onBack }) {
                 {isAdmin && !member.isAdmin && member.uid !== user?.uid && (
                   <button
                     className="pool-admin__remove-btn"
+                    aria-label={t('poolRemoveMember')}
+                    title={t('poolRemoveMember')}
                     onClick={() => setConfirm({
                       type: 'remove',
                       data: member,

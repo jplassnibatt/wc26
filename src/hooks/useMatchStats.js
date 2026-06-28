@@ -13,6 +13,9 @@ export function useMatchStats(matchId, enabled) {
   const { activePoolId } = usePools();
   const [bets, setBets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [reloadKey, setReloadKey] = useState(0);
+  const reload = () => setReloadKey((k) => k + 1);
 
   useEffect(() => {
     if (!enabled || !activePoolId || !isMatchLocked(matchId)) {
@@ -22,6 +25,7 @@ export function useMatchStats(matchId, enabled) {
     let cancelled = false;
     (async () => {
       setLoading(true);
+      setError(false);
       try {
         const [betsSnap, names] = await Promise.all([
           getDocs(query(collection(db, 'pools', activePoolId, 'bets'), where('matchId', '==', matchId))),
@@ -42,13 +46,16 @@ export function useMatchStats(matchId, enabled) {
           .filter((x) => x.a != null && x.b != null);
         setBets(list);
       } catch (e) {
-        if (!cancelled) logError('MATCH_STATS_FAILED', `Falha ao carregar palpites do jogo ${matchId}`, { e: String(e) });
+        if (!cancelled) {
+          setError(true);
+          logError('MATCH_STATS_FAILED', `Falha ao carregar palpites do jogo ${matchId}`, { e: String(e) });
+        }
       } finally {
         if (!cancelled) setLoading(false);
       }
     })();
     return () => { cancelled = true; };
-  }, [enabled, activePoolId, matchId]);
+  }, [enabled, activePoolId, matchId, reloadKey]);
 
-  return { bets, loading };
+  return { bets, loading, error, reload };
 }

@@ -42,6 +42,30 @@ export default function Rules() {
       </section>
 
       <section className="rules__section">
+        <h3 className="rules__section-title">{t('rulesKnockoutTitle')}</h3>
+        <p className="rules__intro">{t('rulesKnockoutIntro')}</p>
+        <div className="rules__points">
+          <div className="rules__point-row">
+            <span className="rules__point-badge rules__point-badge--5">5/3/1</span>
+            <span>{t('rulesKo90')}</span>
+          </div>
+          <div className="rules__point-row">
+            <span className="rules__point-badge rules__point-badge--3">+3</span>
+            <span>{t('rulesKoAdvancer')}</span>
+          </div>
+          <div className="rules__point-row">
+            <span className="rules__point-badge rules__point-badge--3">+2</span>
+            <span>{t('rulesKoDecided')}</span>
+          </div>
+          <div className="rules__point-row">
+            <span className="rules__point-badge rules__point-badge--5">+5</span>
+            <span>{t('rulesKoBoost')}</span>
+          </div>
+        </div>
+        <p className="rules__intro">{t('rulesKoNote')}</p>
+      </section>
+
+      <section className="rules__section">
         <h3 className="rules__section-title">{t('rulesExamples')}</h3>
         <div className="rules__example">
           <div className="rules__example-header">{t('rulesExResult')}: 2 - 1</div>

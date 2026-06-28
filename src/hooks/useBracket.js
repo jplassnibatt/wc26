@@ -3,6 +3,8 @@ import { doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useAuth } from './useAuth';
 import { usePools } from './usePools';
+import { useToast } from './useToast';
+import { useLanguage } from '../i18n/LanguageContext';
 import { logError } from '../utils/logError';
 
 export const BRACKET_RESULTS_DOC = 'global';
@@ -13,6 +15,8 @@ export const BRACKET_RESULTS_DOC = 'global';
 export function useBracket() {
   const { user } = useAuth();
   const { activePoolId } = usePools();
+  const toast = useToast();
+  const { t } = useLanguage();
   const [pred, setPred] = useState({ slots: {}, picks: {} });
   const [results, setResults] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -56,9 +60,10 @@ export function useBracket() {
         );
       } catch (e) {
         logError('BRACKET_SAVE_FAILED', 'Falha ao guardar bracket', { e: String(e) });
+        toast(t('toastSaveError'), 'error');
       }
     },
-    [user, activePoolId]
+    [user, activePoolId, toast, t]
   );
 
   return { pred, results, loading, save };

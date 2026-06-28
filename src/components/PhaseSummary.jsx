@@ -4,11 +4,12 @@ import PhaseFilter from './PhaseFilter';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useAuth } from '../hooks/useAuth';
 import { usePhaseSummary } from '../hooks/usePhaseSummary';
+import { currentPhase } from '../utils/phases';
 
 export default function PhaseSummary() {
   const { t } = useLanguage();
   const { user } = useAuth();
-  const [phaseId, setPhaseId] = useState('group');
+  const [phaseId, setPhaseId] = useState(currentPhase);
   const { matches, loading } = usePhaseSummary(phaseId, true);
 
   const translatedPhases = useMemo(

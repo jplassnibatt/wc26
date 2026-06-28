@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import * as Sentry from '@sentry/react';
 import { useAuth } from '../hooks/useAuth';
 import { useLanguage } from '../i18n/LanguageContext';
+import { useModalA11y } from '../hooks/useModalA11y';
 
 // Google blocks OAuth inside embedded webviews (WhatsApp, Instagram, Facebook,
 // Messenger, TikTok…) with "disallowed_useragent" — the popup opens, shows a
@@ -38,6 +39,7 @@ export default function AuthScreen() {
   const [isSignUp, setIsSignUp] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  const modalRef = useModalA11y({ key: step });
 
   // Update nickname default when user/profile changes (e.g., after Google sign-in)
   useEffect(() => {
@@ -146,9 +148,16 @@ export default function AuthScreen() {
   if (step === 'nickname') {
     return (
       <div className="modal-overlay">
-        <form className="modal" onSubmit={handleNickname}>
-          <span className="modal__icon">⚽</span>
-          <h2 className="modal__title">{t('welcomeTitle')}</h2>
+        <form
+          className="modal"
+          onSubmit={handleNickname}
+          ref={modalRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="auth-modal-title"
+        >
+          <span className="modal__icon" aria-hidden="true">⚽</span>
+          <h2 className="modal__title" id="auth-modal-title">{t('welcomeTitle')}</h2>
           <p className="modal__subtitle">{t('welcomeSubtitleSimple')}</p>
 
           <label className="modal__label">
@@ -177,9 +186,16 @@ export default function AuthScreen() {
   if (step === 'email') {
     return (
       <div className="modal-overlay">
-        <form className="modal" onSubmit={handleEmailSubmit}>
-          <span className="modal__icon">📧</span>
-          <h2 className="modal__title">{isSignUp ? t('authSignUp') : t('authSignIn')}</h2>
+        <form
+          className="modal"
+          onSubmit={handleEmailSubmit}
+          ref={modalRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="auth-modal-title"
+        >
+          <span className="modal__icon" aria-hidden="true">📧</span>
+          <h2 className="modal__title" id="auth-modal-title">{isSignUp ? t('authSignUp') : t('authSignIn')}</h2>
 
           <label className="modal__label">
             {t('authEmailLabel')}
@@ -233,9 +249,15 @@ export default function AuthScreen() {
   // step === 'choose'
   return (
     <div className="modal-overlay">
-      <div className="modal">
-        <span className="modal__icon">⚽</span>
-        <h2 className="modal__title">{t('welcomeTitle')}</h2>
+      <div
+        className="modal"
+        ref={modalRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="auth-modal-title"
+      >
+        <span className="modal__icon" aria-hidden="true">⚽</span>
+        <h2 className="modal__title" id="auth-modal-title">{t('welcomeTitle')}</h2>
         <p className="modal__subtitle">{t('authSubtitle')}</p>
 
         {error && <p className="modal__error">{error}</p>}

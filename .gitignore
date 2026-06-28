@@ -17,6 +17,16 @@ Thumbs.db
 .env.local
 .env.*.local
 
+# Service account keys — NEVER commit these
+*service-account*.json
+scripts/.service-account.json
+**/*serviceAccount*.json
+*firebase-adminsdk*.json
+
+# Local-only admin/data scripts (run with a service account, never deployed)
+scripts/set-points-to-last-place.mjs
+scripts/backfill-phase-points.mjs
+
 # Claude
 .claude/
 

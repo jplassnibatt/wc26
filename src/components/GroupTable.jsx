@@ -42,7 +42,17 @@ export default function GroupTable({ rows, bestThirdIsos, thirds = false, onTeam
               <td className="group-table__pos">{thirds ? idx + 1 : r.pos}</td>
               <td className="group-table__team">
                 <img src={getFlagUrl(r.iso)} alt="" loading="lazy" />
-                <span>{t(`team.${r.iso}`)}</span>
+                {onTeamClick ? (
+                  <button
+                    type="button"
+                    className="group-table__team-link"
+                    onClick={(e) => { e.stopPropagation(); onTeamClick(r.iso); }}
+                  >
+                    {t(`team.${r.iso}`)}
+                  </button>
+                ) : (
+                  <span>{t(`team.${r.iso}`)}</span>
+                )}
                 {thirds && <span className="group-table__grp">{r.group}</span>}
               </td>
               <td>{r.played}</td>

@@ -12,19 +12,28 @@ export default function Overview() {
     totalBets: 0,
     bets24h: 0,
     unresolvedErrors: 0,
+    usersWithFavorites: 0,
   });
   const [live, setLive] = useState(true);
   const [loading, setLoading] = useState(true);
 
   const fetchMetrics = useCallback(async () => {
     try {
-      const [usersSnap, poolsSnap, logsSnap] = await Promise.all([
+      const [usersSnap, poolsSnap, logsSnap, favUsers] = await Promise.all([
         getCountFromServer(collection(db, 'users')),
         getDocs(collection(db, 'pools')),
         getCountFromServer(query(
           collection(db, 'adminLogs'),
           where('resolved', '==', false)
         )),
+        // Proxy for "Os Meus Jogos" usage: users with at least one favourite
+        // team (that page is driven entirely by the `favorites` array). `!= []`
+        // also excludes users that never set the field. Isolated catch so a
+        // missing index here never zeroes the other metrics.
+        getCountFromServer(query(
+          collection(db, 'users'),
+          where('favorites', '!=', [])
+        )).then((s) => s.data().count).catch(() => null),
       ]);
 
       const pools = poolsSnap.docs.map((d) => ({ id: d.id, ...d.data() }));
@@ -44,13 +53,16 @@ export default function Overview() {
         });
       }
 
-      setMetrics({
+      setMetrics((prev) => ({
         totalUsers: usersSnap.data().count,
         totalPools: pools.length,
         totalBets,
         bets24h,
         unresolvedErrors: logsSnap.data().count,
-      });
+        // Keep the previous value if the query failed (null), so a transient
+        // error doesn't flash a misleading 0.
+        usersWithFavorites: favUsers == null ? prev.usersWithFavorites : favUsers,
+      }));
       setLoading(false);
     } catch (err) {
       console.error('Failed to load metrics:', err);
@@ -84,8 +96,13 @@ export default function Overview() {
     };
   }, [live, fetchMetrics]);
 
+  const favPct = metrics.totalUsers
+    ? Math.round((metrics.usersWithFavorites / metrics.totalUsers) * 100)
+    : 0;
+
   const cards = [
     { label: 'Utilizadores', value: metrics.totalUsers },
+    { label: 'Com favoritos (Os Meus Jogos)', value: `${metrics.usersWithFavorites} (${favPct}%)` },
     { label: 'Bolões', value: metrics.totalPools },
     { label: 'Apostas', value: metrics.totalBets },
     { label: 'Apostas (24h)', value: metrics.bets24h },

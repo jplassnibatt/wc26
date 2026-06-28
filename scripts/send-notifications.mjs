@@ -3,6 +3,7 @@
 // (FIREBASE_SERVICE_ACCOUNT) covers Firestore + Messaging. No Cloud Functions.
 //
 // Triggers (each fired once, deduped via the `notificationLog/{key}` collection):
+//   - prekick_<id>   : ~1h before kickoff — last call to lock in a prediction
 //   - kickoff_<id>   : a match has kicked off (group predictions now visible)
 //   - result_<id>    : a result was posted
 //   - specials_reminder : ~24h before the specials deadline
@@ -42,6 +43,35 @@ const MATCH_BY_ID = Object.fromEntries(ALL_MATCHES.map((m) => [String(m.id), m])
 // ---- Build the list of pending events --------------------------------------
 const events = []; // { key, title, body, url, tag }
 
+// Test notification: TEST_MESSAGE env (workflow_dispatch input) sends one
+// immediately to every subscriber. Unique key per run, so it never dedupes.
+if (process.env.TEST_MESSAGE) {
+  events.push({
+    key: `test_${Date.now()}`,
+    title: '🧪 Teste — Mundial 2026',
+    body: process.env.TEST_MESSAGE,
+    url: '/',
+    tag: 'test',
+  });
+}
+
+// 0) Reminder ~1h before kickoff. The window only looks forward, so a sender
+// that was down never fires this after the match has already started.
+for (const m of ALL_MATCHES) {
+  if (!m.home_iso) continue;
+  const t = lockMs(m.date, m.kickoff_bst);
+  if (t == null) continue;
+  if (t > now && t <= now + HOUR) {
+    events.push({
+      key: `prekick_${m.id}`,
+      title: `⏰ ${m.home} x ${m.away} começa daqui a 1 hora`,
+      body: 'Não te esqueças de meter o teu palpite antes do apito!',
+      url: '/#bets',
+      tag: `prekick_${m.id}`,
+    });
+  }
+}
+
 // 1) Kickoffs in the last 6h.
 for (const m of ALL_MATCHES) {
   if (!m.home_iso) continue;
@@ -52,7 +82,7 @@ for (const m of ALL_MATCHES) {
       key: `kickoff_${m.id}`,
       title: `⚽ Começou: ${m.home} x ${m.away}`,
       body: 'Já podes ver os palpites do grupo!',
-      url: '/',
+      url: '/#bets',
       tag: `kickoff_${m.id}`,
     });
   }
@@ -72,7 +102,7 @@ for (const docSnap of resultsSnap.docs) {
     key: `result_${docSnap.id}`,
     title: `📊 Resultado: ${home} ${r.scoreA}-${r.scoreB} ${away}`,
     body: 'Vê quem acertou no Bolão.',
-    url: '/',
+    url: '/#bets',
     tag: `result_${docSnap.id}`,
   });
 }
@@ -83,7 +113,7 @@ if (now >= SPECIAL_DEADLINE - 24 * HOUR && now < SPECIAL_DEADLINE) {
     key: 'specials_reminder',
     title: '⏳ Últimas horas para os Especiais!',
     body: 'Fecha hoje a aposta de marcador, MVP, jovem e seleção surpresa.',
-    url: '/',
+    url: '/#bets',
     tag: 'specials_reminder',
   });
 }
@@ -99,7 +129,7 @@ if (utcHour >= 18 && utcHour <= 20) {
       key: `daily_${tomorrow}`,
       title: `📅 Amanhã há ${count} jogo${count === 1 ? '' : 's'}`,
       body: 'Mete os teus palpites antes do apito!',
-      url: '/',
+      url: '/#bets',
       tag: `daily_${tomorrow}`,
     });
   }
@@ -174,6 +204,16 @@ for (const ev of events) {
   }
 
   await logRef.set({ sentAt: FieldValue.serverTimestamp(), title: ev.title, recipients: sent });
+  // Mirror into the in-app notification feed (read by NotificationCenter).
+  // Keyed by ev.key so re-runs never duplicate.
+  await db.collection('notifications').doc(ev.key).set({
+    title: ev.title,
+    body: ev.body || '',
+    url: ev.url || '',
+    tag: ev.tag || '',
+    type: ev.key.split('_')[0],
+    createdAt: FieldValue.serverTimestamp(),
+  });
   if (bad.length) await removeBadTokens(bad);
   console.log(`Sent "${ev.key}" to ${sent} device(s); pruned ${bad.length} stale token(s).`);
 }

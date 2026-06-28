@@ -3,11 +3,12 @@ import schedule from '../data/schedule.json';
 import { teamConfederation, confederationOrder } from '../data/confederations';
 import TeamCard from '../components/TeamCard';
 import GroupTable from '../components/GroupTable';
+import TournamentStats from '../components/TournamentStats';
 import { useCachedScores } from '../hooks/useLiveScores';
 import { computeStandings } from '../utils/standings';
 import { useLanguage } from '../i18n/LanguageContext';
 
-const VIEW_MODES = ['group', 'az', 'confederation'];
+const VIEW_MODES = ['group', 'az', 'confederation', 'stats'];
 
 export default function Teams({ favorites, toggleFavorite, isFavorite, onTeamClick }) {
   const [search, setSearch] = useState('');
@@ -20,6 +21,7 @@ export default function Teams({ favorites, toggleFavorite, isFavorite, onTeamCli
     az: t('viewAZ'),
     group: t('viewByGroup'),
     confederation: t('viewByConfederation'),
+    stats: t('viewStats'),
   };
 
   // Filter teams by search
@@ -97,15 +99,17 @@ export default function Teams({ favorites, toggleFavorite, isFavorite, onTeamCli
 
   return (
     <div className="teams">
-      <div className="teams__search-wrap">
-        <input
-          type="text"
-          className="teams__search"
-          placeholder={t('searchPlaceholder')}
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-        />
-      </div>
+      {viewMode !== 'stats' && (
+        <div className="teams__search-wrap">
+          <input
+            type="text"
+            className="teams__search"
+            placeholder={t('searchPlaceholder')}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+      )}
 
       <div className="teams__view-toggle">
         {VIEW_MODES.map((mode) => (
@@ -119,35 +123,41 @@ export default function Teams({ favorites, toggleFavorite, isFavorite, onTeamCli
         ))}
       </div>
 
-      {sections.map((section) => (
-        <div key={section.key} className="teams__section">
-          {section.label && (
-            <h3 className="teams__section-label">{section.label}</h3>
-          )}
-          {section.rows ? (
-            <GroupTable rows={section.rows} bestThirdIsos={bestThirdIsos} onTeamClick={onTeamClick} />
-          ) : (
-            <div className="teams__grid">
-              {section.teams.map((team) => (
-                <TeamCard
-                  key={team.iso}
-                  team={team}
-                  isFav={isFavorite(team.iso)}
-                  onToggle={toggleFavorite}
-                  onTeamClick={onTeamClick}
-                />
-              ))}
+      {viewMode === 'stats' ? (
+        <TournamentStats scores={scores} onTeamClick={onTeamClick} />
+      ) : (
+        <>
+          {sections.map((section) => (
+            <div key={section.key} className="teams__section">
+              {section.label && (
+                <h3 className="teams__section-label">{section.label}</h3>
+              )}
+              {section.rows ? (
+                <GroupTable rows={section.rows} bestThirdIsos={bestThirdIsos} onTeamClick={onTeamClick} />
+              ) : (
+                <div className="teams__grid">
+                  {section.teams.map((team) => (
+                    <TeamCard
+                      key={team.iso}
+                      team={team}
+                      isFav={isFavorite(team.iso)}
+                      onToggle={toggleFavorite}
+                      onTeamClick={onTeamClick}
+                    />
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+
+          {viewMode === 'group' && !search && (
+            <div className="teams__section">
+              <h3 className="teams__section-label">{t('bestThirds')}</h3>
+              <p className="teams__thirds-hint">{t('bestThirdsHint')}</p>
+              <GroupTable rows={standings.thirds} thirds onTeamClick={onTeamClick} />
             </div>
           )}
-        </div>
-      ))}
-
-      {viewMode === 'group' && !search && (
-        <div className="teams__section">
-          <h3 className="teams__section-label">{t('bestThirds')}</h3>
-          <p className="teams__thirds-hint">{t('bestThirdsHint')}</p>
-          <GroupTable rows={standings.thirds} thirds onTeamClick={onTeamClick} />
-        </div>
+        </>
       )}
     </div>
   );

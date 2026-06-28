@@ -77,6 +77,12 @@ export function useCachedScores() {
             scoreHome: data.scoreA,
             scoreAway: data.scoreB,
             scorers: data.scorers || [],
+            // Knockout extras (Track A): who advanced + how it was decided, so
+            // the bracket resolves matches settled in extra time / penalties.
+            advancer: data.advancer ?? null,
+            decidedBy: data.decidedBy ?? null,
+            penHome: data.penA ?? null,
+            penAway: data.penB ?? null,
           };
         });
         setScores(map);

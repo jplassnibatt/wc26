@@ -9,18 +9,25 @@ export default function TeamCard({ team, isFav, onToggle, onTeamClick }) {
   const teamName = t(`team.${team.iso}`);
 
   return (
-    <div className="team-card" onClick={() => onTeamClick?.(team.iso)} style={onTeamClick ? { cursor: 'pointer' } : undefined}>
-      <img
-        src={getFlagUrl(team.iso)}
-        alt={teamName}
-        className="team-card__flag"
-        loading="lazy"
-      />
-      <span className="team-card__name">{teamName}</span>
-      <span className="team-card__group">{t('group')} {team.group}</span>
+    <div className="team-card">
+      <button
+        type="button"
+        className="team-card__main"
+        onClick={() => onTeamClick?.(team.iso)}
+        disabled={!onTeamClick}
+      >
+        <img
+          src={getFlagUrl(team.iso)}
+          alt=""
+          className="team-card__flag"
+          loading="lazy"
+        />
+        <span className="team-card__name">{teamName}</span>
+        <span className="team-card__group">{t('group')} {team.group}</span>
+      </button>
       <button
         className={`team-card__fav ${isFav ? 'team-card__fav--active' : ''}`}
-        onClick={(e) => { e.stopPropagation(); onToggle(team.iso); }}
+        onClick={() => onToggle(team.iso)}
         aria-label={isFav ? t('removeFavourite') : t('addFavourite')}
       >
         {isFav ? '★' : '☆'}

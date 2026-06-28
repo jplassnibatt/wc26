@@ -11,7 +11,12 @@ export default function PoolSelector({ onManagePools }) {
 
   return (
     <div className="pool-selector">
-      <button className="pool-selector__trigger" onClick={() => setOpen(!open)}>
+      <button
+        className="pool-selector__trigger"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        onClick={() => setOpen(!open)}
+      >
         <span className="pool-selector__name">{activePool?.name || t('selectPool')}</span>
         <span className={`pool-selector__arrow ${open ? 'pool-selector__arrow--open' : ''}`}>▾</span>
       </button>
