@@ -173,6 +173,11 @@ export const translations = {
     certPrize: 'Uma garrafa de bolhinhas 🍾 (das com bolhas a sério, não da gasosa)',
     certNostradamus: 'Atenção: o título de Nostradamus continua reservado para quem vencer o Mundial inteiro. Até lá, bebe as bolhinhas devagarinho — a profecia ainda vai a meio.',
     certClose: 'Fechar',
+    certPrint: 'Imprimir / PDF 🖨️',
+    certShareImg: 'Partilhar imagem 📲',
+    certExportBusy: 'A gerar…',
+    certExportError: 'Não foi possível gerar a imagem. Tenta de novo.',
+    certShareCaption: 'Oráculo da Circunvalação 🔮 — Vencedor(a) da Fase de Grupos · Mundial 2026',
 
     // Toasts
     toastSaveError: 'Não foi possível guardar. Verifica a ligação e tenta de novo.',
@@ -595,6 +600,11 @@ export const translations = {
     certPrize: 'A bottle of bubbles 🍾 (the proper fizzy kind, not lemonade)',
     certNostradamus: 'Note: the title of Nostradamus stays reserved for whoever wins the whole World Cup. Until then, sip the bubbles slowly — the prophecy is only halfway done.',
     certClose: 'Close',
+    certPrint: 'Print / PDF 🖨️',
+    certShareImg: 'Share image 📲',
+    certExportBusy: 'Generating…',
+    certExportError: 'Could not generate the image. Please try again.',
+    certShareCaption: 'Oracle of Circunvalação 🔮 — Group Stage Winner · World Cup 2026',
 
     // Toasts
     toastSaveError: 'Could not save. Check your connection and try again.',

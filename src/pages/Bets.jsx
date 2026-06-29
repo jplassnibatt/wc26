@@ -1,4 +1,4 @@
-import { useState, useMemo, Suspense } from 'react';
+import { useState, useMemo, useEffect, Suspense } from 'react';
 import schedule from '../data/schedule.json';
 import PhaseFilter from '../components/PhaseFilter';
 import BetCard from '../components/BetCard';
@@ -23,7 +23,7 @@ const BracketPredictor = lazyWithReload(() => import('../components/BracketPredi
 const PhaseSummary = lazyWithReload(() => import('../components/PhaseSummary'));
 const Leaderboard = lazyWithReload(() => import('../components/Leaderboard'));
 
-export default function Bets({ onTeamClick }) {
+export default function Bets({ onTeamClick, focusMatch, onFocusHandled }) {
   const [activePhase, setActivePhase] = useState(currentPhase);
   const [view, setView] = useState('bet');
   const { t } = useLanguage();
@@ -46,6 +46,21 @@ export default function Bets({ onTeamClick }) {
     () => (phase ? groupMatchesByDate(phase.matches) : {}),
     [phase]
   );
+
+  // Deep link from a notification (e.g. "#match-73"): jump to the betting view,
+  // switch to that match's phase, and scroll the card into view.
+  useEffect(() => {
+    if (!focusMatch) return;
+    const ph = schedule.phases.find((p) => p.matches.some((m) => m.id === focusMatch));
+    setView('bet');
+    if (ph) setActivePhase(ph.id);
+    const tmr = setTimeout(() => {
+      document.getElementById(`betmatch-${focusMatch}`)
+        ?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      onFocusHandled?.();
+    }, 350);
+    return () => clearTimeout(tmr);
+  }, [focusMatch, onFocusHandled]);
 
   // Land on today's fixtures, but only in the match-betting view and while
   // viewing the tournament's current phase. The list grows as bets + live scores
@@ -97,6 +112,12 @@ export default function Bets({ onTeamClick }) {
           🎯 {t('betTab')}
         </button>
         <button
+          className={`teams__view-chip ${view === 'ranking' ? 'teams__view-chip--active' : ''}`}
+          onClick={() => setView('ranking')}
+        >
+          🏅 {t('rankingTab')}
+        </button>
+        <button
           className={`teams__view-chip ${view === 'special' ? 'teams__view-chip--active' : ''}`}
           onClick={() => setView('special')}
         >
@@ -113,12 +134,6 @@ export default function Bets({ onTeamClick }) {
           onClick={() => setView('summary')}
         >
           📋 {t('summaryTab')}
-        </button>
-        <button
-          className={`teams__view-chip ${view === 'ranking' ? 'teams__view-chip--active' : ''}`}
-          onClick={() => setView('ranking')}
-        >
-          🏅 {t('rankingTab')}
         </button>
       </div>
 
@@ -166,6 +181,7 @@ export default function Bets({ onTeamClick }) {
                     {matches.map((match) => (
                       <BetCard
                         key={match.id}
+                        id={`betmatch-${match.id}`}
                         match={match}
                         bet={betsMap[match.id]}
                         matchScore={cachedScores[String(match.id)]}
@@ -173,6 +189,7 @@ export default function Bets({ onTeamClick }) {
                         resolvedAway={resolvedKO[match.id]?.away}
                         onSave={handleSave}
                         onTeamClick={onTeamClick}
+                        autoExpandBets={match.id === focusMatch}
                       />
                     ))}
                   </div>

@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { isMatchLocked } from '../data/matchLock';
 import { kickoffDateStr, kickoffTimeStr } from '../utils/matchTime';
@@ -9,7 +9,7 @@ function getFlagUrl(iso) {
   return `https://flagcdn.com/w80/${iso}.png`;
 }
 
-export default function BetCard({ match, bet, onSave, matchScore, onTeamClick, resolvedHome, resolvedAway }) {
+export default function BetCard({ id, match, bet, onSave, matchScore, onTeamClick, resolvedHome, resolvedAway, autoExpandBets }) {
   const { t } = useLanguage();
   // Knockout fixtures carry slot strings ("2A", "W73") instead of team isos;
   // fill them with the teams already certain from results (same as the calendar).
@@ -19,6 +19,11 @@ export default function BetCard({ match, bet, onSave, matchScore, onTeamClick, r
   const hasTeams = !!homeIso && !!awayIso; // both known → bettable
   const [showBets, setShowBets] = useState(false);
   const revealAvailable = hasTeams && isMatchLocked(match.id);
+  // Arriving from a notification deep link: open the group-predictions panel
+  // automatically (only when there's something to reveal).
+  useEffect(() => {
+    if (autoExpandBets && revealAvailable) setShowBets(true);
+  }, [autoExpandBets, revealAvailable]);
 
   const homeName = homeIso ? t(`team.${homeIso}`) : slotLabel(match.home, t);
   const awayName = awayIso ? t(`team.${awayIso}`) : slotLabel(match.away, t);
@@ -98,7 +103,7 @@ export default function BetCard({ match, bet, onSave, matchScore, onTeamClick, r
   };
 
   return (
-    <div className={`bet-card ${isLive ? 'bet-card--live' : ''} ${isFinished ? 'bet-card--finished' : ''}`}>
+    <div id={id} className={`bet-card ${isLive ? 'bet-card--live' : ''} ${isFinished ? 'bet-card--finished' : ''}`}>
       {match.group_label && (
         <span className="match-card__group">{t('group')} {match.group_label}</span>
       )}
@@ -138,27 +143,35 @@ export default function BetCard({ match, bet, onSave, matchScore, onTeamClick, r
         </button>
 
         <div className="bet-card__scores">
-          <input
-            className="bet-card__input"
-            type="number"
-            inputMode="numeric"
-            min="0"
-            value={scoreA}
-            onChange={(e) => handleChange('home', e.target.value)}
-            disabled={isLocked || !hasTeams}
-            aria-label={`${homeName} ${t('goals')}`}
-          />
-          <span className="bet-card__separator">:</span>
-          <input
-            className="bet-card__input"
-            type="number"
-            inputMode="numeric"
-            min="0"
-            value={scoreB}
-            onChange={(e) => handleChange('away', e.target.value)}
-            disabled={isLocked || !hasTeams}
-            aria-label={`${awayName} ${t('goals')}`}
-          />
+          {isFinished && matchScore?.scoreHome != null ? (
+            <span className="bet-card__final-score" aria-label={t('finalResult')}>
+              {matchScore.scoreHome}<span className="bet-card__separator">:</span>{matchScore.scoreAway}
+            </span>
+          ) : (
+            <>
+              <input
+                className="bet-card__input"
+                type="number"
+                inputMode="numeric"
+                min="0"
+                value={scoreA}
+                onChange={(e) => handleChange('home', e.target.value)}
+                disabled={isLocked || !hasTeams}
+                aria-label={`${homeName} ${t('goals')}`}
+              />
+              <span className="bet-card__separator">:</span>
+              <input
+                className="bet-card__input"
+                type="number"
+                inputMode="numeric"
+                min="0"
+                value={scoreB}
+                onChange={(e) => handleChange('away', e.target.value)}
+                disabled={isLocked || !hasTeams}
+                aria-label={`${awayName} ${t('goals')}`}
+              />
+            </>
+          )}
         </div>
 
         <button
@@ -218,10 +231,10 @@ export default function BetCard({ match, bet, onSave, matchScore, onTeamClick, r
         </div>
       )}
 
-      {isFinished && matchScore?.scoreHome != null && (
+      {isFinished && matchScore?.scoreHome != null && bet?.predictedScoreA != null && (
         <div className="bet-card__result">
           <span className="bet-card__actual">
-            {t('finalResult')}: {matchScore.scoreHome} - {matchScore.scoreAway}
+            {t('specialYourPick')}: {bet.predictedScoreA} - {bet.predictedScoreB}
           </span>
           {bet?.pointsAwarded != null && (
             <span className={`bet-card__points bet-card__points--${bet.pointsAwarded}`}>

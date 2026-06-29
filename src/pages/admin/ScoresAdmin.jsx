@@ -104,8 +104,8 @@ export default function ScoresAdmin() {
       const isKO = segment === 'knockout';
       let decidedBy = '90';
       let advancer = null;
+      const teams = isKO ? (resolvedKO[String(match.id)] || {}) : {};
       if (isKO) {
-        const teams = resolvedKO[String(match.id)] || {};
         if (scoreA !== scoreB) {
           decidedBy = '90';
           advancer = scoreA > scoreB ? (teams.home || null) : (teams.away || null);
@@ -123,7 +123,7 @@ export default function ScoresAdmin() {
         scoreB,
         status: 'finished',
         updatedAt: new Date(),
-        ...(isKO ? { decidedBy, advancer } : {}),
+        ...(isKO ? { decidedBy, advancer, homeIso: teams.home || null, awayIso: teams.away || null } : {}),
       });
 
       // Score all bets across ALL pools

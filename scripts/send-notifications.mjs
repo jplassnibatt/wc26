@@ -39,6 +39,9 @@ function lockMs(date, kb) {
 
 const ALL_MATCHES = schedule.phases.flatMap((p) => p.matches);
 const MATCH_BY_ID = Object.fromEntries(ALL_MATCHES.map((m) => [String(m.id), m]));
+// Team name by iso — used to name knockout sides, whose schedule home/away are
+// slot placeholders ("2A"). The result doc stores the resolved homeIso/awayIso.
+const TEAM_NAME = Object.fromEntries((schedule.teams || []).map((t) => [t.iso, t.name]));
 
 // ---- Build the list of pending events --------------------------------------
 const events = []; // { key, title, body, url, tag }
@@ -66,7 +69,7 @@ for (const m of ALL_MATCHES) {
       key: `prekick_${m.id}`,
       title: `⏰ ${m.home} x ${m.away} começa daqui a 1 hora`,
       body: 'Não te esqueças de meter o teu palpite antes do apito!',
-      url: '/#bets',
+      url: `/#match-${m.id}`,
       tag: `prekick_${m.id}`,
     });
   }
@@ -82,7 +85,7 @@ for (const m of ALL_MATCHES) {
       key: `kickoff_${m.id}`,
       title: `⚽ Começou: ${m.home} x ${m.away}`,
       body: 'Já podes ver os palpites do grupo!',
-      url: '/#bets',
+      url: `/#match-${m.id}`,
       tag: `kickoff_${m.id}`,
     });
   }
@@ -96,13 +99,15 @@ for (const docSnap of resultsSnap.docs) {
   const updatedMs = r.updatedAt?.toMillis ? r.updatedAt.toMillis() : null;
   if (updatedMs != null && updatedMs <= now - 6 * HOUR) continue; // too old
   const m = MATCH_BY_ID[String(docSnap.id)] || {};
-  const home = m.home || 'Casa';
-  const away = m.away || 'Fora';
+  // Knockout fixtures have slot placeholders ("2A"); use the resolved team isos
+  // stored on the result doc so the notification reads real names.
+  const home = m.home_iso ? m.home : (TEAM_NAME[r.homeIso] || m.home || 'Casa');
+  const away = m.away_iso ? m.away : (TEAM_NAME[r.awayIso] || m.away || 'Fora');
   events.push({
     key: `result_${docSnap.id}`,
     title: `📊 Resultado: ${home} ${r.scoreA}-${r.scoreB} ${away}`,
     body: 'Vê quem acertou no Bolão.',
-    url: '/#bets',
+    url: `/#match-${docSnap.id}`,
     tag: `result_${docSnap.id}`,
   });
 }

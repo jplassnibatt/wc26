@@ -36,6 +36,9 @@ export default function App() {
   const [page, setPage] = useState('schedule');
   const [animClass, setAnimClass] = useState('page-enter-done');
   const [teamIso, setTeamIso] = useState(null);
+  // A specific match to focus (from a "#match-<id>" notification deep link).
+  const [focusMatch, setFocusMatch] = useState(null);
+  const clearFocusMatch = useCallback(() => setFocusMatch(null), []);
   const prevPageRef = useRef('schedule');
   const mainRef = useRef(null); // the app-shell scroll container (<main>)
   const { favorites, toggleFavorite, isFavorite } = useFavorites();
@@ -94,6 +97,13 @@ export default function App() {
       if (!target) return;
       if (target === 'admin') {
         if (isAdmin) setPage('admin');
+        return;
+      }
+      // "#match-<id>" → open the betting page focused on that match.
+      const mMatch = /^match-(\d+)$/.exec(target);
+      if (mMatch) {
+        setPage('bets');
+        setFocusMatch(Number(mMatch[1]));
         return;
       }
       if (HASH_PAGES.has(target)) setPage(target);
@@ -171,7 +181,7 @@ export default function App() {
                     onTeamClick={navigateToTeam}
                   />
                 )}
-                {page === 'bets' && <Bets onTeamClick={navigateToTeam} />}
+                {page === 'bets' && <Bets onTeamClick={navigateToTeam} focusMatch={focusMatch} onFocusHandled={clearFocusMatch} />}
                 {page === 'bracket' && <Bracket onTeamClick={navigateToTeam} />}
                 {page === 'team' && (
                   <TeamProfile

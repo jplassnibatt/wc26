@@ -2227,6 +2227,17 @@
   color: var(--gray);
 }
 
+/* Final result shown in the scoreboard slot once the match is over (replaces
+   the editable inputs), so the real score reads clearly instead of the guess. */
+.bet-card__final-score {
+  font-family: 'Oswald', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--dark);
+  white-space: nowrap;
+  padding: 0 8px;
+}
+
 /* Knockout extra prediction (advancer / how it ends) — shown on a 90' draw */
 .bet-card__ko {
   display: flex;
@@ -3679,6 +3690,43 @@
   margin: 0;
 }
 
+.cert__actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.cert__action {
+  flex: 1;
+  padding: 11px 8px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.15s ease, transform 0.05s ease;
+}
+
+.cert__action:active {
+  transform: translateY(1px);
+}
+
+.cert__action:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.cert__action--print {
+  color: var(--gold-text);
+  background: rgba(201, 168, 76, 0.12);
+  border: 1px solid var(--gold);
+}
+
+.cert__action--share {
+  color: var(--white);
+  background: var(--gold);
+  border: 1px solid var(--gold);
+}
+
 .cert__close {
   align-self: stretch;
   margin-top: 4px;
@@ -3690,6 +3738,64 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
+}
+
+/* Native print → "Save as PDF": isolate the certificate card on white paper.
+   Forces light colours so dark-mode users still get a printable certificate. */
+@media print {
+  body > *:not(.modal-overlay) {
+    display: none !important;
+  }
+
+  .modal-overlay {
+    position: static !important;
+    display: block !important;
+    background: none !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .cert {
+    margin: 0 auto !important;
+    max-width: 480px !important;
+    max-height: none !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    background:
+      radial-gradient(120% 90% at 50% 0%, rgba(232, 201, 122, 0.18), transparent 60%),
+      #fff !important;
+    color: #1a1a1a !important;
+    border: 2px solid #c9a84c !important;
+  }
+
+  .cert__intro,
+  .cert__phase,
+  .cert__nostradamus {
+    color: #6b7280 !important;
+  }
+
+  .cert__name,
+  .cert__reasons li,
+  .cert__prize-value {
+    color: #1a1a1a !important;
+  }
+
+  .cert__title,
+  .cert__badge,
+  .cert__prize-label {
+    color: #8a6d1e !important;
+  }
+
+  .cert__actions,
+  .cert__close {
+    display: none !important;
+  }
+
+  @page {
+    margin: 16mm;
+  }
 }
 
 /* ===== ADMIN PANEL ===== */
