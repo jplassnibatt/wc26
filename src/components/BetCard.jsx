@@ -256,11 +256,12 @@ export default function BetCard({ id, match, bet, onSave, matchScore, onTeamClic
           {showBets && (
             <MatchBets
               matchId={match.id}
-              homeName={homeName}
-              awayName={awayName}
               finished={isFinished}
               actualA={matchScore?.scoreHome}
               actualB={matchScore?.scoreAway}
+              isKnockout={isKnockout}
+              actualAdvancer={matchScore?.advancer ?? null}
+              actualDecidedBy={matchScore?.decidedBy ?? null}
             />
           )}
         </div>

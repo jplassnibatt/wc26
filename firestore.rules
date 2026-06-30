@@ -85,27 +85,27 @@ service cloud.firestore {
               || isAdmin()
               || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy);
         // Owner creates picks before the deadline and can't self-award points.
-        // One-off exception: two named users got a late extension in WC26-GXFD
+        // One-off exception: two named users got a late extension in WC26-X96C
         // (until 2026-06-28 23:00Z) — see src/data/specialBets.js SPECIAL_EXCEPTION.
         allow create: if request.auth != null
           && request.auth.uid == uid
           && request.auth.uid == request.resource.data.userId
           && request.resource.data.get('pointsAwarded', null) == null
           && (request.time.toMillis() < 1781193600000
-              || (request.auth.token.email in ['22444@aegmmaia.pt', 'tatianalopes4@hotmail.com', 'ricardojbd@gmail.com']
+              || (request.auth.token.email in ['sankukai@gmail.com']
                   && request.time.toMillis() < 1782687600000
-                  && get(/databases/$(database)/documents/pools/$(poolId)).data.get('inviteCode', '') == 'WC26-GXFD'));
+                  && get(/databases/$(database)/documents/pools/$(poolId)).data.get('inviteCode', '') == 'WC26-X96C'));
         // Owner edits picks before the deadline (points unchanged); admin / pool
         // creator write awarded points on resolve. One-off late extension for two
-        // named users in WC26-GXFD — see src/data/specialBets.js SPECIAL_EXCEPTION.
+        // named users in WC26-X96C — see src/data/specialBets.js SPECIAL_EXCEPTION.
         allow update: if request.auth != null
           && (
             (request.auth.uid == uid
               && request.resource.data.get('pointsAwarded', null) == resource.data.get('pointsAwarded', null)
               && (request.time.toMillis() < 1781193600000
-                  || (request.auth.token.email in ['22444@aegmmaia.pt', 'tatianalopes4@hotmail.com', 'ricardojbd@gmail.com']
+                  || (request.auth.token.email in ['sankukai@gmail.com']
                       && request.time.toMillis() < 1782687600000
-                      && get(/databases/$(database)/documents/pools/$(poolId)).data.get('inviteCode', '') == 'WC26-GXFD')))
+                      && get(/databases/$(database)/documents/pools/$(poolId)).data.get('inviteCode', '') == 'WC26-X96C')))
             || isAdmin()
             || request.auth.uid == get(/databases/$(database)/documents/pools/$(poolId)).data.createdBy);
         allow delete: if request.auth != null

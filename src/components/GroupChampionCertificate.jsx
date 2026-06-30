@@ -1,8 +1,8 @@
 import { createPortal } from 'react-dom';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useLanguage } from '../i18n/LanguageContext';
 import { useModalA11y } from '../hooks/useModalA11y';
-import { shareCertificate } from '../utils/certificateImage';
+import { shareCertificate, printCertificate, prewarmCertificateExport } from '../utils/certificateImage';
 import Avatar from './Avatar';
 
 // Tongue-in-cheek certificate for the group-stage winner — the "Oráculo da
@@ -22,17 +22,33 @@ export default function GroupChampionCertificate({ winner, onClose }) {
     cardRef.current = node;
   };
 
-  // Native print: a dedicated @media print stylesheet isolates the certificate
-  // so the browser's "Save as PDF" / printer output is just the card on paper.
-  const handlePrint = () => window.print();
+  // Pre-embed the web fonts as soon as the card is open, so the first export
+  // (image or PDF) doesn't pay the one-time font-fetch cost on click.
+  useEffect(() => {
+    prewarmCertificateExport(cardRef.current);
+  }, []);
 
-  // Export a self-contained PNG and hand it to the share sheet (mobile) or
-  // download it (desktop). Drawn on a canvas — see utils/certificateImage.js.
+  // "Save as PDF": rasterise the card and print that image (see
+  // utils/certificateImage.js) so the gold background prints reliably.
+  const handlePrint = async () => {
+    if (busy) return;
+    setBusy(true);
+    try {
+      await printCertificate(cardRef.current);
+    } catch {
+      alert(t('certExportError'));
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  // Export a PNG snapshot of the live card and hand it to the share sheet
+  // (mobile) or download it (desktop). See utils/certificateImage.js.
   const handleShare = async () => {
     if (busy) return;
     setBusy(true);
     try {
-      await shareCertificate(winner, t);
+      await shareCertificate(cardRef.current, t);
     } catch {
       alert(t('certExportError'));
     } finally {

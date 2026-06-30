@@ -3,10 +3,17 @@ import { useLanguage } from '../i18n/LanguageContext';
 import { useAuth } from '../hooks/useAuth';
 import { useMatchStats } from '../hooks/useMatchStats';
 
-export default function MatchBets({ matchId, homeName, awayName, finished, actualA, actualB }) {
+export default function MatchBets({
+  matchId, finished, actualA, actualB,
+  isKnockout = false, actualAdvancer = null, actualDecidedBy = null,
+}) {
   const { t } = useLanguage();
   const { user } = useAuth();
   const { bets, loading, error, reload } = useMatchStats(matchId, true);
+  // The advancer/decidedBy layers only score (and only "happen") if the match
+  // actually went past 90'. When decided in regulation, those picks didn't count.
+  const beyond90 = actualDecidedBy === 'et' || actualDecidedBy === 'pens';
+  const howLabel = (d) => (d === 'pens' ? t('koPens') : t('koET'));
 
   const stats = useMemo(() => {
     const total = bets.length;
@@ -70,22 +77,42 @@ export default function MatchBets({ matchId, homeName, awayName, finished, actua
       <div className="match-bets__list">
         {stats.ordered.map((b) => {
           const exact = finished && actualA != null && b.a === actualA && b.b === actualB;
+          // Only players who predicted a 90' draw have an advancer pick.
+          const showKo = isKnockout && b.advancer;
+          const advOk = b.advancer === actualAdvancer;
           return (
             <div
               key={b.uid}
               className={`match-bets__row ${b.uid === user?.uid ? 'match-bets__row--me' : ''}`}
             >
-              <span className="match-bets__name">
-                {b.nickname}
-                {b.uid === user?.uid && <span className="match-bets__you">{t('you')}</span>}
-              </span>
-              <span className={`match-bets__score ${exact ? 'match-bets__score--exact' : ''}`}>
-                {exact && '🎯 '}{b.a}–{b.b}
-              </span>
-              {finished && (
-                <span className={`match-bets__pts ${b.points ? 'match-bets__pts--scored' : ''}`}>
-                  {b.points != null ? `+${b.points}` : '—'}
+              <div className="match-bets__row-main">
+                <span className="match-bets__name">
+                  {b.nickname}
+                  {b.uid === user?.uid && <span className="match-bets__you">{t('you')}</span>}
                 </span>
+                <span className={`match-bets__score ${exact ? 'match-bets__score--exact' : ''}`}>
+                  {exact && '🎯 '}{b.a}–{b.b}
+                </span>
+                {finished && (
+                  <span className={`match-bets__pts ${b.points ? 'match-bets__pts--scored' : ''}`}>
+                    {b.points != null ? `+${b.points}` : '—'}
+                  </span>
+                )}
+              </div>
+              {showKo && (
+                <div className="match-bets__ko">
+                  <span className="match-bets__ko-pick">
+                    ↳ {t('koWhoAdvances')}: <strong>{t(`team.${b.advancer}`)}</strong>
+                    {b.decidedBy && ` · ${howLabel(b.decidedBy)}`}
+                  </span>
+                  {finished && (beyond90 ? (
+                    <span className={`match-bets__ko-mark ${advOk ? 'is-ok' : 'is-no'}`}>
+                      {advOk ? '✓' : '✗'}
+                    </span>
+                  ) : (
+                    <span className="match-bets__ko-note">· {t('koDecidedIn90')}</span>
+                  ))}
+                </div>
               )}
             </div>
           );

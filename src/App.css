@@ -3557,17 +3557,73 @@
   max-height: calc(100dvh - 32px); /* tall content scrolls in-place; close stays reachable */
   overflow-y: auto;
   overscroll-behavior: contain;
+  position: relative;
   text-align: center;
   gap: 12px;
-  border: 2px solid var(--gold);
+  border: 3px solid var(--gold);
   background:
     radial-gradient(120% 90% at 50% 0%, rgba(232, 201, 122, 0.16), transparent 60%),
     var(--surface);
 }
 
+/* Off-screen clone used for image/PDF export: force the light, printable
+   palette (regardless of the user's theme), render un-clipped, and size the
+   card to the 13×18 cm photo-paper ratio (≈13:18) with a prominent double
+   frame. Captured at pixelRatio 3 → ~1536×2126 px ≈ 300 dpi at 13×18 cm.
+   See utils/certificateImage.js. */
+.cert--export {
+  --surface: #FFFFFF;
+  --gold: #C9A84C;
+  --gold-text: #8A6D1E;
+  --dark: #1A1A1A;
+  --gray: #6B7280;
+  --green-dark: #006341;
+  --white: #FFFFFF;
+  width: 512px;
+  max-width: 512px;
+  min-height: 709px; /* 512 × 18/13 → fills 13×18 photo paper */
+  max-height: none;
+  overflow: visible;
+  box-shadow: none;
+  margin: 0;
+  justify-content: center; /* center the stack within the photo-ratio frame */
+  border-width: 4px; /* more prominent outer frame */
+  padding: 40px 32px;
+}
+
+/* Inner gold hairline → classic double-frame certificate look. */
+.cert--export::after {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid var(--gold);
+  border-radius: 14px;
+  pointer-events: none;
+}
+
+/* html-to-image mis-renders the avatar's box-shadow gold ring (it comes out as
+   a clipped wedge). Use a real border for the export instead — renders clean. */
+.cert--export .cert__avatar {
+  box-shadow: none;
+  border: 3px solid var(--gold);
+  background: transparent; /* avoid a green sliver if any gap remains */
+}
+
+/* The legend avatars are a coloured disc inset in a square with a transparent
+   margin — invisible at 56px, but enlarged in the export that margin reads as a
+   white ring inside the gold border. Overscan the artwork so it fills right up
+   to the ring. */
+.cert--export .cert__avatar img {
+  transform: scale(1.1);
+}
+
 .cert__seal {
   font-size: 52px;
-  line-height: 1;
+  line-height: 1.2;
+  /* Force the colour-emoji font so the crystal-ball seal rasterises in the
+     html-to-image export (large standalone emoji can fall back to a blank
+     glyph otherwise). */
+  font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
 }
 
 .cert__badge {
@@ -3740,61 +3796,36 @@
   cursor: pointer;
 }
 
-/* Native print → "Save as PDF": isolate the certificate card on white paper.
-   Forces light colours so dark-mode users still get a printable certificate. */
+/* Native print → "Save as PDF". printCertificate() drops a rasterised image of
+   the card into this layer and calls window.print(); we hide everything else and
+   print just the image, so the gold background is baked into the pixels and
+   prints reliably (no iframe quirks, no "background graphics" toggle needed). */
+.cert-print-layer {
+  display: none;
+}
+
 @media print {
-  body > *:not(.modal-overlay) {
+  body > *:not(.cert-print-layer) {
     display: none !important;
   }
 
-  .modal-overlay {
-    position: static !important;
+  .cert-print-layer {
     display: block !important;
-    background: none !important;
-    padding: 0 !important;
-    overflow: visible !important;
   }
 
-  .cert {
-    margin: 0 auto !important;
-    max-width: 480px !important;
-    max-height: none !important;
-    overflow: visible !important;
-    box-shadow: none !important;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-    background:
-      radial-gradient(120% 90% at 50% 0%, rgba(232, 201, 122, 0.18), transparent 60%),
-      #fff !important;
-    color: #1a1a1a !important;
-    border: 2px solid #c9a84c !important;
-  }
-
-  .cert__intro,
-  .cert__phase,
-  .cert__nostradamus {
-    color: #6b7280 !important;
-  }
-
-  .cert__name,
-  .cert__reasons li,
-  .cert__prize-value {
-    color: #1a1a1a !important;
-  }
-
-  .cert__title,
-  .cert__badge,
-  .cert__prize-label {
-    color: #8a6d1e !important;
-  }
-
-  .cert__actions,
-  .cert__close {
-    display: none !important;
+  /* Target 13×18 cm photo paper, borderless: the certificate already has its
+     own gold frame, so we fill the sheet and let the image fit by aspect. */
+  .cert-print-layer img {
+    display: block;
+    width: 130mm;
+    height: 180mm;
+    object-fit: contain;
+    margin: 0 auto;
   }
 
   @page {
-    margin: 16mm;
+    size: 130mm 180mm;
+    margin: 0;
   }
 }
 
@@ -4670,11 +4701,17 @@
 
 .match-bets__row {
   display: flex;
-  align-items: center;
-  gap: 10px;
+  flex-direction: column;
+  gap: 2px;
   padding: 6px 4px;
   font-size: 13px;
   border-bottom: 1px solid var(--border);
+}
+
+.match-bets__row-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .match-bets__row:last-child {
@@ -4683,6 +4720,36 @@
 
 .match-bets__row--me {
   font-weight: 700;
+}
+
+/* Knockout pick sub-line (who advances · how), shown under the score. */
+.match-bets__ko {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-left: 4px;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--gray);
+}
+
+.match-bets__ko-pick strong {
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.match-bets__ko-mark.is-ok {
+  font-weight: 700;
+  color: var(--green-mid);
+}
+
+.match-bets__ko-mark.is-no {
+  font-weight: 700;
+  color: var(--danger);
+}
+
+.match-bets__ko-note {
+  font-style: italic;
 }
 
 .match-bets__name {

@@ -37,7 +37,7 @@ function adjustmentDate(at) {
 
 export default function Leaderboard() {
   const { user } = useAuth();
-  const { activePoolId } = usePools();
+  const { activePoolId, loading: poolsLoading } = usePools();
   const { t } = useLanguage();
   const [entries, setEntries] = useState([]);
   const [adjustments, setAdjustments] = useState([]);
@@ -48,25 +48,40 @@ export default function Leaderboard() {
   const tabRefs = useRef([]);
 
   useEffect(() => {
-    if (!activePoolId) return;
-    let cancelled = false;
-    (async () => {
-      const snap = await getDocs(collection(db, 'pools', activePoolId, 'leaderboard'));
-      if (cancelled) return;
-      setEntries(snap.docs.map((d) => ({ uid: d.id, ...d.data() })));
+    // No pool selected (yet): clear the spinner and let the empty state show.
+    // The `poolsLoading` guard below keeps the spinner up while pools resolve.
+    if (!activePoolId) {
+      setEntries([]);
+      setAdjustments([]);
       setLoading(false);
-      // Manual-adjustment audit trail (best-effort; absent on older pools).
+      return;
+    }
+    let cancelled = false;
+    setLoading(true);
+    (async () => {
       try {
-        const adjSnap = await getDocs(
-          query(collection(db, 'pools', activePoolId, 'adjustments'), orderBy('at', 'desc'))
-        );
-        if (!cancelled) setAdjustments(adjSnap.docs.map((d) => ({ id: d.id, ...d.data() })));
-      } catch { /* no adjustments / not readable — hide the section */ }
+        const snap = await getDocs(collection(db, 'pools', activePoolId, 'leaderboard'));
+        if (cancelled) return;
+        setEntries(snap.docs.map((d) => ({ uid: d.id, ...d.data() })));
+        // Manual-adjustment audit trail (best-effort; absent on older pools).
+        try {
+          const adjSnap = await getDocs(
+            query(collection(db, 'pools', activePoolId, 'adjustments'), orderBy('at', 'desc'))
+          );
+          if (!cancelled) setAdjustments(adjSnap.docs.map((d) => ({ id: d.id, ...d.data() })));
+        } catch { /* no adjustments / not readable — hide the section */ }
+      } catch {
+        // Leaderboard read failed (offline/permissions): fall back to the empty
+        // state instead of spinning forever.
+        if (!cancelled) setEntries([]);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
     })();
     return () => { cancelled = true; };
   }, [activePoolId]);
 
-  if (loading) {
+  if (poolsLoading || loading) {
     return <div className="leaderboard__loading">{t('loading')}</div>;
   }
 

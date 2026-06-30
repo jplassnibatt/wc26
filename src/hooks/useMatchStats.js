@@ -41,6 +41,10 @@ export function useMatchStats(matchId, enabled) {
               a: data.predictedScoreA,
               b: data.predictedScoreB,
               points: data.pointsAwarded,
+              // Knockout extras (only set when the 90' guess was a draw): who the
+              // player predicted to advance and how. Surfaced in the bets list.
+              advancer: data.predictedAdvancer ?? null,
+              decidedBy: data.predictedDecidedBy ?? null,
             };
           })
           .filter((x) => x.a != null && x.b != null);
