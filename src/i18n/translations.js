@@ -586,13 +586,13 @@ export const translations = {
     lbFieldOutcome: 'Outcomes',
     lbHistoryTitle: 'Adjustment history',
 
-    // Group-stage champion ("Papito del Flow") — banner, tag & certificate
+    // Group-stage champion ("Oráculo da Circunvalação") — banner, tag & certificate
     lbOracleBanner: 'is the "Papito del Flow"',
-    lbOracleTag: 'Papito del flow',
+    lbOracleTag: 'Papito del Flow',
     lbViewCertificate: 'View certificate 📜',
     certBadge: 'Official Certificate · Stamped by the Crystal Ball',
     certIntro: 'Amid imagined penalties and miraculous draws, it is solemnly proclaimed that',
-    certTitle: 'Papito del flow',
+    certTitle: 'Papito del Flow',
     certPhase: 'Group Stage Winner · World Cup 2026',
     certReason1: 'Saw penalties the VAR, the referees and the striker all somehow missed.',
     certReason2: 'Predicted results not even the national teams believed in.',
@@ -605,7 +605,7 @@ export const translations = {
     certShareImg: 'Share image 📲',
     certExportBusy: 'Generating…',
     certExportError: 'Could not generate the image. Please try again.',
-    certShareCaption: 'Papito del flow 🔮 — Group Stage Winner · World Cup 2026',
+    certShareCaption: 'Papito del Flow 🔮 — Group Stage Winner · World Cup 2026',
 
     // Toasts
     toastSaveError: 'Could not save. Check your connection and try again.',
