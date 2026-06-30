@@ -586,7 +586,7 @@ export const translations = {
     lbFieldOutcome: 'Outcomes',
     lbHistoryTitle: 'Adjustment history',
 
-    // Group-stage champion ("Oráculo da Circunvalação") — banner, tag & certificate
+    // Group-stage champion ("Papito del Flow") — banner, tag & certificate
     lbOracleBanner: 'is the "Papito del Flow"',
     lbOracleTag: 'Papito del flow',
     lbViewCertificate: 'View certificate 📜',
