@@ -1,0 +1,37 @@
+name: Backfill KO lockAt
+
+# Maintenance: realign stored `lockAt` on knockout bets to the corrected
+# kickoff times. Run manually (workflow_dispatch) after a schedule time change.
+# The push trigger below only fires on the fix branch so it runs once now.
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - scripts/backfill-ko-lockat.mjs
+
+permissions:
+  contents: read
+
+jobs:
+  backfill:
+    environment:
+      name: github-pages
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+      - name: Backfill knockout lockAt
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "FIREBASE_SERVICE_ACCOUNT not set — skipping."
+            exit 0
+          fi
+          npm i --no-save firebase-admin@12
+          node scripts/backfill-ko-lockat.mjs
