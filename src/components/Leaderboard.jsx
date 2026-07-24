@@ -4,7 +4,7 @@ import { db } from '../firebase';
 import { useAuth } from '../hooks/useAuth';
 import { usePools } from '../hooks/usePools';
 import { useLanguage } from '../i18n/LanguageContext';
-import { defaultLeaderboardTab, groupStageComplete } from '../utils/phases';
+import { defaultLeaderboardTab, groupStageComplete, tournamentComplete } from '../utils/phases';
 import Avatar from './Avatar';
 import GroupChampionCertificate from './GroupChampionCertificate';
 
@@ -17,6 +17,38 @@ const TABS = [
   { id: 'special', labelKey: 'lbTabSpecial', field: 'specialPoints' },
   { id: 'total', labelKey: 'lbTabTotal', field: 'totalPoints' },
 ];
+
+// The parts that make up a final total, in stacking order. Each is a bucket
+// field on the leaderboard doc; together with any residual (manual total-only
+// adjustments) they sum to `totalPoints`. Drives the tournament-over build-up.
+const SEGMENTS = [
+  { key: 'group', labelKey: 'lbTabGroup', field: 'groupPoints' },
+  { key: 'knockout', labelKey: 'lbTabKnockout', field: 'knockoutPoints' },
+  { key: 'special', labelKey: 'lbTabSpecial', field: 'specialPoints' },
+  { key: 'bracket', labelKey: 'lbSegBracket', field: 'bracketPoints' },
+];
+
+// Break a total into segments that ALWAYS sum to `totalPoints`, so the stacked
+// bar can never over- or under-shoot the headline number. A positive residual
+// (total-only adjustment) becomes an "other" segment; a negative one (e.g.
+// specialPoints tracked but excluded from the total for some users) is trimmed
+// off the known buckets, special first.
+function buildSegments(entry) {
+  const total = entry.totalPoints || 0;
+  const parts = SEGMENTS.map((s) => ({ ...s, value: Math.max(0, entry[s.field] || 0) }));
+  const known = parts.reduce((sum, p) => sum + p.value, 0);
+  if (total > known) {
+    parts.push({ key: 'other', labelKey: 'lbSegOther', value: total - known });
+  } else if (total < known) {
+    let excess = known - total;
+    for (let i = parts.length - 1; i >= 0 && excess > 0; i -= 1) {
+      const cut = Math.min(parts[i].value, excess);
+      parts[i].value -= cut;
+      excess -= cut;
+    }
+  }
+  return parts.filter((p) => p.value > 0);
+}
 
 // Fields an adjustment can touch, with their i18n label keys. Used to render
 // only the values that actually changed in the audit history.
@@ -108,6 +140,12 @@ export default function Leaderboard() {
 
   const medals = ['🥇', '🥈', '🥉'];
 
+  // Once the final is played, the Total tab swaps the plain list for a build-up
+  // view: a stacked bar per player showing how their score was assembled. Bar
+  // length scales to the leader's total so players are comparable at a glance.
+  const showFinal = tab === 'total' && tournamentComplete();
+  const maxTotal = ranked[0]?.totalPoints || 0;
+
   // The "Oráculo da Circunvalação": top of the Groups ranking, but only once the
   // group stage is actually over and there are points to speak of — so we never
   // crown a mid-stage leader.
@@ -165,53 +203,116 @@ export default function Leaderboard() {
           </div>
         )}
 
-        <div className="leaderboard__header">
-          <span className="leaderboard__col leaderboard__col--pos">#</span>
-          <span className="leaderboard__col leaderboard__col--name">{t('player')}</span>
-          <span className="leaderboard__col leaderboard__col--exact">🎯</span>
-          <span className="leaderboard__col leaderboard__col--pts">{t('pts')}</span>
-        </div>
-
-        {ranked.map((entry, i) => {
-          const isMe = entry.uid === user?.uid;
-          return (
-            <div
-              key={entry.uid}
-              className={`leaderboard__row ${isMe ? 'leaderboard__row--me' : ''} ${i < 3 ? 'leaderboard__row--top' : ''}`}
-            >
-              <span className="leaderboard__col leaderboard__col--pos">
-                {i < 3 ? medals[i] : i + 1}
-              </span>
-              <span className="leaderboard__col leaderboard__col--name">
-                <Avatar
-                  nickname={entry.nickname}
-                  avatar={entry.avatar}
-                  customPhotoURL={entry.customPhotoURL}
-                  avatarKind={entry.avatarKind}
-                  className="leaderboard__avatar"
-                />
-                {entry.nickname}
-                {isMe && <span className="leaderboard__me-badge">{t('you')}</span>}
-                {groupChampion?.uid === entry.uid && (
-                  <button
-                    type="button"
-                    className="leaderboard__oracle-tag"
-                    onClick={() => setCertOpen(true)}
-                    title={t('lbViewCertificate')}
-                  >
-                    🔮 {t('lbOracleTag')}
-                  </button>
-                )}
-              </span>
-              <span className="leaderboard__col leaderboard__col--exact">
-                {entry.exactResultsCount || 0}
-              </span>
-              <span className="leaderboard__col leaderboard__col--pts">
-                {entry[field] || 0}
-              </span>
+        {showFinal ? (
+          <div className="lb-final">
+            <div className="lb-final__intro">
+              <h3 className="lb-final__title">{t('lbFinalTitle')}</h3>
+              <p className="lb-final__subtitle">{t('lbFinalSubtitle')}</p>
             </div>
-          );
-        })}
+
+            <div className="lb-final__legend" aria-hidden="true">
+              {[...SEGMENTS, { key: 'other', labelKey: 'lbSegOther' }].map((s) => (
+                <span key={s.key} className="lb-final__legend-item">
+                  <span className={`lb-final__swatch lb-final__swatch--${s.key}`} />
+                  {t(s.labelKey)}
+                </span>
+              ))}
+            </div>
+
+            {ranked.map((entry, i) => {
+              const isMe = entry.uid === user?.uid;
+              const total = entry.totalPoints || 0;
+              const segments = buildSegments(entry);
+              return (
+                <div
+                  key={entry.uid}
+                  className={`lb-final__row ${isMe ? 'lb-final__row--me' : ''} ${i < 3 ? 'lb-final__row--top' : ''}`}
+                >
+                  <div className="lb-final__head">
+                    <span className="lb-final__pos">{i < 3 ? medals[i] : i + 1}</span>
+                    <Avatar
+                      nickname={entry.nickname}
+                      avatar={entry.avatar}
+                      customPhotoURL={entry.customPhotoURL}
+                      avatarKind={entry.avatarKind}
+                      className="leaderboard__avatar"
+                    />
+                    <span className="lb-final__name">{entry.nickname}</span>
+                    {isMe && <span className="leaderboard__me-badge">{t('you')}</span>}
+                    <span className="lb-final__total">{total} <small>{t('pts')}</small></span>
+                  </div>
+                  <div
+                    className="lb-final__bar"
+                    style={{ width: `${maxTotal > 0 ? Math.max((total / maxTotal) * 100, 4) : 0}%` }}
+                    role="img"
+                    aria-label={segments.map((s) => `${t(s.labelKey)} ${s.value}`).join(', ')}
+                  >
+                    {segments.map((s) => (
+                      <span
+                        key={s.key}
+                        className={`lb-final__seg lb-final__seg--${s.key}`}
+                        style={{ flexGrow: s.value }}
+                        title={`${t(s.labelKey)}: ${s.value}`}
+                      >
+                        {s.value}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <>
+            <div className="leaderboard__header">
+              <span className="leaderboard__col leaderboard__col--pos">#</span>
+              <span className="leaderboard__col leaderboard__col--name">{t('player')}</span>
+              <span className="leaderboard__col leaderboard__col--exact">🎯</span>
+              <span className="leaderboard__col leaderboard__col--pts">{t('pts')}</span>
+            </div>
+
+            {ranked.map((entry, i) => {
+              const isMe = entry.uid === user?.uid;
+              return (
+                <div
+                  key={entry.uid}
+                  className={`leaderboard__row ${isMe ? 'leaderboard__row--me' : ''} ${i < 3 ? 'leaderboard__row--top' : ''}`}
+                >
+                  <span className="leaderboard__col leaderboard__col--pos">
+                    {i < 3 ? medals[i] : i + 1}
+                  </span>
+                  <span className="leaderboard__col leaderboard__col--name">
+                    <Avatar
+                      nickname={entry.nickname}
+                      avatar={entry.avatar}
+                      customPhotoURL={entry.customPhotoURL}
+                      avatarKind={entry.avatarKind}
+                      className="leaderboard__avatar"
+                    />
+                    {entry.nickname}
+                    {isMe && <span className="leaderboard__me-badge">{t('you')}</span>}
+                    {groupChampion?.uid === entry.uid && (
+                      <button
+                        type="button"
+                        className="leaderboard__oracle-tag"
+                        onClick={() => setCertOpen(true)}
+                        title={t('lbViewCertificate')}
+                      >
+                        🔮 {t('lbOracleTag')}
+                      </button>
+                    )}
+                  </span>
+                  <span className="leaderboard__col leaderboard__col--exact">
+                    {entry.exactResultsCount || 0}
+                  </span>
+                  <span className="leaderboard__col leaderboard__col--pts">
+                    {entry[field] || 0}
+                  </span>
+                </div>
+              );
+            })}
+          </>
+        )}
       </div>
 
       {adjustments.length > 0 && (

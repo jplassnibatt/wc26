@@ -3496,6 +3496,150 @@
   margin-left: 4px;
 }
 
+/* Tournament-over "final standings" build-up — replaces the Total list once the
+   final has been played. A stacked bar per player shows how the score was made;
+   bar length scales to the leader so players are comparable at a glance. */
+.lb-final {
+  --seg-group: #0F8C5F;
+  --seg-knockout: #C9A84C;
+  --seg-special: #3B82C4;
+  --seg-bracket: #8B6DB0;
+  --seg-other: #9AA1AC;
+  padding-top: 4px;
+}
+
+.lb-final__intro {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.lb-final__title {
+  font-family: 'Oswald', sans-serif;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  color: var(--dark);
+}
+
+.lb-final__subtitle {
+  font-size: 12px;
+  color: var(--gray);
+  margin: 2px 0 0;
+}
+
+.lb-final__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  justify-content: center;
+  margin-bottom: 14px;
+  font-size: 11px;
+  color: var(--gray);
+}
+
+.lb-final__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.lb-final__swatch {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.lb-final__swatch--group { background: var(--seg-group); }
+.lb-final__swatch--knockout { background: var(--seg-knockout); }
+.lb-final__swatch--special { background: var(--seg-special); }
+.lb-final__swatch--bracket { background: var(--seg-bracket); }
+.lb-final__swatch--other { background: var(--seg-other); }
+
+.lb-final__row {
+  padding: 10px 12px;
+  border-radius: var(--r-sm);
+  margin-top: 4px;
+}
+
+.lb-final__row--me {
+  background: rgba(0, 99, 65, 0.06);
+  border: 1px solid rgba(0, 99, 65, 0.12);
+}
+
+.lb-final__row--top .lb-final__name {
+  font-weight: 700;
+}
+
+.lb-final__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.lb-final__pos {
+  width: 26px;
+  font-size: 15px;
+  flex-shrink: 0;
+  text-align: center;
+}
+
+.lb-final__name {
+  font-size: 14px;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lb-final__total {
+  margin-left: auto;
+  font-family: 'Oswald', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--green-dark);
+  flex-shrink: 0;
+}
+
+.lb-final__total small {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--gray);
+}
+
+.lb-final__bar {
+  display: flex;
+  height: 22px;
+  border-radius: var(--r-xs);
+  overflow: hidden;
+  min-width: 24px;
+  transition: width 0.4s ease;
+}
+
+.lb-final__seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--white);
+  font-size: 11px;
+  font-weight: 700;
+  font-family: 'Oswald', sans-serif;
+  white-space: nowrap;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.35);
+}
+.lb-final__seg--group { background: var(--seg-group); }
+.lb-final__seg--knockout { background: var(--seg-knockout); }
+.lb-final__seg--special { background: var(--seg-special); }
+.lb-final__seg--bracket { background: var(--seg-bracket); }
+.lb-final__seg--other { background: var(--seg-other); }
+
+@media (prefers-reduced-motion: reduce) {
+  .lb-final__bar { transition: none; }
+}
+
 /* Oráculo da Circunvalação — group-stage champion banner & tag */
 .leaderboard__oracle {
   display: flex;

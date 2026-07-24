@@ -158,6 +158,12 @@ export const translations = {
     lbFieldOutcome: 'Resultados',
     lbHistoryTitle: 'Histórico de ajustes',
 
+    // Tournament-over "final standings" build-up view (replaces the Total list)
+    lbFinalTitle: '🏆 Classificação Final',
+    lbFinalSubtitle: 'Como cada pontuação foi construída',
+    lbSegBracket: 'Bracket',
+    lbSegOther: 'Ajustes',
+
     // Group-stage champion ("Oráculo da Circunvalação") — banner, tag & certificate
     lbOracleBanner: 'é o Oráculo da Circunvalação',
     lbOracleTag: 'Oráculo da Circunvalação',
@@ -586,17 +592,23 @@ export const translations = {
     lbFieldOutcome: 'Outcomes',
     lbHistoryTitle: 'Adjustment history',
 
+    // Tournament-over "final standings" build-up view (replaces the Total list)
+    lbFinalTitle: '🏆 Final Standings',
+    lbFinalSubtitle: 'How each score was built',
+    lbSegBracket: 'Bracket',
+    lbSegOther: 'Adjustments',
+
     // Group-stage champion ("Oráculo da Circunvalação") — banner, tag & certificate
-    lbOracleBanner: 'is the "Papito del Flow"',
-    lbOracleTag: 'Papito del Flow',
+    lbOracleBanner: 'is the Oracle of Circunvalação',
+    lbOracleTag: 'Oracle of Circunvalação',
     lbViewCertificate: 'View certificate 📜',
     certBadge: 'Official Certificate · Stamped by the Crystal Ball',
     certIntro: 'Amid imagined penalties and miraculous draws, it is solemnly proclaimed that',
-    certTitle: 'Papito del Flow',
+    certTitle: 'Oracle of Circunvalação',
     certPhase: 'Group Stage Winner · World Cup 2026',
     certReason1: 'Saw penalties the VAR, the referees and the striker all somehow missed.',
     certReason2: 'Predicted results not even the national teams believed in.',
-    certReason3: 'Certified crystal ball, with a prime view over the Group Phase',
+    certReason3: 'Certified crystal ball, with a prime view over the Circunvalação.',
     certPrizeLabel: 'Prize',
     certPrize: 'A bottle of bubbles 🍾 (the proper fizzy kind, not lemonade)',
     certNostradamus: 'Note: the title of Nostradamus stays reserved for whoever wins the whole World Cup. Until then, sip the bubbles slowly — the prophecy is only halfway done.',
@@ -605,7 +617,7 @@ export const translations = {
     certShareImg: 'Share image 📲',
     certExportBusy: 'Generating…',
     certExportError: 'Could not generate the image. Please try again.',
-    certShareCaption: 'Papito del Flow 🔮 — Group Stage Winner · World Cup 2026',
+    certShareCaption: 'Oracle of Circunvalação 🔮 — Group Stage Winner · World Cup 2026',
 
     // Toasts
     toastSaveError: 'Could not save. Check your connection and try again.',

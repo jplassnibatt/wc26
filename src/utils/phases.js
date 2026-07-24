@@ -34,6 +34,12 @@ const finalMatch = schedule.phases.find((p) => p.id === 'final')?.matches[0];
 // Tournament is "over" ~3h after the final kicks off.
 const TOURNAMENT_END_MS = finalMatch ? kickoffMs(finalMatch) + 3 * 60 * 60 * 1000 : Infinity;
 
+// True once the final has been played — the tournament is done. Gates the
+// leaderboard's "final standings" build-up view.
+export function tournamentComplete(now = Date.now()) {
+  return now >= TOURNAMENT_END_MS;
+}
+
 // Which leaderboard tab to open on, following the tournament's current phase:
 // group stage → 'group'; once the group stage is over → 'knockout'; after the
 // final ends → 'total'. The per-segment tabs always stay available regardless.

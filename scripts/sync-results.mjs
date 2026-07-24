@@ -6,6 +6,7 @@
 import { readFileSync } from 'node:fs';
 import { initializeApp, cert } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
+import { resolveKnockout } from './resolve-knockout.mjs';
 
 const raw = process.env.FIREBASE_SERVICE_ACCOUNT;
 if (!raw) {
@@ -299,9 +300,28 @@ async function scoreMatch(matchId, scoreA, scoreB, koActual = null) {
   return scoredBets;
 }
 
+// Resolve each knockout match's BRACKET home/away orientation from the results
+// so far. A bet's side 'A' is the bracket's home slot (e.g. the winner of match
+// 73), which ESPN may list as its away side — so we must detect that and swap,
+// exactly like the group branch does. Loaded once; a match's own slots depend
+// only on its (already-finished) feeders, never on itself.
+async function loadBracket() {
+  const snap = await db.collection('matchResults').get();
+  const map = {};
+  snap.forEach((d) => {
+    const x = d.data();
+    map[d.id] = {
+      status: x.status, scoreHome: x.scoreA, scoreAway: x.scoreB,
+      advancer: x.advancer, decidedBy: x.decidedBy, penHome: x.penA, penAway: x.penB,
+    };
+  });
+  return resolveKnockout(map);
+}
+
 // ---- Main --------------------------------------------------------------------
 const finished = await fetchFinished();
 console.log(`ESPN: ${finished.length} finished match(es) in the last 2 days`);
+const bracket = await loadBracket();
 
 for (const ev of finished) {
   const found = findMatch(ev);
@@ -332,14 +352,33 @@ for (const ev of finished) {
       console.log(`  SKIP (knockout needs admin — unclear ET/pens): match ${match.id} ${ev.homeName} ${ev.scoreHome}-${ev.scoreAway} ${ev.awayName}`);
       continue;
     }
-    const homeIso = resolveIso(ev.homeName);
-    const awayIso = resolveIso(ev.awayName);
-    const advancer = ko.advancerSide === 'home' ? homeIso : awayIso;
-    const scoreA = ko.a90; // 90' base, mirrors ScoresAdmin (Track A)
-    const scoreB = ko.b90;
-    // ESPN home is the bracket's home slot, so side 'A' = ESPN home (no swap).
+    const espnHomeIso = resolveIso(ev.homeName);
+    const espnAwayIso = resolveIso(ev.awayName);
+    // The bet's side 'A' is the bracket's HOME slot (e.g. winner of match 73),
+    // which ESPN may list as its away side. When it does, the whole result must
+    // be mirrored (score, pens, scorer sides) before storing — otherwise every
+    // bet on this match is scored against a flipped result. This mirrors the
+    // group branch's swap; only there it keys off the fixed schedule pair, here
+    // off the resolved bracket orientation.
+    const slot = bracket[String(match.id)] || {};
+    const swapped = !!(slot.home && slot.away && espnHomeIso && espnAwayIso
+      && espnHomeIso === slot.away && espnAwayIso === slot.home);
+    if (slot.home && slot.away && espnHomeIso && espnAwayIso && !swapped
+        && !(espnHomeIso === slot.home && espnAwayIso === slot.away)) {
+      console.log(`  WARN match ${match.id}: ESPN teams (${espnHomeIso}/${espnAwayIso}) don't ` +
+        `match the bracket (${slot.home}/${slot.away}); keeping ESPN orientation`);
+    }
+    // Stored in BRACKET orientation (side 'A' = bracket home). The advancer is
+    // the REAL team that went through, so it's orientation-independent.
+    const homeIso = swapped ? espnAwayIso : espnHomeIso;
+    const awayIso = swapped ? espnHomeIso : espnAwayIso;
+    const advancer = ko.advancerSide === 'home' ? espnHomeIso : espnAwayIso;
+    const scoreA = swapped ? ko.b90 : ko.a90; // 90' base, mirrors ScoresAdmin (Track A)
+    const scoreB = swapped ? ko.a90 : ko.b90;
+    const penA = swapped ? ko.penB : ko.penA;
+    const penB = swapped ? ko.penA : ko.penB;
     const scorers = (ev.scorers ?? []).map((s) => ({
-      name: s.name, minute: s.minute, side: s.homeSide ? 'A' : 'B', pen: s.pen, og: s.og,
+      name: s.name, minute: s.minute, side: (s.homeSide !== swapped) ? 'A' : 'B', pen: s.pen, og: s.og,
     }));
     const same = cur && cur.scoreA === scoreA && cur.scoreB === scoreB
       && cur.decidedBy === ko.decidedBy && cur.advancer === advancer;
@@ -350,11 +389,12 @@ for (const ev of finished) {
       continue;
     }
     console.log(`  match ${match.id} (KO) ${ev.homeName} vs ${ev.awayName}: ${scoreA}-${scoreB}` +
-      ` [${ko.decidedBy}${ko.decidedBy === 'pens' ? ` ${ko.penA}-${ko.penB}` : ''}${ko.decidedBy !== '90' ? `, adv ${advancer}` : ''}]` +
+      ` [${ko.decidedBy}${ko.decidedBy === 'pens' ? ` ${penA}-${penB}` : ''}${ko.decidedBy !== '90' ? `, adv ${advancer}` : ''}]` +
+      (swapped ? ' (orientation swapped to bracket)' : '') +
       (cur ? ' (rescoring)' : ''));
     await ref.set({
       matchId: match.id, scoreA, scoreB, scorers,
-      decidedBy: ko.decidedBy, advancer, penA: ko.penA, penB: ko.penB,
+      decidedBy: ko.decidedBy, advancer, penA, penB,
       homeIso, awayIso, // resolved teams, so notifications can name the sides
       status: 'finished', updatedAt: new Date(), source: 'auto-espn',
     }, { merge: true });
