@@ -599,12 +599,12 @@ export const translations = {
     lbSegOther: 'Adjustments',
 
     // Group-stage champion ("Oráculo da Circunvalação") — banner, tag & certificate
-    lbOracleBanner: 'is the Oracle of Circunvalação',
-    lbOracleTag: 'Oracle of Circunvalação',
+    lbOracleBanner: 'is the "Papito del Flow"',
+    lbOracleTag: 'Papito del Flow',
     lbViewCertificate: 'View certificate 📜',
     certBadge: 'Official Certificate · Stamped by the Crystal Ball',
     certIntro: 'Amid imagined penalties and miraculous draws, it is solemnly proclaimed that',
-    certTitle: 'Oracle of Circunvalação',
+    certTitle: 'Papito del Flow',
     certPhase: 'Group Stage Winner · World Cup 2026',
     certReason1: 'Saw penalties the VAR, the referees and the striker all somehow missed.',
     certReason2: 'Predicted results not even the national teams believed in.',
@@ -617,7 +617,8 @@ export const translations = {
     certShareImg: 'Share image 📲',
     certExportBusy: 'Generating…',
     certExportError: 'Could not generate the image. Please try again.',
-    certShareCaption: 'Oracle of Circunvalação 🔮 — Group Stage Winner · World Cup 2026',
+    certShareCaption: 'Papito del Flow 🔮 — Group Stage Winner · World Cup 2026',
+
 
     // Toasts
     toastSaveError: 'Could not save. Check your connection and try again.',
